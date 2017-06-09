@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/x16"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <!-- ~~ -->
+            <LinearLayout
+                android:layout_width="@dimen/x400"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView2
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test"
+                    android:tag="@string/hscroll_left_end_top" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView2
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_launcher"
+                    android:tag="@string/hscroll_left_end_buttom" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x400"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:src="@mipmap/ic_launcher" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x400"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scaleType="center"
+                    android:src="@mipmap/test" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/test" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x400"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:src="@mipmap/ic_launcher" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x400"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/test" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scaleType="fitStart"
+                    android:src="@mipmap/test" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x400"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:tag="@string/hscroll_right_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:src="@mipmap/ic_launcher" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:tag="@string/hscroll_right_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
+
+
+            <!-- ## -->
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

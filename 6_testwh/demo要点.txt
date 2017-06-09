@@ -1,0 +1,16 @@
+一 关于事件处理和焦点移动
+1 按键事件的拦截在Main2Activiy的dispatchKeyEvent方法
+2 拦截事件以后对于FragmentTop和FragmentBottom的图片点击事件用了setOnKeyListener(new View.OnKeyListener())
+3 由于右侧采用了ViewPager，在最左侧图和最右侧图增加了Tag（fragment2的布局文件里写的tag）
+4 接着3，在Main2Activiy的dispatchKeyEvent对遥控器事件进行处理，拦截对应的操作，跳回到左侧的itemTitle导航
+5 焦点移动的做法其实是有一个透明只有背景的view移动到当前焦点的view然后大小与其一致就行
+  代码在Fragment1：：changeFocusView，focusLayer在Main2Activity的布局中
+
+二 关于整体的事件跟随
+1 当进入app以后，焦点在左侧栏的推荐上，上下移动的时候，右侧viewpager跟随切换
+2 处理代码在Fragment1中，监听的左侧4个textview和1个imageview的焦点事件，当有焦点时（onFocusChange监听）
+  通过Eventbus post一个事件给Main2Actvity，然后切换viewpager
+3 切换viewpager以后，在Main2Acitivy监听的Viewpager切换事件onPageSelected又post一个事件到fragment1
+  来实现左侧出现一个当前选择栏目的高亮状态
+4 上下箭头的切换就是调用viewpager的setcurrentitem。。。
+

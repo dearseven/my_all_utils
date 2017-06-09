@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context="com.teetaa.testwh.MainActivity">
+
+    <fragment
+        android:id="@+id/id_fragment_top"
+        android:name="com.teetaa.testwh.activity.fragment.FragmentTop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/x8"
+        android:layout_weight="8" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <fragment
+                android:id="@+id/id_fragment_title"
+                android:name="com.teetaa.testwh.activity.fragment.Fragment1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/x8"
+
+                android:layout_weight="3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/ll_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.teetaa.testwh.vertical_cursor_imageview.VerticalCursorView
+                        android:id="@+id/v_c_v"
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true" />
+
+                    <com.teetaa.testwh.verticalviewpager.VerticalViewPager
+                        android:layout_toLeftOf="@+id/v_c_v"
+                        android:id="@+id/v_vp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></com.teetaa.testwh.verticalviewpager.VerticalViewPager>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <fragment
+                        android:id="@+id/id_fragment_title2"
+                        android:name="com.teetaa.testwh.activity.fragment.Fragment_fenlei"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/x8"
+
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <fragment
+                        android:id="@+id/id_fragment_title3"
+                        android:name="com.teetaa.testwh.activity.fragment.Fragment_zhuanti"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/x8"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/id_fragment_bottom"
+            android:name="com.teetaa.testwh.activity.fragment.FragmentBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/x8"
+            android:layout_weight="8" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">凤凰专区</string>
+    <string name="menu_1_txt">推荐</string>
+    <string name="menu_2_txt">专题</string>
+    <string name="menu_3_txt">分类</string>
+    <string name="menu_4_txt">我的</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="hscroll_left_end_top">left_to_item_title</string>
+    <string name="hscroll_left_end_buttom">left_to_item_title1</string>
+    <string name="hscroll_right_end">end_of_hscroll</string>
+
+</resources>

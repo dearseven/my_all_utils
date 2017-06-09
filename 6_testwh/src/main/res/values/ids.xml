@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="view_tag_content_id" type="id">view_tag_content_id</item>
+    <item name="view_tag_view_holder" type="id">view_tag_view_holder</item>
+
+</resources>

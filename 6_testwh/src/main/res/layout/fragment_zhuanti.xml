@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/x16"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x2"
+                android:layout_weight="1">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="@dimen/x250"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x2"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test"
+                    android:tag="@string/hscroll_left_end_top" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="@dimen/x250"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_marginRight="@dimen/x2"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="@dimen/x250"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test"
+                    android:tag="@string/hscroll_right_end" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x2"
+                android:layout_weight="1">
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="@dimen/x250"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x2"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test"
+                    android:tag="@string/hscroll_left_end_buttom" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="@dimen/x250"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_marginRight="@dimen/x2"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+
+                <com.teetaa.testwh.focus_anim.FocusFollowImageView
+                    android:layout_width="@dimen/x250"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test"
+                    android:tag="@string/hscroll_right_end" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</LinearLayout>
