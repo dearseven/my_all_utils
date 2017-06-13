@@ -1,0 +1,60 @@
+这个是我们常用的dp和px的转化公式，其实和下面我要说的关系不大，不过可以复习下。
+	/** 
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素) 
+     */  
+    public static int dip2px(Context context, float dpValue) {  
+        final float scale = context.getResources().getDisplayMetrics().density;  
+        return (int) (dpValue * scale + 0.5f);  
+    }  
+   
+    /** 
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp 
+     */  
+    public static int px2dip(Context context, float pxValue) {  
+        final float scale = context.getResources().getDisplayMetrics().density;  
+        return (int) (pxValue / scale + 0.5f);  
+    }  
+	
+一 首先是几个常量
+ldpi=120dp
+mdpi=160dp
+hdpi=240dp
+xhdpi=320dp
+,如果再网上，每个加80
+
+二 实际开发中我们经常看到
+res/layout-sw600dp/这样的资源目录
+意思就是：
+系统只会在可用屏幕的尺寸至少是600dp的时候才会使用这些资源，
+而不管600dp是否是被用户认知的高度或宽度。最小宽度是设备的固定屏幕尺寸特征，当屏幕的方向发生改变时，设备的最小宽度不改变。
+
+三 那如果计算设备的dp呢：
+第一步计算设备的dpi，dpi=(根号下(长的平方+宽的平方))/设备尺寸
+
+假设一个设备长800，宽480，大小为4.3英寸
+那么其dpi的计算过程为：
+
+A=800*800+480*480=230400
+B=A yroot 2 ~= 932 (yroot的意思是根号下的意思，x yroot 2 就是x的2分之一次方，9 yroot 2=3)
+dpi=B/4.3~=216，也就是说每英寸216个像素
+
+第二步 计算其dp
+首先最基本的一个公式 px = dp * (dpi/ 160)，所以 dp= px /(dpi/ 160)
+上一步算出 dpi=216
+所以dp=480/(216/160)~=355，所以应该是是适配到xhdpi(320dp)
+（tip：反正根据我的经验，一般用于计算的这个px是宽度也就是小的这个值，所以这里是800*480，我计算的时候用的480）
+那 1 dp~= 480/355~=1.35px
+
+举个实际的例子
+三星s7 5.1英寸 2560*1440
+其dpi=(2560*2560+1440*1440)yroot2/5.1~=575
+常量M=160
+其dp=1440/(575/M)=400
+宽度就是400dp(1440px),也就是xxhdpi
+1dp ~= DIP/DP=575/400=1.4375
+
+在Google官方开发文档中，说明了 mdpi：hdpi：xhdpi：xxhdpi：xxxhdpi=2：3：4：6：8 的尺寸比例进行缩放。
+例如，一个图标的大小为48×48dp，表示在mdpi上，实际大小为48×48px，在hdpi像素密度上，实际尺寸为mdpi上的1.5倍，即72×72px，以此类推
+
+
+
