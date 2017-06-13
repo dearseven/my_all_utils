@@ -36,7 +36,13 @@ class Main2Activity : cc.m2u.lottery.activity.base.BaseCompatActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         //
-        toolbarTitle.text = "MainActivityKt2!"
+      // toolbarTitle.text = "MainActivityKt2!"
+
+        subTitle.text="main2"
+    }
+
+    override fun isShowBacking(): Boolean {
+       return false;
     }
 
 

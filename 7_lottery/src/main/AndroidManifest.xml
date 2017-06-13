@@ -48,7 +48,7 @@
         </activity>
         <activity android:name=".activity.test.MainActivity"></activity>
 
-        <activity android:name=".activity.test.Main2Activity"></activity>
+        <activity android:name=".activity.test.Main2Activity" android:label="myLableMain2!"></activity>
 
         <activity
             android:name=".activity.PermissionAskActivity"

@@ -39,7 +39,7 @@ public abstract class BaseCompatActivity extends AppCompatActivity {
         toolbar.setSubtitle("Sub Title");
         */
         mToolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        //~ mToolbarSubTitle = (TextView) findViewById(R.id.toolbar_subtitle);
+        mToolbarSubTitle = (TextView) findViewById(R.id.toolbar_subtitle);
 
         //Log.d("intelliCyan",mToolbarTitle+" "+mToolbarSubTitle);
         if (mToolbar != null) {
@@ -52,7 +52,6 @@ public abstract class BaseCompatActivity extends AppCompatActivity {
             //设置默认的标题不显示
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-
     }
 
     @Override

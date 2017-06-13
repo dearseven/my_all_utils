@@ -11,4 +11,7 @@ public class DLog {
         Log.i("lottery", clz.getName() + "\n" + log);
     }
 
+    public static void exception(Class clz, String log) {
+        Log.i("CatchExcep", clz.getName() + "\n" + log);
+    }
 }

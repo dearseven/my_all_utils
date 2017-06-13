@@ -73,7 +73,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         StringWriter writer = new StringWriter();
         ex.printStackTrace(new PrintWriter(writer));
         final String exInfo = writer.getBuffer().toString();
-        DLog.log(CrashHandler.class,exInfo);
+        DLog.exception(CrashHandler.class,exInfo);
         ex.printStackTrace();
         //使用Toast来显示异常信息
         new Thread() {
