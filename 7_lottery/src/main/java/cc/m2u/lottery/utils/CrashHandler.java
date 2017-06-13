@@ -13,6 +13,7 @@ import java.io.StringWriter;
 
 import cc.m2u.lottery.App;
 import cc.m2u.lottery.activity.LaunchActivity;
+import uex.InsertUncatchedException;
 
 
 /**
@@ -73,7 +74,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         StringWriter writer = new StringWriter();
         ex.printStackTrace(new PrintWriter(writer));
         final String exInfo = writer.getBuffer().toString();
-        DLog.exception(CrashHandler.class,exInfo);
+        DLog.exception(CrashHandler.class, exInfo);
+        InsertUncatchedException.insert(exInfo);
         ex.printStackTrace();
         //使用Toast来显示异常信息
         new Thread() {

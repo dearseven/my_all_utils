@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class PermissionAskActivity : AppCompatActivity() {
     /**
-     * 在大于等于6。0的版本动态申请gps定位权限
+     * 大于M（6.0）动态权限申请
      */
     private val REQUEST_FINE_LOCATION_GTE_ANDROID_M = 1
 
