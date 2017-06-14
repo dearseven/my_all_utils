@@ -1,11 +1,15 @@
 package cc.m2u.lottery.utils;
 
 
+import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import java.io.PrintWriter;
@@ -13,15 +17,17 @@ import java.io.StringWriter;
 
 import cc.m2u.lottery.App;
 import cc.m2u.lottery.activity.LaunchActivity;
+import uex.InsertUncatchedException;
 
 
 /**
  * Created by wx on 2016/6/15.
  */
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
+public class CrashHandler implements Thread.UncaughtExceptionHandler, Application.ActivityLifecycleCallbacks {
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     public static final String TAG = "CatchExcep";
     App application;
+    Activity currAct = null;
 
     /**
      * 开发中的时候，不启用异常重启
@@ -31,6 +37,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     public CrashHandler(App app) {
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         application = app;
+        application.registerActivityLifecycleCallbacks(this);
     }
 
     @Override
@@ -56,6 +63,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                         restartIntent); // 1秒钟后重启应用
             }
             //application.finishActivity();
+
             android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
@@ -73,7 +81,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         StringWriter writer = new StringWriter();
         ex.printStackTrace(new PrintWriter(writer));
         final String exInfo = writer.getBuffer().toString();
-        DLog.log(CrashHandler.class,exInfo);
+        DLog.exception(CrashHandler.class, exInfo);
+        InsertUncatchedException.insert(exInfo);
         ex.printStackTrace();
         //使用Toast来显示异常信息
         new Thread() {
@@ -86,5 +95,40 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
         }.start();
         return true;
+    }
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        DLog.log(getClass(),"created:"+activity.toString());
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+        DLog.log(getClass(),"started:"+activity.toString());
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+        DLog.log(getClass(),"resumed:"+activity.toString());
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        DLog.log(getClass(),"paused:"+activity.toString());
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+        DLog.log(getClass(),"stopped:"+activity.toString());
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+        DLog.log(getClass(),"saveIns:"+activity.toString());
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+        DLog.log(getClass(),"destroyed:"+activity.toString());
     }
 }
