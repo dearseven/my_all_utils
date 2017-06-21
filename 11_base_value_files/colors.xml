@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- toolar的背景色,用的位置见styles文件-->
+    <color name="tool_bar_color">#FFcc0000</color>
+    <!-- 顶部系统状态栏的背景色,用的位置见styles文件-->
+    <color name="status_bar_color">#FFFF0000</color>
+    <!-- toolar弹出菜单的背景色,用的位置见styles文件-->
+    <color name="pop_menu_color">#cc0000</color>
+    <!-- 貌似没用到 mainacitity的顶部菜单背景色,用的位置见activity_main布局文件-->
+    <color name="bottom_bar_color">#758595</color>
+
+    <color name="transparent">#0000</color>
+
+    <color name="blueball_color">#AA3333FF</color>
+    <color name="redball_color">#EEFF3333</color>
+</resources>
