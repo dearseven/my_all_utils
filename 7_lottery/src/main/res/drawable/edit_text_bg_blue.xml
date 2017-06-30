@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 先画一个A色的矩形 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#57E" />
+            <corners android:radius="0dp" />
+
+        </shape>
+    </item>
+
+    <!-- 下，左，右各1dp的边距画一个B色的矩形，这个时候就变成有，下左右3个A色边-->
+    <item
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#fff" />
+            <corners android:radius="0dp" />
+
+        </shape>
+    </item>
+
+    <!-- 然后再距离下部分6dp画一个举行，这样左右两侧的A色边就变得很短了 就实现了类似edittext背景-->
+    <item android:bottom="6dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#fff" />
+            <corners android:radius="0dp" />
+        </shape>
+    </item>
+
+</layer-list>
