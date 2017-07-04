@@ -24,4 +24,9 @@ class TotalAsynRun {
         }).start()
         return this
     }
+	
+	fun _runInMain(_fd: Flood2, lash: (fd: Flood2) -> Any): TotalAsynRun {
+        lash(_fd)
+        return this
+    }
 }

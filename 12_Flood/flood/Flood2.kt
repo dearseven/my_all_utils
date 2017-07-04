@@ -61,7 +61,7 @@ class Flood2 {
         return this
     }
 
-    fun runAtUI(h: android.os.Handler, lash: (arg: Flood2) -> Any): Flood2 {
+    fun runAtUI(h: android.os.Handler, lash: (arg: Flood2)): Flood2 {
         h.post {
             lash(this)
         }
