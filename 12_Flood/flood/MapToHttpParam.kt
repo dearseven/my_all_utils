@@ -13,7 +13,7 @@ class MapToHttpParam {
             m.mapKeys {
                 sb.append("$it&")
             }
-            sb.append("_cts_:${System.currentTimeMillis()}")
+            sb.append("_cts_=${System.currentTimeMillis()}")
             return sb.toString()
         }
     }
