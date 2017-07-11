@@ -1,4 +1,3 @@
-package cc.m2u.hidrogen.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

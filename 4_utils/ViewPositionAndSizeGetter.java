@@ -1,4 +1,3 @@
-package cc.m2u.lottery.utils;
 
 import android.app.Activity;
 import android.content.Context;

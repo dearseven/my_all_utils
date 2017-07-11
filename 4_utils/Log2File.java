@@ -1,4 +1,3 @@
-package cc.m2u.xiandao.checkin1.util;
 
 import android.content.Context;
 import android.os.Environment;
@@ -23,7 +22,7 @@ public class Log2File {
             sb.setLength(0);
 
             String fileName = ymd + "_" + userId + ".txt";
-            String folder = Environment.getExternalStorageDirectory() + "/xdchecklog/";
+            String folder = Environment.getExternalStorageDirectory() + "/cyans_log/";
             File f = new File(folder);
             if (f.exists() == false) {
                 f.mkdir();

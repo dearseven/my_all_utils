@@ -1,4 +1,3 @@
-package cc.m2u.lottery.utils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
