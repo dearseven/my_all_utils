@@ -1,0 +1,23 @@
+        //对于5.0以上，创建job
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            DLog.log(javaClass, "准备启动job")
+            var mJobScheduler: JobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+            val builder = JobInfo.Builder(1,
+                    ComponentName(packageName,
+                            JobSchedulerService::class.java.name))
+            //15s运行一次,最迟30秒
+            builder.setMinimumLatency(15 * 1000)
+            builder.setOverrideDeadline(30 * 1000)
+            builder.setPersisted(true)
+
+            //有网络就运行
+            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            if (mJobScheduler.schedule(builder.build()) <= 0) {
+                //If something goes wrong
+                DLog.log(javaClass, "job启动失败")
+            } else {
+                DLog.log(javaClass, "job启动成功")
+            }
+        }else{
+            DLog.log(javaClass,"SDK<21，不启动JobSchedule")
+        }
