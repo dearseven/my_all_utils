@@ -2,6 +2,7 @@
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             DLog.log(javaClass, "准备启动job")
             var mJobScheduler: JobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+			mJobScheduler.cancelAll()
             val builder = JobInfo.Builder(1,
                     ComponentName(packageName,
                             JobSchedulerService::class.java.name))
