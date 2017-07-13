@@ -7,6 +7,25 @@ import kotlin.collections.ArrayList
 /**
  * 淘汰了Flood，可以实现链式操作
  * 配合TotalAsynRun实现完全的后台操作，如果用了TotalAsynRun其实就不要runThread，除非是一定要再某段事件内给予响应
+ * <br/>
+ * 关于使用http的正确用法
+
+TotalAsynRun.getInstance()._run(Flood2()) {
+it.runSimpleHttp(Configs.RUN_AT_THREAD_TIMEOUT) {
+doWithServer(ctx, id);
+}.runNext(Configs.RUN_AT_THREAD_TIMEOUT, null) {
+flag = check(ctx, id, it._get());
+flag
+}.run {
+if (it.isRetNotNull()) {
+listenr.loginStatusCallback(it._get())
+}
+true
+}
+}
+1 用runSimpleHttp返回SimpleHttp.Result
+2 用runNext处理返回的SimpleHttp.Result
+3 再用run或者runUI更新数据或者UI
  * Created by wx on 2017/6/20.
  */
 class Flood2 {
