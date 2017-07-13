@@ -1,7 +1,4 @@
-package  cc.m2u.hidrogen.utils.flood
 
-import cc.m2u.hidrogen.utils.JSONArrToList
-import cc.m2u.hidrogen.utils.SimpleHttp
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -15,8 +12,18 @@ import kotlin.collections.ArrayList
 class Flood2 {
     var data: Any? = null
 
+    /**
+     * 返回任意泛型
+     */
     fun <T> _get(): T {
         return data as T
+    }
+
+    /**
+     * 可以判断data是不是为null
+     */
+    fun isRetNotNull(): Boolean {
+        return data != null
     }
 
     fun _set(value: Any) {
@@ -50,7 +57,9 @@ class Flood2 {
 
     /**
      * 因为用了get的wait模式，其实还是可能阻塞ui ，但是不会说在主线程反问网络等问题
-     * 如果需要完全不阻塞ui，可以代码都跑在Thread中
+     * 如果需要完全不阻塞ui，可以代码都跑在Thread中,如果调用这个代码，
+     * !!!!!!!一定要返回SimpleHttp.Result
+     * 不然有时候会抛出错，如果要一个一个的调用，请runNext
      */
     fun runSimpleHttp(timeout: Long, lash: (objectArg: Flood2) -> Any): Flood2 {
         val es = java.util.concurrent.Executors.newSingleThreadExecutor()
@@ -91,6 +100,41 @@ class Flood2 {
         //
         return this
     }
+
+
+    /**
+     *可以用于一步一步的执行任务
+     * wrongflag用于错误的默认值，建议设置和返回值同类型但是是是错误的情况,或者直接给一个null也可以吧
+     * 其实我觉得用null最好了，用isRetNull来判定就好了
+     */
+    fun runNext(timeout: Long, wrongFlg: Any?, lash: (objectArg: Flood2) -> Any): Flood2 {
+        val es = java.util.concurrent.Executors.newSingleThreadExecutor()
+        var f: java.util.concurrent.Future<Any>? = null
+        //
+        try {
+            val task = java.util.concurrent.Callable<Any> {
+                lash(this);
+            }
+            // 提交任务
+            f = es.submit<Any>(task)
+            this.data = f!!.get(timeout, java.util.concurrent.TimeUnit.MILLISECONDS)
+        } catch (eex: java.util.concurrent.ExecutionException) {
+            eex.printStackTrace()
+            f!!.cancel(true)
+            this.data = wrongFlg
+        } catch (tex: java.util.concurrent.TimeoutException) {
+            this.data = wrongFlg
+            tex.printStackTrace()
+        } catch (e: Exception) {
+            this.data = wrongFlg
+            e.printStackTrace()
+        } finally {
+            es.shutdown()
+        }
+        //
+        return this
+    }
+
 
     fun runAtUI(h: android.os.Handler, lash: (arg: Flood2) -> Unit): Flood2 {
         h.post {

@@ -1,4 +1,3 @@
-package cc.m2u.hidrogen.utils
 
 /**
  * Created by wx on 2017/7/6.
