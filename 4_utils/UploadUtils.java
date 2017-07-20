@@ -19,24 +19,30 @@ import java.util.UUID;
  */
 public class UploadUtils {
     private static final String TAG = "uploadFile";
-    private static final int TIME_OUT = 10*10000000;   //超时时间
+    private static final int TIME_OUT = 10 * 10000000;   //超时时间
     private static final String CHARSET = "utf-8"; //设置编码
-    public static final String SUCCESS="1";
-    public static final String FAILURE="0";
+    public static final String SUCCESS = "1";
+    public static final String FAILURE = "0";
     /**
      * File buffer stream size.
      */
     public static final int FILE_STREAM_BUFFER_SIZE = 8192;
+
     /**
      * android上传文件到服务器
-     * @param file  需要上传的文件
-     * @param RequestURL  请求的rul
-     * @return  返回响应的内容
+     *
+     * @param file       需要上传的文件
+     * @param RequestURL 请求的rul
+     * @return 返回响应的内容
+     * @param nameForAction  图片的传递到服务端时候的表单控件name
+     *
      */
-    public static String uploadFile(File file, String RequestURL)
-    {
-        String  BOUNDARY =  UUID.randomUUID().toString();  //边界标识   随机生成
-        String PREFIX = "--" , LINE_END = "\r\n";
+    public static String uploadFile(File file, String RequestURL,String nameForAction) {
+        if(nameForAction==null){
+            nameForAction="file";
+        }
+        String BOUNDARY = UUID.randomUUID().toString();  //边界标识   随机生成
+        String PREFIX = "--", LINE_END = "\r\n";
         String CONTENT_TYPE = "multipart/form-data";   //内容类型
 
         try {
@@ -51,12 +57,29 @@ public class UploadUtils {
             conn.setRequestProperty("Charset", CHARSET);  //设置编码
             conn.setRequestProperty("connection", "keep-alive");
             conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY);
-            if(file!=null)
-            {
+
+            //
+            String uuidStr = UUID.randomUUID().toString();
+            String apiName = RequestURL.replace(APIs.Companion.getBaseServer(), "");
+            String srcStr = null;
+            String param = null;
+            if (param == null || param.trim().equals("")) {
+                srcStr = "signatureNonce=" + uuidStr;
+            } else {
+                srcStr = "signatureNonce=" + uuidStr + "&" + param;
+            }
+            String token = Signature.getToken(srcStr, apiName, null);
+            conn.setRequestProperty("signatureNonce",
+                    uuidStr);
+            conn.setRequestProperty("signature",
+                    token);
+            //
+
+            if (file != null) {
                 /**
                  * 当文件不为空，把文件包装并且上传
                  */
-                OutputStream outputSteam=conn.getOutputStream();
+                OutputStream outputSteam = conn.getOutputStream();
 
                 DataOutputStream dos = new DataOutputStream(outputSteam);
                 StringBuffer sb = new StringBuffer();
@@ -69,20 +92,19 @@ public class UploadUtils {
                  * filename是文件的名字，包含后缀名的   比如:abc.png
                  */
 
-                sb.append("Content-Disposition: form-data; name=\"img\"; filename=\""+file.getName()+"\""+LINE_END);
-                sb.append("Content-Type: application/octet-stream; charset="+CHARSET+LINE_END);
+                sb.append("Content-Disposition: form-data; name=\""+nameForAction+"\"; filename=\"" + file.getName() + "\"" + LINE_END);
+                sb.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINE_END);
                 sb.append(LINE_END);
                 dos.write(sb.toString().getBytes());
                 InputStream is = new FileInputStream(file);
                 byte[] bytes = new byte[1024];
                 int len = 0;
-                while((len=is.read(bytes))!=-1)
-                {
+                while ((len = is.read(bytes)) != -1) {
                     dos.write(bytes, 0, len);
                 }
                 is.close();
                 dos.write(LINE_END.getBytes());
-                byte[] end_data = (PREFIX+BOUNDARY+PREFIX+LINE_END).getBytes();
+                byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END).getBytes();
                 dos.write(end_data);
                 dos.flush();
                 /**
@@ -92,9 +114,8 @@ public class UploadUtils {
                 int res = conn.getResponseCode();
                 String ret = streamToString(conn.getInputStream(), "UTF-8");
 
-                Log.e(TAG, "response code:"+res);
-                if(res==200)
-                {
+                Log.e(TAG, "response code:" + res);
+                if (res == 200) {
                     return ret;
                 }
             }
@@ -105,13 +126,12 @@ public class UploadUtils {
         }
         return FAILURE;
     }
+
     /**
      * 按照特定的编码格式转换Stream成string
      *
-     * @param is
-     *            Stream源
-     * @param enc
-     *            编码格式
+     * @param is  Stream源
+     * @param enc 编码格式
      * @return 目标String
      */
     private static String streamToString(InputStream is, String enc) {
