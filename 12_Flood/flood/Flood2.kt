@@ -182,7 +182,7 @@ fun main(args: Array<String>) {
     TotalAsynRun.getInstance()._run(Flood2.getInstance()) {
         it.run() { "wangxu" }.runSimpleHttp(3000) {
             println("myname is ${it._get<String>()}")
-            Date()
+            Date()//其实这里应该返回SimpleHttp.Result
         }.run { println("new is ${it._get<Date>()}") }
     }
 }
