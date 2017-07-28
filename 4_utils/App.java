@@ -1,10 +1,20 @@
 
+import android.app.Activity;
+import android.app.Application;
+
+import android.os.Bundle;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+
 /**
  * Created by wx on 2017/4/4.
  */
 
-public class App extends MultiDexApplication implements Application.ActivityLifecycleCallbacks {
-    Map<String, AppCompatActivity> map = new HashMap<String, AppCompatActivity>();
+public class App extends Application implements Application.ActivityLifecycleCallbacks{
+    List<Activity> activities = new ArrayList<Activity>();
 
     @Override
     public void onCreate() {
@@ -14,15 +24,22 @@ public class App extends MultiDexApplication implements Application.ActivityLife
         registerActivityLifecycleCallbacks(this);
     }
 
+    public void finishActivities(List<String> clzSimpleNames) {
+        Iterator<Activity> it = activities.iterator();
+        DLog.log(getClass(),"before finishActivities:"+clzSimpleNames.size());
+        while (it.hasNext()) {
+            Activity a = it.next();
+            DLog.log(getClass(),a.getClass().getSimpleName()+","+clzSimpleNames.contains(a.getClass().getSimpleName()));
+            if (clzSimpleNames.contains(a.getClass().getSimpleName())) {
+                a.finish();
+            }
+        }
+        DLog.log(getClass(),"before finishActivities:"+clzSimpleNames.size());
+    }
+
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        DLog.log(getClass(), activity.getClass().getSimpleName() + "," + getClass());
-        if (map.containsKey(activity.getClass().getSimpleName())) {
-            DLog.log(getClass(), "contains,need finish " + activity);
-            map.get(activity.getClass().getSimpleName()).finish();
-            map.remove(activity.getClass().getSimpleName());
-        }
-        map.put(activity.getClass().getSimpleName(), (AppCompatActivity) activity);
+        activities.add(activity);
     }
 
     @Override
@@ -52,6 +69,6 @@ public class App extends MultiDexApplication implements Application.ActivityLife
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        map.remove(activity.getClass().getSimpleName());
+        activities.remove(activity);
     }
 }
