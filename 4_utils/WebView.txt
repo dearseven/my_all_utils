@@ -1,0 +1,9 @@
+   handler.postDelayed({
+            val webSettings: WebSettings = asls_webview.getSettings()
+            webSettings.setJavaScriptEnabled(true)
+            webSettings.setJavaScriptCanOpenWindowsAutomatically(true)
+            webSettings.setSupportMultipleWindows(true)
+            asls_webview.setWebViewClient(WebViewClient())
+            asls_webview.setWebChromeClient(WebChromeClient())
+            asls_webview.loadUrl("http://www.qq.com");
+        }, 500)
