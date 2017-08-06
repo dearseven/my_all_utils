@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="autoSize">
+        <attr name="w" format="float"></attr>
+        <attr name="h" format="float"></attr>
+    </declare-styleable>
+</resources>
