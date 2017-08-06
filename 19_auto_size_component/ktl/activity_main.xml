@@ -4,14 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="cyan.ktl.MainActivity">
 
-    <cyan.ktl.AutoSizeTextView
-        autoSize:w="-1"
-        autoSize:h="500"
-        android:layout_width="wrap_content"
+    <cyan.ktl.AutoSizeToolbar
+        android:background="#f0f"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        autoSize:h="200"
+        autoSize:w="-1"></cyan.ktl.AutoSizeToolbar>
+
+    <cyan.ktl.AutoSizeTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#8923"
-        android:text="Hello World!" />
+        android:text="Hello World!"
+        autoSize:h="-1"
+        autoSize:w="1400" />
 
 </LinearLayout>
