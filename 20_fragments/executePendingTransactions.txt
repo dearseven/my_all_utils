@@ -1,0 +1,23 @@
+   Toast.makeText(this@WinLotteryTicketActivity, "初始化成功，即将显示数据", Toast.LENGTH_SHORT).show()
+        if(ticket.details[0].type==OrderLotteryBallWrap.TYPE_DCB){
+                    frags.add(WLT_RunLotteryInfoFragment())
+                    frags.add(WLT_TicketNumberInfoFragment())
+                    frags.add(WLT_TicketImgLittleFragment())
+                    frags.add(WLT_OrderBasicInfoFragment())
+        }
+
+        //生成布
+        val ts = supportFragmentManager.beginTransaction()
+        (0..frags.size - 1).forEach {
+            var idStr = "awlt_ctn_${it + 1}"
+            var ctnId = ResourceGetter.getViewID(this, idStr)
+            DLog.log(javaClass,"${it+1}:$ctnId")
+            findViewById(ctnId).visibility = View.VISIBLE
+            ts.add(ctnId, frags[it])
+        }
+        ts.commit()
+        //!!!这个方法非常重要，不要可能导致调用下面的setAPIsValue，在Fragment的onCreate之前
+        supportFragmentManager.executePendingTransactions();
+        (0..frags.size - 1).forEach {
+            frags[it].setAPIsValue(jsonStr!!, it, this)
+        }
