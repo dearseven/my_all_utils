@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:au2size="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cyan.ktl.MainActivity">
+
+    <ASToolbar
+        android:background="#f0f"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        au2size:h="200"
+        au2size:w="-1"></cyan.ktl.AutoSizeToolbar>
+
+    <ASTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#8923"
+        android:text="Hello World!"
+        au2size:h="-1"
+        au2size:w="1400" />
+
+</LinearLayout>
+当w和h为自适应大小的宽高，系统原本的layout_width和layout_height请仅仅使用match_parent或wrap_content
+当w或者h为-1的时候，则会启用layout_width或layout_height的值，否则用w或h的值
+参考值为1440w*2560h px
+记得导入  xmlns:au2size="http://schemas.android.com/apk/res-auto"
