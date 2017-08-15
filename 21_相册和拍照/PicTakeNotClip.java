@@ -1,3 +1,4 @@
+package cc.m2u.lotterymerchantside.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -9,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,8 +18,10 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.view.Surface;
 import android.widget.ImageView;
 import android.widget.Toast;
+import kotlin.Deprecated;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -28,10 +32,9 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
+
+import static android.view.OrientationEventListener.ORIENTATION_UNKNOWN;
 
 /**
  * Created by wx on 2017/7/28.
@@ -78,7 +81,7 @@ public class PicTakeNotClip {
             //不裁剪
             // startPhotoZoom(Uri.fromFile(new File(tempFilePath)));
             Bitmap bm = BitmapFactory.decodeFile(tempFilePath);
-            bm = zoomImage(bm, 720, 1280);
+            bm = zoomImage(bm);
             setPicToView(bm);
         } else if (requestCode == REQUEST_CODE_OPEN_ABLUM && resultCode == Activity.RESULT_OK) {
             //判断手机系统版本号
@@ -93,31 +96,66 @@ public class PicTakeNotClip {
         }
     }
 
+//    /**
+//     * 转换成指定大小
+//     *
+//     * @param bgimage
+//     * @param newWidth
+//     * @param newHeight
+//     * @return
+//     */
+//    public Bitmap zoomImage(Bitmap bgimage, double newWidth, double newHeight) {
+//        // 获取这个图片的宽和高
+//        float width = bgimage.getWidth();
+//        float height = bgimage.getHeight();
+//        DLog.log(getClass(), "w:" + width + ",h:" + height);
+//        //获取图片翻转
+//        int degress = readPictureDegree(tempFilePath);
+//        // 创建操作图片用的matrix对象
+//        Matrix matrix = new Matrix();
+//        //吧图片翻转回去
+//        matrix.setRotate(degress);
+//        // 计算宽高缩放率
+//        float scaleWidth = ((float) newWidth) / width;
+//        float scaleHeight = ((float) newHeight) / height;
+//        DLog.log(getClass(), "sw:" + scaleWidth + ",sh:" + scaleHeight);
+//
+//        // 缩放图片动作
+//        matrix.postScale(scaleWidth, scaleHeight);
+//        Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width, (int) height, matrix, true);
+//        //bgimage.recycle();
+//        return bitmap;
+//    }
+
+
     /**
      * 转换成指定大小
      *
      * @param bgimage
-     * @param newWidth
-     * @param newHeight
      * @return
      */
-    public static Bitmap zoomImage(Bitmap bgimage, double newWidth, double newHeight) {
+    public Bitmap zoomImage(Bitmap bgimage) {
         // 获取这个图片的宽和高
-
         float width = bgimage.getWidth();
         float height = bgimage.getHeight();
+        DLog.log(getClass(), "w:" + width + ",h:" + height);
+        //获取图片翻转
+        int degress = readPictureDegree(tempFilePath);
         // 创建操作图片用的matrix对象
         Matrix matrix = new Matrix();
+        //吧图片翻转回去
+        matrix.setRotate(degress);
         // 计算宽高缩放率
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
+        float scaleWidth = ((float) width / 10) / width;
+        float scaleHeight = ((float) height / 10) / height;
+        DLog.log(getClass(), "sw:" + scaleWidth + ",sh:" + scaleHeight);
+
         // 缩放图片动作
         matrix.postScale(scaleWidth, scaleHeight);
         Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width, (int) height, matrix, true);
         //bgimage.recycle();
         return bitmap;
     }
-
 
     public static final int REQUEST_CODE_OPEN_ABLUM = 5123;
     public static final int REQUEST_CODE_TAKE_NEW_IMG = 5124;
@@ -183,7 +221,7 @@ public class PicTakeNotClip {
                                     intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                     activity.startActivityForResult(intent, REQUEST_CODE_OPEN_ABLUM);
-                                }else {
+                                } else {
                                     Intent intent = new Intent(Intent.ACTION_PICK,
                                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                     intent.setDataAndType(
@@ -209,9 +247,10 @@ public class PicTakeNotClip {
                                     int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                                     Intent intent = new Intent(
                                             MediaStore.ACTION_IMAGE_CAPTURE);
-                                        // 下面这句指定调用相机拍照后的照片存储的路径
+                                    //intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                                    // 下面这句指定调用相机拍照后的照片存储的路径
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                                Uri.fromFile(temp));
+                                            Uri.fromFile(temp));
                                     activity.startActivityForResult(intent, REQUEST_CODE_TAKE_NEW_IMG);
                                 } else {
                                     Toast.makeText(
@@ -276,21 +315,21 @@ public class PicTakeNotClip {
             //如果是document类型的uri，则通过document id处理
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
-                DLog.log(getClass(),"1");
+                DLog.log(getClass(), "1");
                 //解析出数字格式的id
                 String id = docId.split(":")[1];
                 String selection = MediaStore.Images.Media._ID + "=" + id;
                 imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-                DLog.log(getClass(),"2");
+                DLog.log(getClass(), "2");
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
                 imagePath = getImagePath(contentUri, null);
             } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-                DLog.log(getClass(),"3");
+                DLog.log(getClass(), "3");
                 //如果是content类型的uri，则使用普通方式处理
                 imagePath = getImagePath(uri, null);
             } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-                DLog.log(getClass(),"4");
+                DLog.log(getClass(), "4");
                 //如果是file类型的uri，直接获取图片路径即可
                 imagePath = uri.getPath();
             }
@@ -305,7 +344,7 @@ public class PicTakeNotClip {
     private void displayImage(String imagePath) {
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            bitmap = zoomImage(bitmap, 720, 1280);
+            bitmap = zoomImage(bitmap);
             setPicToView(bitmap);
         } else {
 //            ToastUtil.showShort(this,"failed to get image");
@@ -359,4 +398,72 @@ public class PicTakeNotClip {
         //Toast.makeText(activity, "上传图片地址:" + readyForUpload.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         onTaked.pictureTaked(readyForUpload);
     }
+
+    /**
+     * 获取图片的旋转角度
+     */
+    private int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+                default:
+                    degree = 0;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+//    /**
+//     * 将图片的旋转角度置为0
+//     */
+//    private void setPictureDegreeZero(String path) {
+//        try {
+//            ExifInterface exifInterface = new ExifInterface(path);
+//            //修正图片的旋转角度，设置其不旋转。这里也可以设置其旋转的角度，可以传值过去，
+//            //例如旋转90度，传值ExifInterface.ORIENTATION_ROTATE_90，需要将这个值转换为String类型的
+//            exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "no");
+//            exifInterface.saveAttributes();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+//    private void setPictrait(String bitmapUrl) {
+//        try {
+//            int degree = 0;
+//            ExifInterface exifInterface = new ExifInterface(bitmapUrl);
+//            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//            switch (orientation) {
+//                case ExifInterface.ORIENTATION_ROTATE_90:
+//                    degree = 90;
+//                    break;
+//                case ExifInterface.ORIENTATION_ROTATE_180:
+//                    degree = 180;
+//                    break;
+//                case ExifInterface.ORIENTATION_ROTATE_270:
+//                    degree = 270;
+//                    break;
+//                default:
+//                    degree = 0;
+//            }
+
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
 }
