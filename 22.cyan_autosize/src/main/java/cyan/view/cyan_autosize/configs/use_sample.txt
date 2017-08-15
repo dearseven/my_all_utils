@@ -27,3 +27,4 @@
 当w或者h为-1的时候，则会启用layout_width或layout_height的值，否则用w或h的值
 参考值为1440w*2560h px
 记得导入  xmlns:au2size="http://schemas.android.com/apk/res-auto"
+compile project(':cyan_autosize')
