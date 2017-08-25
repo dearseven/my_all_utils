@@ -63,8 +63,9 @@ public class ASImageButton extends android.support.v7.widget.AppCompatImageButto
 
         // 获取屏幕宽度
         int sw = ctx.getResources().getDisplayMetrics().widthPixels;
+        int sh = ctx.getResources().getDisplayMetrics().heightPixels;
         //获取和基准参数得比值w
-        float factor = sw * 1.0f / AutoSizeConfigs.STANDHARD_W;
+        float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
         //在计算出应该得w
         int shouldW = new BigDecimal( w* factor).intValue();
         result=MeasureSpec.makeMeasureSpec(shouldW,MeasureSpec.EXACTLY);
@@ -76,10 +77,11 @@ public class ASImageButton extends android.support.v7.widget.AppCompatImageButto
         // int specMode = MeasureSpec.getMode(measureSpec);
         //int specSize = MeasureSpec.getSize(measureSpec);
 
-        // 获取屏幕高度
+        // 获取屏幕宽度
+        int sw = ctx.getResources().getDisplayMetrics().widthPixels;
         int sh = ctx.getResources().getDisplayMetrics().heightPixels;
-        //获取和基准参数得比值
-        float factor = sh * 1.0f / AutoSizeConfigs.STANDHARD_H;
+        //获取和基准参数得比值w
+        float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
         //在计算出应该得h
         int shouldH = new BigDecimal(h * factor).intValue();
         result=MeasureSpec.makeMeasureSpec(shouldH,MeasureSpec.EXACTLY);
