@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#FFF"
+        android:padding="10dp"
+
+              android:orientation="vertical">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="@string/bianji"
+                android:textColor="#2E83BA"
+                android:textSize="18sp"/>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="#2E83BA"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="15dp"
+        android:layout_marginTop="16dp"></View>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+        <EditText
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:id="@+id/in_d_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/edit_text_bg_blue"
+                android:hint="_" android:textSize="18sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="16dp">
+
+        <Button
+                android:layout_marginRight="5dp"
+                android:id="@+id/in_d_negative"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="43dp"
+                android:background="@drawable/button_bg_common"
+                android:text="@string/quxiao"
+                android:textSize="20sp"/>
+        <Button
+                android:layout_marginLeft="5dp"
+                android:id="@+id/in_d_input_positive"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="43dp"
+                android:background="@drawable/button_bg_common"
+                android:text="@string/queren"
+                android:textSize="20sp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
