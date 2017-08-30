@@ -1,0 +1,18 @@
+在
+ var _mi: MenuItem? = null
+    /*
+     */
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        _mi = menu.findItem(R.id.main_into_msg_center)
+        // getSupportMenuInflater().inflate(R.menu.book_detail, menu);
+        return super.onPrepareOptionsMenu(menu)
+    }
+	获取到menu的item
+	然后在需要修改的地方
+	 if (hasNotification) {
+                    _mi!!.setIcon(
+                            R.drawable.go_user_button)
+                } else {
+                    _mi!!.setIcon(
+                            R.drawable.go_infomation_button)
+                }
