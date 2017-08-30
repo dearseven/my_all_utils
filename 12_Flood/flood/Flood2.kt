@@ -126,7 +126,7 @@ class Flood2 {
      * wrongflag用于错误的默认值，建议设置和返回值同类型但是是是错误的情况,或者直接给一个null也可以吧
      * 其实我觉得用null最好了，用isRetNull来判定就好了
      */
-    fun runNext(timeout: Long, wrongFlg: Any?, lash: (objectArg: Flood2) -> Any): Flood2 {
+    fun runNext(timeout: Long, wrongFlg: Any?, lash: (objectArg: Flood2) -> Any?): Flood2 {
         val es = java.util.concurrent.Executors.newSingleThreadExecutor()
         var f: java.util.concurrent.Future<Any>? = null
         //
