@@ -1,0 +1,23 @@
+ 1 <EditText
+                android:id="@+id/acs_name"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:hint="@string/yonghuming"
+                android:inputType="text"
+                android:textColorHint="@color/text_hint_color"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="3"
+                android:windowSoftInputMode="adjustResize"
+                android:background="@drawable/edit_text_bg_blue"/>
+				
+				核心属性android:imeOptions="actionNext" android:inputType="text"
+				
+2 代码里
+ acs_name.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                DLog.log(javaClass, "${EditorInfo.IME_ACTION_NEXT},${actionId}")
+                return (event != null && event!!.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+            }
+        })
