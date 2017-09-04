@@ -1,0 +1,129 @@
+
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.widget.*;
+import cc.m2u.hidrogen.R;
+import cc.m2u.hidrogen.utils.DLog;
+
+/**
+ * 自定义没有数据的时候的重新刷新view
+ * Created by wx on 2017/9/4.
+ */
+public class CustomRefreshView extends LinearLayout implements View.OnTouchListener {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.getId() == R.id.crl_refresh_img_area) {
+            if (event.getAction() == 1) {//松开
+                bulb.setImageResource(R.drawable.light_bulb);
+                refreshArrow.setImageResource(R.drawable.refresh);
+                if (isTouchPointInView(refreshImgArea, (int) event.getRawX(), (int) event.getRawY()) || isTouchPointInView(refreshButton, (int) event.getRawX(), (int) event.getRawY())) {//松开的位置在空间内，刷新
+                    startAnimate();
+                }
+            } else {
+                bulb.setImageResource(R.drawable.light_bulb_blue);
+                refreshArrow.setImageResource(R.drawable.refresh_blue);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 当触发刷新动画的时候，会回调当前接口
+     */
+    public interface CustomRefreshEvent {
+        void whenUserClick();
+    }
+
+    public void setCustomRefreshEvent(CustomRefreshEvent listener) {
+        this.listener = listener;
+    }
+
+    private CustomRefreshEvent listener = null;
+    private RelativeLayout refreshImgArea = null;
+    private ImageView bulb = null;
+    private ImageView refreshArrow = null;
+    private Button refreshButton = null;
+    private ValueAnimator va = null;
+
+    public CustomRefreshView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        LayoutInflater.from(context).inflate(R.layout.custom_refresh_layout, this, true);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        refreshImgArea = (RelativeLayout) findViewById(R.id.crl_refresh_img_area);
+        bulb = (ImageView) findViewById(R.id.crl_bulb);
+        refreshArrow = (ImageView) findViewById(R.id.crl_refresh_arrow);
+        refreshButton = (Button) findViewById(R.id.crl_refresh_btn);
+
+        //设置一个触摸事件
+        refreshImgArea.setOnTouchListener(this);
+        //设置一个按钮事件
+        refreshButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnimate();
+            }
+        });
+    }
+
+
+    public void stopAnimate() {
+        if (va != null) {
+            va.cancel();
+        }
+    }
+
+    private void startAnimate() {
+        if (va == null) {
+            va = ValueAnimator.ofFloat(360f, -1);
+            //va.setInterpolator(new LinearInterpolator());
+            va.setDuration(1500);
+            va.setRepeatMode(Animation.RESTART);
+            va.setRepeatCount(Animation.INFINITE);
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float r = (float) animation.getAnimatedValue();
+                    if (r < 0) {
+                        r = 0;
+                    }
+                    refreshArrow.setRotation(r);
+                }
+            });
+            va.start();
+        }
+        if (listener != null) {
+            listener.whenUserClick();
+        }
+    }
+
+
+    private boolean isTouchPointInView(View view, int x, int y) {
+        if (view == null) {
+            return false;
+        }
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        int left = location[0];
+        int top = location[1];
+        int right = left + view.getMeasuredWidth();
+        int bottom = top + view.getMeasuredHeight();
+        //view.isClickable() &&
+        if (y >= top && y <= bottom && x >= left
+                && x <= right) {
+            return true;
+        }
+        return false;
+    }
+}
