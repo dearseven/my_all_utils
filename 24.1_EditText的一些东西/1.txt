@@ -23,3 +23,7 @@
         })
 		
 		如果要指定某一个控件为下一个可以android:nextFocusForward="@+id/***"  
+
+		3限制输入
+		android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:maxLength="20"
