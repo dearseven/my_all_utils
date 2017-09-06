@@ -1,0 +1,5 @@
+1，keytool 在JDK的bin目录中
+2，将证书拷入这个目录
+3，运行
+keytool -list -keystore 证书名字
+4,输入口令即可

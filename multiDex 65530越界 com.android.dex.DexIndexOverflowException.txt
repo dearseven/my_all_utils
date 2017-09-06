@@ -1,0 +1,27 @@
+1、删除掉项目中未使用过的jar包。
+
+
+2、项目目录下build.gradle 下的defaultConfig添加multiDexEnabled true
+
+defaultConfig{  
+   multiDexEnabled true  
+}  
+
+
+
+3、项目目录下build.gradle 下的dependencies
+
+dependencies{  
+    compile "com.android.support:multidex:1.0.1"  
+}  
+
+
+4、AndroidManifest.xml中添加 android:name = "android.support.multidex.MultiDexApplication"
+如果项目中已经使用了Applicaiton可以提供的解决方法是让自己的Application继承MultiDexApplication或者在Application的attachBaseContext方法中添加
+
+@Override    
+  protected void attachBaseContext(Context base) {    
+    super.attachBaseContext(base);    
+    MultiDex.install(this);  
+ }   
+我一般选择继承MultiDexApplication
