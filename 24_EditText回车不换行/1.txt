@@ -21,3 +21,5 @@
                 return (event != null && event!!.getKeyCode() == KeyEvent.KEYCODE_ENTER)
             }
         })
+		
+		如果要指定某一个控件为下一个可以android:nextFocusForward="@+id/***"  
