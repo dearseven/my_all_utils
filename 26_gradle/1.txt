@@ -1,0 +1,42 @@
+1.Declaring custom 'clean' task when using the standard Gradle lifecycle plugins is not allowed.
+一般出现这个问题是因为重写了clean任务
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+    id "com.github.dcendents.android-maven" version "1.5"
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+解决方案
+You should not try to override the default clean task, but instead configure it to delete additional stuff like
+
+clean {
+    delete rootProject.buildDir
+}
+
+But check first whether this is not the default behavior of the clean task anyway.
+Alternatively if you want to be able to do a specific clean action individually, you can also define a separate task and add a dependency like
+
+task customClean(type: Delete) {
+    delete rootProject.buildDir
+}
+clean.dependsOn customClean
