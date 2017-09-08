@@ -19,6 +19,11 @@ public class NotifyAbleStatusTester {
     private static final String CHECK_OP_NO_THROW = "checkOpNoThrow";
     private static final String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
 
+
+    /**
+     * 检查权限 并去开启
+     * @param context
+     */
     public static void enableNotification(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             boolean flag = checkGreatThenKITKAT(context);
@@ -28,7 +33,12 @@ public class NotifyAbleStatusTester {
         }
     }
 
-    private static boolean checkGreatThenKITKAT(Context context) {
+    /**
+     * 只检测
+     * @param context
+     * @return
+     */
+    public static boolean checkGreatThenKITKAT(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
             ApplicationInfo appInfo = context.getApplicationInfo();
@@ -45,6 +55,8 @@ public class NotifyAbleStatusTester {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else{
+            return true;
         }
         return false;
     }
@@ -72,12 +84,12 @@ public class NotifyAbleStatusTester {
     }
 
     private static void toSetting(final Context ctx) {
-        new AlertDialog.Builder(ctx).setTitle("重要提示").setMessage("通知权限已关闭，将影响使用，请去系统设置中打开权限").setNegativeButton("不", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(ctx).setTitle("重要提示").setMessage("通知权限已关闭，将影响使用，请去系统设置中打开权限").setNegativeButton("稍后再说", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
-        }).setPositiveButton("好", new DialogInterface.OnClickListener() {
+        }).setPositiveButton("现在就去", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 openSetting(ctx);
