@@ -13,7 +13,7 @@ import cc.m2u.hidrogen.R;
 import cc.m2u.hidrogen.utils.DLog;
 
 /**
- * 自定义没有数据的时候的重新刷新view
+ * 自定义没有数据的时候的重新刷新view,使用的时候高宽都用match_parent
  * Created by wx on 2017/9/4.
  */
 public class CustomRefreshView extends LinearLayout implements View.OnTouchListener {

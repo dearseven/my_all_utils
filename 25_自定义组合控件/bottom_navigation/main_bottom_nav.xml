@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:id="@+id/mbn_1">
+        <ImageView android:layout_width="wrap_content" android:layout_height="30dp"
+                   android:src="@mipmap/ic_launcher" android:scaleType="centerInside"
+                   android:id="@+id/mbn_iv1" android:layout_alignParentTop="true"
+                   android:layout_centerHorizontal="true"/>
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true" android:layout_below="@+id/mbn_iv1"
+                  android:text="我的" android:textSize="14sp" android:textColor="#555"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/mbn_2"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+        <ImageView android:layout_width="wrap_content" android:layout_height="30dp"
+                   android:src="@mipmap/ic_launcher" android:scaleType="centerInside"
+                   android:id="@+id/mbn_iv2" android:layout_alignParentTop="true"
+                   android:layout_centerHorizontal="true"/>
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true" android:layout_below="@+id/mbn_iv2"
+                  android:text="我的" android:textSize="14sp" android:textColor="#555"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/mbn_3"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+        <ImageView android:layout_width="wrap_content" android:layout_height="30dp"
+                   android:src="@mipmap/ic_launcher" android:scaleType="centerInside"
+                   android:id="@+id/mbn_iv3" android:layout_alignParentTop="true"
+                   android:layout_centerHorizontal="true"/>
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true" android:layout_below="@+id/mbn_iv3"
+                  android:text="我的" android:textSize="14sp" android:textColor="#555"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/mbn_4"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+        <ImageView android:layout_width="wrap_content" android:layout_height="30dp"
+                   android:src="@mipmap/ic_launcher" android:scaleType="centerInside"
+                   android:id="@+id/mbn_iv4" android:layout_alignParentTop="true"
+                   android:layout_centerHorizontal="true"/>
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true" android:layout_below="@+id/mbn_iv4"
+                  android:text="我的" android:textSize="14sp" android:textColor="#555"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/mbn_5"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+        <ImageView android:layout_width="wrap_content" android:layout_height="30dp"
+                   android:src="@mipmap/ic_launcher" android:scaleType="centerInside"
+                   android:id="@+id/mbn_iv5" android:layout_alignParentTop="true"
+                   android:layout_centerHorizontal="true"/>
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true" android:layout_below="@+id/mbn_iv5"
+                  android:text="我的" android:textSize="14sp" android:textColor="#555"/>
+    </RelativeLayout>
+</LinearLayout>
