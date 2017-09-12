@@ -1,0 +1,2 @@
+记得配置
+<service android:name=".autoupdate.update.UpdateService"></service>
