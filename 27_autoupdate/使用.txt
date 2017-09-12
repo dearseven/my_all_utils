@@ -1,2 +1,12 @@
 记得配置
 <service android:name=".autoupdate.update.UpdateService"></service>
+//使用，先自己先代码判定好是不是要更新
+var autoUpdater: AutoUpdater? = null
+if (autoUpdater == null) {
+    autoUpdater = AutoUpdater.UpdateHelper("更新", "1,***\n2,***  ", "http://app.mi.com/download/2").builder();
+    autoUpdater!!.startUpdate(this);
+}
+参数 1 标题
+     2 更新说明
+     3 APK地址	 
+	
