@@ -1,0 +1,21 @@
+class CalendarTestActivity : AppCompatActivity(), RecyclerViewCalenar.Parent<Any> {
+    override fun getContext(): Context = this@CalendarTestActivity
+
+    override fun findAndroidViewById(id: Int): View {
+        return findViewById(id);
+    }
+
+    override fun clickDate(y: Int, m: Int, d: Int) {
+        val dd = if (d < 10) "0" + d else "" + d
+        val mm = if (m + 1 < 10) "0" + (m + 1) else "" + (m + 1)
+        val date = "$y-$mm-$dd"
+        Toast.makeText(this, date, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_calendar_test)
+        val c=RecyclerViewCalenar(this, R.id.cta_calendar_rv, R.id.cta_lastMonth, R.id.cta_nextMonth, R.id.cta_showYandM)
+    }
+}
+//自己通过改变change**来改变日历的状态
