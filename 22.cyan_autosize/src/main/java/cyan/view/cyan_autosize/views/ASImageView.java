@@ -65,6 +65,8 @@ public class ASImageView extends android.support.v7.widget.AppCompatImageView {
         int sw = ctx.getResources().getDisplayMetrics().widthPixels;
         int sh = ctx.getResources().getDisplayMetrics().heightPixels;
         //获取和基准参数得比值w
+        //获取和基准参数得比值
+        AutoSizeConfigs.resetStandHardWH(ctx);
         float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
         //在计算出应该得w
         int shouldW = new BigDecimal( w* factor).intValue();
@@ -81,6 +83,8 @@ public class ASImageView extends android.support.v7.widget.AppCompatImageView {
         int sw = ctx.getResources().getDisplayMetrics().widthPixels;
         int sh = ctx.getResources().getDisplayMetrics().heightPixels;
         //获取和基准参数得比值w
+        //获取和基准参数得比值
+        AutoSizeConfigs.resetStandHardWH(ctx);
         float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
         //在计算出应该得h
         int shouldH = new BigDecimal(h * factor).intValue();
