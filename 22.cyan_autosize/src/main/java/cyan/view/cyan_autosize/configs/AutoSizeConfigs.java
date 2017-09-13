@@ -24,7 +24,7 @@ public class AutoSizeConfigs {
      */
     public static void resetStandHardWH(Context ctx) {
         Integer[] wh = new Integer[2];
-        float wDh = ctx.getResources().getDisplayMetrics().widthPixels / ctx.getResources().getDisplayMetrics().heightPixels;
+        float wDh = (ctx.getResources().getDisplayMetrics().widthPixels * 1.0f) / (ctx.getResources().getDisplayMetrics().heightPixels * 1.0f);
         if (wDh == 0.5f) {//小米mix2 18:9=0.5
             wh[0] = 1080;
             wh[1] = 2160;
