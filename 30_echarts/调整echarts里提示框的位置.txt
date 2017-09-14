@@ -1,0 +1,30 @@
+http://echarts.baidu.com/option.html#tooltip.position?qq-pf-to=pcqq.group
+
+调整echarts里提示框的位置
+tooltip : {
+trigger : 'axis',
+position : function(pos, params, dom, rect, size) {
+//
+var obj = {
+top : '10%'
+};
+
+if (pos[0] > size.viewSize[0] / 4 * 3) {//鼠标位置大于屏幕宽度4分之三
+obj[[ 'left', 'right' ][+(pos[0] < size.viewSize[0] / 2)]] = pos[0] / 8 * 6;
+} else if (pos[0] >= size.viewSize[0] / 2
+&& pos[0] < size.viewSize[0] / 4 * 3) {
+//largethan equals one half and less than 3/4
+obj[[ 'left', 'right' ][+(pos[0] < size.viewSize[0] / 2)]] = pos[0] / 8 * 7;
+} else {
+obj[[ 'left', 'right' ][+(pos[0] > size.viewSize[0] / 2)]] = pos[0];
+}
+return obj;
+},
+axisPointer : {
+type : 'cross',
+crossStyle : {
+color : '#999'
+}
+}
+}
+通过设置position 进行调整
