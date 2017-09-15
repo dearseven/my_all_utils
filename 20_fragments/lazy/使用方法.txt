@@ -1,0 +1,27 @@
+这个懒切换适合在一个Layout通过点击不同的按钮直接切换fragment而不是viewpager的方式
+Viewpager的方法最好是一开始就在Create中吧所有fragment new好，然后切换的时候只调用自己写的init方法来初始化
+
+1在activity中创建实例
+    private BaseLazyFragment blf = new BaseLazyFragment();
+
+2在activity的OnCreate设置监听器
+ blf.setOnFragmentCreatedListener(this);
+ 
+3在需要切换fragment显示的事件调用
+BaseLazyFragment to = BaseLazyFragment.changeFragment(instance of BaseLazyFragment, instance of OnFragmentCreatedListener, 
+container id, to show fragment.class, tagName);
+会返回fragment，但是不要再这里使用
+
+4在回调中使用
+    @Override
+    public void OnFragmentCreated(BaseLazyFragment fragment) {
+        Map<String, Object> m = Configs.Companion.getMain_fragments().get(fragment.getTag());
+        fragment.intoFragment(m);
+    }
+
+	
+	 override fun intoFragment(vararg args: Any?) {
+       val m: Map<String, Object> = (args[0] as Array<Any>)[0] as Map<String, Object>
+        val tv1 = selfView.findViewById<TextView>(R.id.fmt1_tv)
+        tv1.text = m.get("display") as String
+    }
