@@ -1,4 +1,3 @@
-package cc.m2u.lottery.db.cyansql;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,8 +12,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import cc.m2u.lottery.db.cyansql.sys.Infos;
 
 
 /**

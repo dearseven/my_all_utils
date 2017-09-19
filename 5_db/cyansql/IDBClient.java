@@ -1,4 +1,3 @@
-package cc.m2u.lottery.db.cyansql;
 
 import android.support.annotation.Nullable;
 

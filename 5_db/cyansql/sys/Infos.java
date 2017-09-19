@@ -1,4 +1,3 @@
-package cc.m2u.lottery.db.cyansql.sys;
 
 
 import android.os.Parcel;
