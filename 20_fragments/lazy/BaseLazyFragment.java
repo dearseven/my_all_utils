@@ -84,7 +84,7 @@ public class BaseLazyFragment extends Fragment {
      * @param toFragment        准备显示的fragment的tag
      * @return 子类的实例
      */
-    final public static BaseLazyFragment changeFragment(BaseLazyFragment _this, AppCompatActivity appCompatActivity, int containerId, Class claz, String toFragment) {
+    final public static void changeFragment(BaseLazyFragment _this, AppCompatActivity appCompatActivity, int containerId, Class claz, String toFragment) {
         FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment from = fragmentManager.findFragmentByTag(_this.currentFragmentTag);
@@ -114,7 +114,7 @@ public class BaseLazyFragment extends Fragment {
         }
         _this.currentFragmentTag = toFragment;
         ((BaseLazyFragment) to).listener=_this.listener;
-        return (BaseLazyFragment) to;
+        //return (BaseLazyFragment) to;
     }
 
     public interface OnFragmentCreatedListener {
