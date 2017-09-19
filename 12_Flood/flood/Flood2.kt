@@ -29,6 +29,8 @@ true
  * Created by wx on 2017/6/20.
  */
 class Flood2 {
+
+
     var data: Any? = null
 
     /**
@@ -169,12 +171,13 @@ class Flood2 {
 //        return this;
 //    }
 
-  /**
+
+    /**
      * 方便传结果，其实可以配合SimpleHttp的结果和api的msgCode（我们习惯用这个来表示api的返回状态）来设置flag
      * what用于也许还要传递个其他的什么东西,data在正确的时候肯定是结果，但是如果是错误的时候，也许是一个错误字符串或者是null
      * 这个要看业务逻辑
      */
-    inner class TempResult() {
+    class TempResult() {
         var flag = -1;
         var data: Any? = null
         var what: Any? = null
@@ -183,6 +186,7 @@ class Flood2 {
 
         }
     }
+
 }
 
 
