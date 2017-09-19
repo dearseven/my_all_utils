@@ -1,4 +1,3 @@
-package cc.m2u.lottery.utils
 
 import com.bumptech.glide.load.Options
 import com.bumptech.glide.load.model.*

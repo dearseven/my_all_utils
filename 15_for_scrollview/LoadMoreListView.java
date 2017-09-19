@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import cc.m2u.lotterymerchantside.R;
 
 /**
  * 上拉加载更多
