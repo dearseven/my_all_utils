@@ -2,7 +2,7 @@
 Viewpager的方法最好是一开始就在Create中吧所有fragment new好，然后切换的时候只调用自己写的init方法来初始化
 
 1在activity中创建实例
-    private BaseLazyFragment blf = new BaseLazyFragment();
+ private BaseLazyFragment blf = new BaseLazyFragment();
 
 2在activity的OnCreate设置监听器
  blf.setOnFragmentCreatedListener(this);
@@ -13,13 +13,16 @@ container id, to show fragment.class, tagName);
 会返回fragment，但是不要再这里使用
 
 4在回调中使用
+--Activity
     @Override
     public void OnFragmentCreated(BaseLazyFragment fragment) {
-        Map<String, Object> m = Configs.Companion.getMain_fragments().get(fragment.getTag());
-        fragment.intoFragment(m);
+            if (fragment.getTag().equals(blf.getCurrentFragmentTag())) {
+            Map<String, Object> m = Configs.Companion.getMain_fragments().get(fragment.getTag());
+            fragment.intoFragment(m);
+        }
     }
 
-	
+--instance of Fragment
 	 override fun intoFragment(vararg args: Any?) {
        val m: Map<String, Object> = (args[0] as Array<Any>)[0] as Map<String, Object>
         val tv1 = selfView.findViewById<TextView>(R.id.fmt1_tv)

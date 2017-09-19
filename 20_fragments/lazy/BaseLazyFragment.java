@@ -9,13 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cc.m2u.ifengbigdata.R;
-import cc.m2u.ifengbigdata.activity.base.BaseCompatActivity;
-import cc.m2u.ifengbigdata.utils.DLog;
+
 
 public class BaseLazyFragment extends Fragment {
     protected View selfView = null;
     private String currentFragmentTag;
+
+    public String getCurrentFragmentTag() {
+        return currentFragmentTag;
+    }
 
     /**
      * 是否被hasInited
@@ -58,7 +60,7 @@ public class BaseLazyFragment extends Fragment {
     }
 
     /**
-     * 子类就别重写这个方法了
+     * 子类就别重写这个方法了,或者写一下，调用 return super.onCreateView(inflater, container, savedInstanceState)
      *
      * @param inflater
      * @param container
@@ -68,7 +70,6 @@ public class BaseLazyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        DLog.log(getClass(), "456");
         selfView = inflater.inflate(getLayoutId(), container, false);
         listener.OnFragmentCreated(this);
         return selfView;
@@ -117,14 +118,10 @@ public class BaseLazyFragment extends Fragment {
     }
 
     public interface OnFragmentCreatedListener {
-		/**
-		 *当onCreateView调用后，会回调
-		 */
         void OnFragmentCreated(BaseLazyFragment fragment);
     }
 
     private   OnFragmentCreatedListener listener;
-
 
     public   void setOnFragmentCreatedListener(OnFragmentCreatedListener listener) {
         this.listener = listener;
