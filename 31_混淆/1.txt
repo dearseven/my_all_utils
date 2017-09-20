@@ -1,0 +1,14 @@
+Android Studio 开启混淆
+
+在build.gradle中修改minifyEnabled改为true 
+即可
+
+ buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+	
+	如果找不到aapt.txt
+	把project rebuild一下
