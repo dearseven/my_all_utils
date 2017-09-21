@@ -20,14 +20,16 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
     public boolean onTouch(View v, MotionEvent event) {
         if (v.getId() == R.id.crl_refresh_img_area) {
             if (event.getAction() == 1) {//松开
-                bulb.setImageResource(R.drawable.light_bulb);
-                refreshArrow.setImageResource(R.drawable.refresh);
+                // bulb.setImageResource(R.drawable.light_bulb);
+                refreshArrow.setImageResource(R.drawable.logo_refresh);
                 if (isTouchPointInView(refreshImgArea, (int) event.getRawX(), (int) event.getRawY()) || isTouchPointInView(refreshButton, (int) event.getRawX(), (int) event.getRawY())) {//松开的位置在空间内，刷新
-                    startAnimate();
+                    if (isEnable) {
+                        startAnimate();
+                    }
                 }
             } else {
-                bulb.setImageResource(R.drawable.light_bulb_blue);
-                refreshArrow.setImageResource(R.drawable.refresh_blue);
+                // bulb.setImageResource(R.drawable.light_bulb_blue);
+                refreshArrow.setImageResource(R.drawable.logo_refresh);
             }
             return true;
         }
@@ -47,10 +49,23 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
 
     private CustomRefreshEvent listener = null;
     private RelativeLayout refreshImgArea = null;
-    private ImageView bulb = null;//这个其实是不栋的
-    private ImageView refreshArrow = null;//这个才是转动的
+    private ImageView bulb = null;
+    private ImageView refreshArrow = null;
     private Button refreshButton = null;
     private ValueAnimator va = null;
+    /**
+     * 是否可以触发转动和回调
+     */
+    private boolean isEnable = true;
+
+    /**
+     * 设置是否可以触发转动和回调
+     *
+     * @param enable
+     */
+    public void setEnable(boolean enable) {
+        isEnable = enable;
+    }
 
     public CustomRefreshView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -71,7 +86,9 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
         refreshButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startAnimate();
+                if (isEnable) {
+                    startAnimate();
+                }
             }
         });
     }
