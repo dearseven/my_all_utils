@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.*;
-import cc.m2u.hidrogen.R;
-import cc.m2u.hidrogen.utils.DLog;
+
 
 /**
  * 自定义没有数据的时候的重新刷新view,使用的时候高宽都用match_parent
@@ -48,8 +47,8 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
 
     private CustomRefreshEvent listener = null;
     private RelativeLayout refreshImgArea = null;
-    private ImageView bulb = null;
-    private ImageView refreshArrow = null;
+    private ImageView bulb = null;//这个其实是不栋的
+    private ImageView refreshArrow = null;//这个才是转动的
     private Button refreshButton = null;
     private ValueAnimator va = null;
 

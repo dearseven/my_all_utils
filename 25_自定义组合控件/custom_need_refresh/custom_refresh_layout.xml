@@ -10,12 +10,14 @@
             android:id="@+id/crl_refresh_img_area"
             android:layout_width="150dp" android:layout_height="150dp"
             android:layout_marginTop="50dp">
+			<!-- 不动的小图 -->
         <ImageView
                 android:focusableInTouchMode="false"
                 android:id="@+id/crl_bulb"
                 android:layout_width="54dp" android:layout_height="77dp"
                 android:src="@drawable/light_bulb" android:scaleType="fitXY"
                 android:layout_centerInParent="true"/>
+				<!-- 旋转大图-->
         <ImageView android:focusableInTouchMode="false"
                    android:id="@+id/crl_refresh_arrow"
                    android:layout_width="110dp" android:layout_height="110dp"
