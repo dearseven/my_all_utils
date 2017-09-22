@@ -178,6 +178,7 @@ class Flood2 {
      * 这个要看业务逻辑
      */
     class TempResult() {
+		var httpcode = SimpleHttp.Result.CODE_TIME_OUT
         var flag = -1;
         var data: Any? = null
         var what: Any? = null
