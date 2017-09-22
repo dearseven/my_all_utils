@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.webkit.*;
 
 public class CWebView extends WebView {
+	private String currentUrl = null;
     private boolean loadError = false;
     /**
      * 用于表示当前是谁
@@ -28,6 +29,16 @@ public class CWebView extends WebView {
     @Override
     public String getTag() {
         return tag;
+    }
+	
+	@Override
+    public void loadUrl(String url) {
+        currentUrl = url;
+        super.loadUrl(url);
+    }
+
+    public String getCurrentUrl() {
+        return currentUrl;
     }
 
     public interface CWebViewEventHandler {
@@ -77,6 +88,7 @@ public class CWebView extends WebView {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 if (!loadError) {//当网页加载成功的时候判断是否加载成功
+				    setEnabled(true);
                     cWebViewEventHandler.onPageFinshed(CWebView.this, false);
                 } else { //加载失败的话，初始化页面加载失败的图，然后替换正在加载的视图页面
                     cWebViewEventHandler.onPageFinshed(CWebView.this, true);
