@@ -1,3 +1,4 @@
+package cc.m2u.ifengbigdata.widgets;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -86,6 +87,9 @@ public class CWebView extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+				if (NetWorkTester.getNetState(getContext()) == NetWorkTester.NO_INTERNET) {
+                    loadError = true;
+                }
                 if (!loadError) {//当网页加载成功的时候判断是否加载成功
 				    setEnabled(true);
                     cWebViewEventHandler.onPageFinshed(CWebView.this, false);
