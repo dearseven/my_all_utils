@@ -114,7 +114,7 @@ public class CWebView extends WebView {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 //判断标题 title 中是否包含有“error”字段，如果包含“error”字段，则设置加载失败，显示加载失败的视图
-                if(!TextUtils.isEmpty(title)&&title.toLowerCase().contains("error")){
+                if(!TextUtils.isEmpty(title)||title.toLowerCase().contains("error")){
                     loadError = true;
                 }
             }
