@@ -1,4 +1,4 @@
-
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -15,6 +15,14 @@ public class CSON {
         }
     }
 
+    public CSON(JSONObject obj) {
+        try {
+            js = obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public <T> T getObjectType(String k) {
         try {
@@ -24,9 +32,18 @@ public class CSON {
         }
     }
 
-    public <T> T getObjectType(String k, Class<T> clazz) {
+//    public <T> T getObjectType(String k, Class<T> clazz) {
+//        try {
+//            return (T) js.get(k);
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+
+    public <T> T getSpecificType(String k, Class<T> clazz) {
         try {
-            return (T) js.get(k);
+            Object o = js.get(k);
+            return clazz.cast(o);
         } catch (Exception e) {
             return null;
         }
@@ -63,6 +80,7 @@ public class CSON {
             return false;
         }
     }
+
 
 //    public String getString(String k) {
 //        try {
