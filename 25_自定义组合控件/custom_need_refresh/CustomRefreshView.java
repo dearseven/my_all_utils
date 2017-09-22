@@ -142,4 +142,29 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
         }
         return false;
     }
+	
+	 public void onlyStartAnimate() {
+        if (va == null) {
+            va = ValueAnimator.ofFloat(360f, -1);
+            //va.setInterpolator(new LinearInterpolator());
+            va.setDuration(1500);
+            va.setRepeatMode(Animation.RESTART);
+            va.setRepeatCount(Animation.INFINITE);
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float r = (float) animation.getAnimatedValue();
+                    if (r < 0) {
+                        r = 0;
+                    }
+                    refreshArrow.setRotation(r);
+                }
+            });
+            va.start();
+        }
+    }
+	
+	  public void setText(String str) {
+        refreshButton.setText(str);
+    }
 }
