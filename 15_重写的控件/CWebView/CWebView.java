@@ -1,13 +1,14 @@
-package cc.m2u.ifengbigdata.widgets;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.webkit.*;
 
+
 public class CWebView extends WebView {
-	private String currentUrl = null;
+    private String currentUrl = null;
     private boolean loadError = false;
     /**
      * 用于表示当前是谁
@@ -27,11 +28,6 @@ public class CWebView extends WebView {
     }
 
     @Override
-    public String getTag() {
-        return tag;
-    }
-	
-	@Override
     public void loadUrl(String url) {
         currentUrl = url;
         super.loadUrl(url);
@@ -39,6 +35,11 @@ public class CWebView extends WebView {
 
     public String getCurrentUrl() {
         return currentUrl;
+    }
+
+    @Override
+    public String getTag() {
+        return tag;
     }
 
     public interface CWebViewEventHandler {
@@ -87,11 +88,11 @@ public class CWebView extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-				if (NetWorkTester.getNetState(getContext()) == NetWorkTester.NO_INTERNET) {
+                if (NetWorkTester.getNetState(getContext()) == NetWorkTester.NO_INTERNET) {
                     loadError = true;
                 }
                 if (!loadError) {//当网页加载成功的时候判断是否加载成功
-				    setEnabled(true);
+                    setEnabled(true);
                     cWebViewEventHandler.onPageFinshed(CWebView.this, false);
                 } else { //加载失败的话，初始化页面加载失败的图，然后替换正在加载的视图页面
                     cWebViewEventHandler.onPageFinshed(CWebView.this, true);
@@ -105,14 +106,15 @@ public class CWebView extends WebView {
                 super.onProgressChanged(view, newProgress);
                 cWebViewEventHandler.loadProgress(CWebView.this, newProgress);
             }
-			
-			 /**
+
+            /**
              * 当WebView加载之后，返回 HTML 页面的标题 Title
              * @param view
              * @param title
              */
             @Override
             public void onReceivedTitle(WebView view, String title) {
+                //DLog.log(getClass(),getTag()+",onReceivedTitle ~"+title);
                 //判断标题 title 中是否包含有“error”字段，如果包含“error”字段，则设置加载失败，显示加载失败的视图
                 if(!TextUtils.isEmpty(title)||title.toLowerCase().contains("error")){
                     loadError = true;
