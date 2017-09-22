@@ -172,10 +172,15 @@ class Flood2 {
 //    }
 
 
-    /**
+     /**
      * 方便传结果，其实可以配合SimpleHttp的结果和api的msgCode（我们习惯用这个来表示api的返回状态）来设置flag
      * what用于也许还要传递个其他的什么东西,data在正确的时候肯定是结果，但是如果是错误的时候，也许是一个错误字符串或者是null
      * 这个要看业务逻辑
+     * 不管怎么样，建议
+     * httpcode放simplehttp的交互返回标示,比如SimpleHttp.Result.CODE_TIME_OUT
+     * flag放接口的msgCode
+     * 这样就可以实现两个状态位都有
+     * 
      */
     class TempResult() {
 		var httpcode = SimpleHttp.Result.CODE_TIME_OUT
