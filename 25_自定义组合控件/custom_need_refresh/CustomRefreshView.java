@@ -97,6 +97,7 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
     public void stopAnimate() {
         if (va != null) {
             va.cancel();
+			va=null;
         }
     }
 
