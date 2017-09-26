@@ -32,4 +32,16 @@ class JSONArrToList {
         var ret = lash(list);
         return ret as T
     }
+	
+	
+    fun <T> toForeach(arr: JSONArray, lash: (jsonObj: JSONObject) -> Unit): Unit {
+        var list = ArrayList<JSONObject>(arr.length())
+        for (i in 0..arr.length() - 1) {
+            list.add(arr.getJSONObject(i))
+        }
+        //return list as T
+        list.forEach {
+            lash(it)
+        }
+    }
 }
