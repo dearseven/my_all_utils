@@ -109,13 +109,13 @@ public class CWebView extends WebView {
             public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
                 super.onReceivedHttpError(view, request, errorResponse);
                 // 这个方法在6.0才出现
-                int statusCode = errorResponse.getStatusCode();
+               /* int statusCode = errorResponse.getStatusCode();
                 System.out.println("onReceivedHttpError code = " + statusCode);
                 if (404 == statusCode || 500 == statusCode) {
                     view.loadUrl("about:blank");// 避免出现默认的错误界面
                     //view.loadUrl(mErrorUrl);
                     loadError = true;
-                }
+                }*/
             }
 
             @Override
