@@ -6,7 +6,9 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.webkit.*;
 
-
+/**
+ * 记得调用setCWebViewEventHandler`~~~
+ */
 public class CWebView extends WebView {
     private String currentUrl = null;
     private boolean loadError = false;
@@ -29,6 +31,7 @@ public class CWebView extends WebView {
 
     @Override
     public void loadUrl(String url) {
+        DLog.log(getClass(), "url:" + url);
         currentUrl = url;
         super.loadUrl(url);
     }
@@ -79,10 +82,40 @@ public class CWebView extends WebView {
                 cWebViewEventHandler.onStartLoad(CWebView.this, url);
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                loadError = true;
+                // 断网或者网络连接超时
+                if (error.getErrorCode() == ERROR_HOST_LOOKUP || error.getErrorCode() == ERROR_CONNECT || error.getErrorCode() == ERROR_TIMEOUT) {
+                    view.loadUrl("about:blank"); // 避免出现默认的错误界面
+//                    view.loadUrl(mErrorUrl);
+                    loadError = true;
+                }
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                // 断网或者网络连接超时
+                if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
+                    view.loadUrl("about:blank"); // 避免出现默认的错误界面
+                    loadError = true;
+                }
+            }
+
+            @TargetApi(android.os.Build.VERSION_CODES.M)
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                // 这个方法在6.0才出现
+                int statusCode = errorResponse.getStatusCode();
+                System.out.println("onReceivedHttpError code = " + statusCode);
+                if (404 == statusCode || 500 == statusCode) {
+                    view.loadUrl("about:blank");// 避免出现默认的错误界面
+                    //view.loadUrl(mErrorUrl);
+                    loadError = true;
+                }
             }
 
             @Override
@@ -101,6 +134,7 @@ public class CWebView extends WebView {
         });
 
         setWebChromeClient(new WebChromeClient() {
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -116,8 +150,15 @@ public class CWebView extends WebView {
             public void onReceivedTitle(WebView view, String title) {
                 //DLog.log(getClass(),getTag()+",onReceivedTitle ~"+title);
                 //判断标题 title 中是否包含有“error”字段，如果包含“error”字段，则设置加载失败，显示加载失败的视图
-                if(!TextUtils.isEmpty(title)&&title.toLowerCase().contains("error")){
-                    loadError = true;
+//                if (!TextUtils.isEmpty(title) && title.toLowerCase().contains("error")) {
+//                    loadError = true;
+//                }
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    if (title.contains("404") || title.contains("500") || title.contains("Error")) {
+                        view.loadUrl("about:blank");// 避免出现默认的错误界面
+                        loadError = true;
+                    }
                 }
             }
         });

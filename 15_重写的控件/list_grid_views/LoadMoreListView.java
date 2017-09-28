@@ -8,10 +8,15 @@ import android.widget.ListView;
 
 /**
  * 上拉加载更多
+ * addFooterView和removeFooterView在不性能不好的手机会卡顿
+ * 建议是在页面合适的（比如最下方）做一个textview写一些提示的话，然后通过回调的
+ *         void showLoadAnimate();
+ *      void hideLoadAnimate();
+ * 这两个接口来显示
  * Created by wx on 2017/7/24.
  */
 public class LoadMoreListView extends ListView implements AbsListView.OnScrollListener {
-    private View mFootView;
+      private View mFootView;
     private int mTotalItemCount;//item总数
     private OnLoadMoreListener mLoadMoreListener;
     private boolean mIsLoading = false;//是否正在加载
@@ -22,6 +27,10 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
 
     public interface OnLoadMoreListener {
         void onloadMore();
+
+        void showLoadAnimate();
+
+        void hideLoadAnimate();
     }
 
     public LoadMoreListView(Context context) {
@@ -52,7 +61,8 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
         if (!mIsLoading && scrollState == OnScrollListener.SCROLL_STATE_IDLE//停止滚动
                 && lastVisibleIndex == mTotalItemCount - 1) {//滑动到最后一项
             mIsLoading = true;
-            addFooterView(mFootView);
+            // addFooterView(mFootView);
+            mLoadMoreListener.showLoadAnimate();
             if (mLoadMoreListener != null) {
                 mLoadMoreListener.onloadMore();
             }
@@ -67,9 +77,20 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
     /**
      * loadmore完成，调用这个方法隐藏动画
      */
-    public void setLoadCompleted(){
-        mIsLoading=false;
-        removeFooterView(mFootView);
+    public void setLoadCompleted() {
+        mLoadMoreListener.hideLoadAnimate();
+        mIsLoading = false;
+        //removeFooterView(mFootView);
+    }
+
+    @Override
+    /**
+     * 重写该方法，达到使ListView适应ScrollView的效果
+     */
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
+                MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, expandSpec);
     }
 
 }
