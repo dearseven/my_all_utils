@@ -33,6 +33,7 @@ public class CWebView extends WebView {
     public void loadUrl(String url) {
         DLog.log(getClass(), "url:" + url);
         currentUrl = url;
+		loadError=false;
         super.loadUrl(url);
     }
 
