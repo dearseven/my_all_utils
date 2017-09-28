@@ -169,4 +169,21 @@ public class App extends Application implements Application.ActivityLifecycleCal
         }
         return false;
     }
+	
+	   /**
+     * 关掉activity除了传过来的
+     *
+     * @param activity
+     */
+    public void closeAllActivityExceptMe(Activity activity) {
+        Iterator<Map.Entry<String, AppCompatActivity>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            String key = it.next().getKey();
+            if (!key.equals(activity.getClass().getSimpleName())) {
+                Activity a = map.get(key);
+                a.finish();
+                it.remove();
+            }
+        }
+    }
 }
