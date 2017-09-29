@@ -16,6 +16,9 @@ import android.widget.*;
  * Created by wx on 2017/9/4.
  */
 public class CustomRefreshView extends LinearLayout implements View.OnTouchListener {
+	boolean isAnimating = false;
+	public static long ANIMATION_DURATION=1000;
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (v.getId() == R.id.crl_refresh_img_area) {
@@ -23,7 +26,7 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
                 // bulb.setImageResource(R.drawable.light_bulb);
                 refreshArrow.setImageResource(R.drawable.logo_refresh);
                 if (isTouchPointInView(refreshImgArea, (int) event.getRawX(), (int) event.getRawY()) || isTouchPointInView(refreshButton, (int) event.getRawX(), (int) event.getRawY())) {//松开的位置在空间内，刷新
-                    if (isEnable) {
+                    if (isEnable&&isAnimating == false) {
                         startAnimate();
                     }
                 }
@@ -102,10 +105,11 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
     }
 
     private void startAnimate() {
+		isAnimating = true;
         if (va == null) {
             va = ValueAnimator.ofFloat(360f, -1);
             //va.setInterpolator(new LinearInterpolator());
-            va.setDuration(1500);
+            va.setDuration(ANIMATION_DURATION);
             va.setRepeatMode(Animation.RESTART);
             va.setRepeatCount(Animation.INFINITE);
             va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -118,11 +122,19 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
                     refreshArrow.setRotation(r);
                 }
             });
+			va.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    isAnimating = false;
+					if (listener != null) {
+						listener.whenUserClick();
+					}
+                }
+            });
             va.start();
         }
-        if (listener != null) {
-            listener.whenUserClick();
-        }
+      
     }
 
 
@@ -145,10 +157,11 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
     }
 	
 	 public void onlyStartAnimate() {
+		isAnimating = true;
         if (va == null) {
             va = ValueAnimator.ofFloat(360f, -1);
             //va.setInterpolator(new LinearInterpolator());
-            va.setDuration(1500);
+            va.setDuration(ANIMATION_DURATION);
             va.setRepeatMode(Animation.RESTART);
             va.setRepeatCount(Animation.INFINITE);
             va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -159,6 +172,13 @@ public class CustomRefreshView extends LinearLayout implements View.OnTouchListe
                         r = 0;
                     }
                     refreshArrow.setRotation(r);
+                }
+            });
+            va.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    isAnimating = false;
                 }
             });
             va.start();

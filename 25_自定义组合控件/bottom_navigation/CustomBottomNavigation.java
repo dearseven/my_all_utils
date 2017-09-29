@@ -20,6 +20,8 @@ public class CustomBottomNavigation extends LinearLayout implements View.OnTouch
     private Context ctx;
     private List<NavItem> items;
     private BottomNavigationItemClick listener;
+    private List<RelativeLayout> rls = new ArrayList<RelativeLayout>();
+
 
     public CustomBottomNavigation(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,6 +39,7 @@ public class CustomBottomNavigation extends LinearLayout implements View.OnTouch
             RelativeLayout rl = (RelativeLayout) findViewById(ResourceGetter.getViewID(ctx, "mbn_" + (count)));
             rl.setTag(ni.tag);
             count++;
+			rls.add(rl);
             //
             ImageView iv = (ImageView) rl.getChildAt(0);
             iv.setImageResource(ni.img4Idle);
@@ -82,6 +85,17 @@ public class CustomBottomNavigation extends LinearLayout implements View.OnTouch
         return false;
     }
 
+   public void setCurrentItem(String tag) {
+        for(int i=0;i<rls.size();i++){
+            if(rls.get(i).getTag().equals(tag)){
+                rls.get(i).setBackgroundColor(Color.parseColor("#eeeeee"));
+            }else{
+                rls.get(i).setBackgroundColor(Color.parseColor("#ffffff"));
+
+            }
+        }
+    }
+	
     public static class NavItem {
         /**
          * tag，点击事件会把这个传递回去
