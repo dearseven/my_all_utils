@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/main_into_msg_center"
-        android:icon="@drawable/go_infomation_button"
+        android:id="@+id/device_info_edit"
+        android:icon="@drawable/edit_name_button"
         android:orderInCategory="100"
         android:title=""
         app:showAsAction="always" />

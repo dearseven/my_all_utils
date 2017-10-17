@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/main_into_msg_center"
-        android:icon="@drawable/go_infomation_button"
+        android:id="@+id/main_into_history_msg"
         android:orderInCategory="100"
-        android:title=""
+        android:title="@string/chakanlishixiaoxi"
         app:showAsAction="always" />
 </menu>
