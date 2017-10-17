@@ -15,3 +15,13 @@
             return null;
         }
     }
+	
+	
+	    fun <T> get(k: Any, clz: Class<T>): T? {
+        try {
+            val o = _this.get(k)
+            return clz.cast(o)
+        } catch (e: Exception) {
+            return null
+        }
+    }
