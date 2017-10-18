@@ -39,7 +39,7 @@ public abstract class BeImplNavIconBaseCompatActivity extends AppCompatActivity 
         toolbar.setSubtitle("Sub Title");
         */
         mToolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        // mToolbarSubTitle = (TextView) findViewById(R.id.toolbar_subtitle);
+        mToolbarSubTitle = (TextView) findViewById(R.id.toolbar_subtitle);
 
         //Log.d("intelliCyan",mToolbarTitle+" "+mToolbarSubTitle);
         if (mToolbar != null) {
