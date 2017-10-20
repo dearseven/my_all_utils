@@ -29,18 +29,37 @@ public class UpdateService extends Service {
 
     @Override
     public void onCreate() {
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        filePath = Environment.getExternalStorageDirectory() + "/ttfh_autoupdate/ttfh_update.apk";
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        String folder = Environment.getExternalStorageDirectory() + "/m2u_update/" + getPackageName() + "/";
+        try {//如果存在就删掉
+            File file = new File(folder);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+        } catch (Exception ex) {
+
+        }
+        filePath = folder + "new_version.apk";
+        DLog.log(getClass(), "下载新版本:" + filePath);
+        try {//如果存在就删掉
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception ex) {
+
+        }
         if (intent == null) {
             notifyUser(getString(R.string.update_download_failed), getString(R.string.update_download_failed_msg), 0);
             stopSelf();
         }
         apkURL = intent.getStringExtra("ttfh_main");
-        Debug.iwxdb(getClass(), "下载地址: " + apkURL);
+        DLog.log(getClass(), "下载地址: " + apkURL);
         notifyUser(getString(R.string.update_download_start), getString(R.string.update_download_start), 0);
         startDownload();
         return super.onStartCommand(intent, flags, startId);
@@ -55,12 +74,12 @@ public class UpdateService extends Service {
 
             @Override
             public void onProgressChanged(int progress, String downloadUrl) {
-                Debug.iwxdb(getClass(), "下载ing: " + progress);
+                DLog.log(getClass(), "下载ing: " + progress);
             }
 
             @Override
             public void onFinished(int completeSize, String downloadUrl) {
-                Debug.iwxdb(getClass(), "下载完成: " + filePath);
+                DLog.log(getClass(), "下载完成: " + filePath);
                 File apkFile = new File(filePath);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -71,7 +90,7 @@ public class UpdateService extends Service {
 
             @Override
             public void onFailure() {
-                Debug.iwxdb(getClass(), "下载失败: ");
+                DLog.log(getClass(), "下载失败: ");
                 stopSelf();
             }
         });
@@ -117,3 +136,4 @@ public class UpdateService extends Service {
         return null;
     }
 }
+
