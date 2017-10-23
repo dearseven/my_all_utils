@@ -1,0 +1,61 @@
+修改MIUI
+public static boolean setMiuiStatusBarDarkMode(Activity activity, boolean darkmode) {
+    Class<? extends Window> clazz = activity.getWindow().getClass();
+    try {
+        int darkModeFlag = 0;
+        Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+        Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+        darkModeFlag = field.getInt(layoutParams);
+        Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+        extraFlagField.invoke(activity.getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
+        return true;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+修改Flyme
+public static boolean setMeizuStatusBarDarkIcon(Activity activity, boolean dark) {
+    boolean result = false;
+    if (activity != null) {
+        try {
+            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+            Field darkFlag = WindowManager.LayoutParams.class
+                    .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+            Field meizuFlags = WindowManager.LayoutParams.class
+                    .getDeclaredField("meizuFlags");
+            darkFlag.setAccessible(true);
+            meizuFlags.setAccessible(true);
+            int bit = darkFlag.getInt(null);
+            int value = meizuFlags.getInt(lp);
+            if (dark) {
+                value |= bit;
+            } else {
+                value &= ~bit;
+            }
+            meizuFlags.setInt(lp, value);
+            activity.getWindow().setAttributes(lp);
+            result = true;
+        } catch (Exception e) {
+        }
+    }
+    return result;
+}
+修改Android6.0+
+<style name="statusBarStyle" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+</style>
+
+//找到项目搭建里的Style修改一下
+    <!-- 这个是我修改以后的主题,application要用给这个，不然会报错说有toolbar了 -->
+    <style name="AppTheme.BaseCompat" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
+        <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:listDivider">@drawable/white_devide</item>
+    </style>
+
