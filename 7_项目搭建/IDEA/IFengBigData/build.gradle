@@ -18,6 +18,9 @@ android {
         multiDexEnabled true
 
     }
+	//dataBinding {//每个用到的模块都需要添加,不然会报莫名其妙的问题
+      //  enabled = true
+    //}
     buildTypes {
         release {
             minifyEnabled false
