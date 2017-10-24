@@ -1,4 +1,3 @@
-package cc.m2u.intelliv.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
