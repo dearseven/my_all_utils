@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/_main_menu_search"
+        android:orderInCategory="1"
+        android:title="搜索"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/_add"
+        android:icon="@drawable/_action_add"
+        android:title=""
+        android:orderInCategory="2"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/_createGroup"
+                android:icon="@drawable/_menu_group_chat"
+                android:title="群聊"
+                app:showAsAction="always" />
+            <item
+                android:id="@+id/_addBuddy"
+                android:icon="@drawable/_menu_addbuddy"
+                android:title="添加好友/群"
+                app:showAsAction="always" />
+            <item
+                android:id="@+id/main_qrcode_scan"
+                android:icon="@drawable/_menu_scan"
+                android:title="扫一扫"
+                app:showAsAction="always" />
+            <item
+                android:id="@+id/_qr"
+                android:icon="@drawable/_menu_qrcode"
+                android:title="二维码"
+                app:showAsAction="always" />
+        </menu>
+    </item>
+</menu>
