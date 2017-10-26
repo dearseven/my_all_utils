@@ -1,0 +1,2 @@
+在mainfest.xml中，对那个Activity加：
+<activityandroid:name=".activity.HomeActivity"android:windowSoftInputMode="adjustPan|stateHidden"></activity>
