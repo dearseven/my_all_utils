@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
-import com.vrv.linkdood.R;
 
 import java.util.ArrayList;
 
@@ -93,6 +92,17 @@ public class PermissionAskActivity extends AppCompatActivity {
                 permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             }
 
+			//
+            checkResult = checkSelfPermission(Manifest.permission.READ_PHONE_STATE);
+            if (checkResult != PackageManager.PERMISSION_GRANTED) {
+                permissionList.add(Manifest.permission.READ_PHONE_STATE);
+            }
+
+            //
+            checkResult = checkSelfPermission(Manifest.permission.READ_PHONE_NUMBERS);
+            if (checkResult != PackageManager.PERMISSION_GRANTED) {
+                permissionList.add(Manifest.permission.READ_PHONE_NUMBERS);
+            }
 
             //开始申请权限
             if (permissionList.size() > 0) {
