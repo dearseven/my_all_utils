@@ -1,0 +1,13 @@
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+    signingConfigs {
+        debug {
+            keyAlias '***'
+            keyPassword '***'
+            storeFile file('D:\\keyfiles\\***')
+            storePassword '***'
+        }
+    }
+}
