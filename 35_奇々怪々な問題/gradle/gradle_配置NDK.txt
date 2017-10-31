@@ -1,0 +1,46 @@
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["src/main/jniLibs"]
+        }
+    }
+
+    defaultConfig {
+        applicationId "cc.***"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+        ndk {
+            //设置支持的SO库架构（bugly）
+            abiFilters "armeabi", "armeabi-v7a"//, "x86","arm64-v8a","x86_64"
+        }
+    }
+    dataBinding {//每个用到的模块都需要添加,不然会报莫名其妙的问题
+        enabled = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+    compileOptions {
+        sourceCompatibility rootProject.ext.sourceCompatibility
+        targetCompatibility rootProject.ext.targetCompatibility
+    }
+    lintOptions {// 屏蔽没有英文时报错的问题
+        checkReleaseBuilds false
+//        abortOnError false
+    }
+}
