@@ -23,7 +23,7 @@ import uex.InsertUncatchedException;
 /**
  * Created by wx on 2016/6/15.
  */
-public class CrashHandler implements Thread.UncaughtExceptionHandler, Application.ActivityLifecycleCallbacks {
+public class CrashHandler implements Thread.UncaughtExceptionHandler/*, Application.ActivityLifecycleCallbacks */{
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     public static final String TAG = "CatchExcep";
     App application;
@@ -37,7 +37,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler, Applicatio
     public CrashHandler(App app) {
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         application = app;
-        application.registerActivityLifecycleCallbacks(this);
+        //application.registerActivityLifecycleCallbacks(this);
     }
 
     @Override
@@ -97,19 +97,19 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler, Applicatio
         return true;
     }
 
-    @Override
+    /*@Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        DLog.log(getClass(),"created:"+activity.toString());
+       // DLog.log(getClass(),"created:"+activity.toString());
     }
 
     @Override
     public void onActivityStarted(Activity activity) {
-        DLog.log(getClass(),"started:"+activity.toString());
+       // DLog.log(getClass(),"started:"+activity.toString());
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        DLog.log(getClass(),"resumed:"+activity.toString());
+        //DLog.log(getClass(),"resumed:"+activity.toString());
     }
 
     @Override
@@ -130,5 +130,5 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler, Applicatio
     @Override
     public void onActivityDestroyed(Activity activity) {
         DLog.log(getClass(),"destroyed:"+activity.toString());
-    }
+    }*/
 }
