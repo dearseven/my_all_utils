@@ -56,11 +56,11 @@ public class RecyclerViewCalenar extends RecyclerView.Adapter<RecyclerViewCalena
     /**
      * 上一月
      */
-    private ImageView last;
+    private TextView last;
     /**
      * 下一月
      */
-    private ImageView next;
+    private TextView next;
     /**
      * 显示年月
      */
@@ -84,8 +84,8 @@ public class RecyclerViewCalenar extends RecyclerView.Adapter<RecyclerViewCalena
 
         this.parent = parent;
 
-        this.last = (ImageView) parent.findAndroidViewById(lastId);
-        this.next = (ImageView) parent.findAndroidViewById(nextId);
+        this.last = (TextView) parent.findAndroidViewById(lastId);
+        this.next = (TextView) parent.findAndroidViewById(nextId);
         this.show = (TextView) parent.findAndroidViewById(showId);
 
         this.last.setOnClickListener(this);

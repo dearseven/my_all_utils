@@ -19,3 +19,32 @@ class CalendarTestActivity : AppCompatActivity(), RecyclerViewCalenar.Parent<Any
     }
 }
 //自己通过改变change**来改变日历的状态
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/assitant_add_remind_calendar_show"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.75" />
+
+                <TextView
+                    android:id="@+id/assitant_add_remind_calendar_back"
+                    android:layout_width="0dp" android:text="<" android:gravity="center"
+                    android:layout_height="match_parent" android:textSize="18sp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/assitant_add_remind_calendar_next"
+                    android:layout_width="0dp" android:text=">" android:gravity="center"
+                    android:layout_height="match_parent" android:textSize="18sp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/assitant_add_remind_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
