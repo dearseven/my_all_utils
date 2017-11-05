@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="item"
+            type="app.cyan.cyanalbum.fragment.PhotoBoradFragment.BoardItem" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- image本身不提供对src binding，参见utils包中的ImageViewAttrAdapter，写到代码里就行了，不需要额外的注册什么的~-->
+        <ImageView
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/itemview_photo_board_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@{item.forShowBitmap}" />
+    </RelativeLayout>
+</layout>

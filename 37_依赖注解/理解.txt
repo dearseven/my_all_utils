@@ -1,0 +1,47 @@
+
+1 建立一个android project，里面得android modole app简称A，建立一个java module jap简称B
+B的gradle配置
+
+apply plugin: 'java'
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    dependencies {
+        compile 'com.google.auto.service:auto-service:1.0-rc3'
+        compile 'com.squareup:javapoet:1.9.0'
+    }
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+2 A要引入B  ，compile project(path: ':jap')
+  修改一下配置
+  android{
+    //解决duplicate问题
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+  }
+3 在A中，首先我们一般是要对Activity最自动注入之类的对吧，所以我们定义包叫做finder。
+再一个接口，里面有2个方法，一个返回Context（其实返回Activity比较好把），一个返回View，也就是要注入的View，然后用ActivityFinder实现这个接口。
+其实做这个接口的其实不是一定需要，但是方便在于这样的话就可以把一些判断啊，复杂逻辑还是让我们写起来方便的代码来执行，在注解里会有这个类的实例，然后调用它来获取view
+
+4 接下来我们再一个包叫做helper，写一个接口叫做Injector，然后写BindHelper
+Injector是真的做自动注入的类需要实现的接口，
+BindHelper是给用户调用的，BindHelper调用了Injector的方法的地方，就是开始做自动注入了
+
+6 在B的annotation里，有两个定义的注解
+
+5 在B中的model包里的两个类（BindViewField和OnClickMethod）保存的是某一个被注解了的Activity里面有多少个View或者方法被BindView和OnClick注解的的信息
+
+7 process保重BindViewProcessor主要是辅助生成某一个类（使用了注解的Activity）有多少个BindViewField和OnClickMethod
+
+8 AnnotatedClass的generateFinder是真的执行自动注解
+
+！！ 实际上自动注解并不是会自动执行代码，而是自动写代码
+在AnnotatedClass的74行就调用了Finder的对象，其实这里在Activity调用BindHelper.bind()的方法的时候，这个方法就调用了Injector接口的方法，而我们的自动注解类就是实现了Inject类的实例，所以这样一来就在bind的时候自动进行了view和方法的注入
