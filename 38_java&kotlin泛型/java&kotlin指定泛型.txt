@@ -25,3 +25,19 @@
             return null
         }
     }
+	//--------------------
+	open class Presenter<A : BaseCompatActivity>(_UI: A) {
+    var ui: A? = null
+
+		init {
+			ui = _UI
+		}
+    }
+	如果用java写就是
+	public class Presenter<A extends BaseCompatActivity>{
+		A ui=null;
+		
+		public Presenter(A _UI){
+			ui=_UI;
+		}
+	}
