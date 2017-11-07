@@ -1,0 +1,27 @@
+    public <T> T getObjectType(String k) {
+        try {
+            return (T) map.get(k);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    public <T> T getSpecificType(String k, Class<T> clazz) {
+        try {
+            Object o = map.get(k);
+            return clazz.cast(o);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+	
+	
+	    fun <T> get(k: Any, clz: Class<T>): T? {
+        try {
+            val o = _this.get(k)
+            return clz.cast(o)
+        } catch (e: Exception) {
+            return null
+        }
+    }
