@@ -1,0 +1,27 @@
+如题，我希望实现在切换Fragment时更换Menu，用到了Activity的invalidateOptionsMenu()方法，该方法顾名思义
+贴两段代码：
+[java] view plain copy
+@Override  
+    public boolean onCreateOptionsMenu(Menu menu){  
+        menuInflater= getMenuInflater();  
+        if(cur == 1){  
+            menuInflater.inflate(R.menu.menu_main, menu);  
+        }else{  
+            menuInflater.inflate(R.menu.menu_com, menu);  
+        }  
+        return super.onCreateOptionsMenu(menu);  
+    }  
+
+
+[java] view plain copy
+if(f==1){  
+            cur = 1;  
+            mFragmentManager.beginTransaction().replace(R.id.main_container_layout, groupFragment).commit();  
+            invalidateOptionsMenu();  
+            changeStyle(bottom_group);  
+        }else if(f==2){  
+            cur = 2;  
+            mFragmentManager.beginTransaction().replace(R.id.main_container_layout, qaFragment).commit();  
+            invalidateOptionsMenu();  
+            changeStyle(bottom_qa);  
+        }  
