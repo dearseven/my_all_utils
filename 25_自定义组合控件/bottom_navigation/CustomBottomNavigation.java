@@ -86,12 +86,15 @@ public class CustomBottomNavigation extends LinearLayout implements View.OnTouch
     }
 
    public void setCurrentItem(String tag) {
-        for(int i=0;i<rls.size();i++){
-            if(rls.get(i).getTag().equals(tag)){
-                rls.get(i).setBackgroundColor(Color.parseColor("#eeeeee"));
-            }else{
+        for (int i = 0; i < rls.size(); i++) {
+            if (rls.get(i).getTag().equals(tag)) {
                 rls.get(i).setBackgroundColor(Color.parseColor("#ffffff"));
-
+                ImageView iv = (ImageView) rls.get(i).getChildAt(0);
+                iv .setImageResource( items.get(i).img4Action);
+            } else {
+                rls.get(i).setBackgroundColor(Color.parseColor("#ffffff"));
+                ImageView iv = (ImageView) rls.get(i).getChildAt(0);
+                iv .setImageResource( items.get(i).img4Idle);
             }
         }
     }
