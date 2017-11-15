@@ -72,6 +72,8 @@ dependencies {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
+
 
 android {
     compileSdkVersion 25
@@ -119,5 +121,6 @@ dependencies {
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:recyclerview-v7:25.1.0'
+	// kapt "com.google.dagger:dagger-compiler:$dagger-version"
 }
 
