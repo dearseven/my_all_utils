@@ -1,0 +1,16 @@
+
+Value of type java.lang.String cannot be converted to JSONObject 错误的解决方法，确认JSON数据格式没有问题的前提下，100%是因为UTF-8的BOM头。
+
+    fun clearBOM(jsonStr: String): String {
+        if (jsonStr != null && jsonStr.startsWith("\ufeff")) {
+            return jsonStr.substring(1);
+        }
+        return jsonStr
+    }
+	
+	private fun String.clearBom(): String {
+    if (this != null && this.startsWith("\ufeff")) {
+        this.substring(1);
+    }
+    return this
+}
