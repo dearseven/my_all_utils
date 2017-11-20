@@ -1,0 +1,8 @@
+1 首先这个情况一般是我从服务器上下载了别人的代码到我的STS（eclipse spring）
+
+2 首先可以看一下Maven的lib有没有引入
+   右键项目->Porperties->Deployment Assembly[->如果没有Maven Dependencies则加入]->Add->Java Build Path Entries->然后选择保存
+   
+3 接下来，去本地的maven目录，删除所有jar（先关掉STS），比如我本地的在C:\Users\Administrator\.m2\repository
+
+4 然后等maven下载完，右键项目->Run As->Maven Clean
