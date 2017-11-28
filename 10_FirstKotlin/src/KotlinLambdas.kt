@@ -1,10 +1,12 @@
-package test
+package test 
 
 /**
  * Created by wx on 2017/6/23.
  */
 
 fun main(args: Array<String>) {
+    //初始化数组, {(0+1),(1+1),(2+1)}={1,2,3}
+	val WHEELVALUES = Array(3, { i -> i + 1 })
     //------------聚合操作--------------
     //1 any 如果至少有一个元素与指定条件相符，则返回true。
     val list = listOf(1, 2, 3, 4, 5)
