@@ -9,7 +9,7 @@ import cc.m2u.hidrogen.utils.WeakHandler
  * Created by wx on 2017/11/30.
  */
 class APIClient {
-   object Holder {
+      object Holder {
         val instance = APIClient()
     }
 
@@ -20,9 +20,18 @@ class APIClient {
     }
 
     /**
+     * {"msgCode":"??","errMsg":"..."}俊哥做的api就没有errMsg
      * 执行方法
+     * 调用示例：
+     *
+    APIClient.getInstance().post(APIs.getInstance().getAPI(APIs.USER_DEVICE_SETTING), MapToHttpParam.toParamString(mapOf(
+    "adminId" to adminId, "equipmentId" to equipId, "lang" to lang
+    )), ui!!.h!!, { a, b -> APIClient.getInstance().standhardErrProcess(a, b) { getInfo() } }) { tr ->
+    //成功执行的方法
+    }
+    这个getInfo()其实是处理和api交互的方法，然后errFuc会回调这个方法
      */
-    fun post(url: String, param: String, h: WeakHandler, func: (result: Flood2.TempResult) -> Unit) {
+    fun post(url: String, param: String, h: WeakHandler, errFuc: (result: Flood2.TempResult, h: WeakHandler) -> Unit, sucFuc: (result: Flood2.TempResult) -> Unit) {
         val key = UUID.randomUUID()
         TotalAsynRun.getInstance()._run(Flood2()) {
             it.runSimpleHttp(Configs.RUN_AT_THREAD_TIMEOUT) {
@@ -41,8 +50,30 @@ class APIClient {
                 }
                 temp
             }.runAtUI(h) {
-                func(it._get())
+                val tr = it._get<Flood2.TempResult>()
+                if (tr.httpcode != 0 || tr.flag != 0) {
+                    errFuc(tr, h)
+                } else {
+                    sucFuc(tr)
+                }
             }
+        }
+    }
+
+    fun standhardErrProcess(tr: Flood2.TempResult, h: WeakHandler, func: () -> Unit) {
+        if (tr.httpcode != 0) {
+            AskDialog().showConnectFailed(h.wr.get()!!, {
+                if (it) {
+                    func()
+                }
+            })
+        } else if (tr.flag != 0) {
+            val errMsg = (tr.data as CSON).getSpecificType("errMsg", String::class.java);
+            AskDialog().showAPIFailed(errMsg, h.wr.get()!!, {
+                if (it) {
+                    func()
+                }
+            })
         }
     }
 }
