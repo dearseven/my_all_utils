@@ -9,7 +9,7 @@ import cc.m2u.hidrogen.utils.WeakHandler
  * Created by wx on 2017/11/30.
  */
 class APIClient {
-    object Holder {
+   object Holder {
         val instance = APIClient()
     }
 
@@ -22,13 +22,16 @@ class APIClient {
     /**
      * 执行方法
      */
-    fun post(url: String, param: String, h: Handler, func: (result: Flood2.TempResult) -> Unit) {
+    fun post(url: String, param: String, h: WeakHandler, func: (result: Flood2.TempResult) -> Unit) {
+        val key = UUID.randomUUID()
         TotalAsynRun.getInstance()._run(Flood2()) {
             it.runSimpleHttp(Configs.RUN_AT_THREAD_TIMEOUT) {
+                DLog.log(h.wr.get()!!.javaClass, "${key}请求:$url?$param")
                 SimpleHttp.post(url, param)
             }.runNext(Configs.RUN_AT_THREAD_TIMEOUT, Flood2.TempResult()) {
                 val temp = Flood2.TempResult();
                 val rs = it._get<SimpleHttp.Result>()
+                DLog.log(h.wr.get()!!.javaClass, "${key}返回:$rs")
                 temp.httpcode = rs.returnCode
                 if (rs.returnCode == SimpleHttp.Result.CODE_SUCCESS) {
                     val cson = CSON(rs.retString);
