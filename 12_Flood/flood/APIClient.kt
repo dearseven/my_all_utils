@@ -27,11 +27,13 @@ class APIClient {
     //成功执行的方法
     }
     这个getInfo()其实是处理和api交互的方法，然后errFuc会回调这个方法
+	可以配合loadingView的那个Dialog
      */
     fun post(url: String, param: String, h: WeakHandler, errFuc: (result: Flood2.TempResult, h: WeakHandler) -> Unit, sucFuc: (result: Flood2.TempResult) -> Unit) {
         val key = UUID.randomUUID()
         TotalAsynRun.getInstance()._run(Flood2()) {
             it.runSimpleHttp(Configs.RUN_AT_THREAD_TIMEOUT) {
+				Thread.sleep(750) //这里如果有配合loadingview做一个延迟比较好~让动画转一下
                 DLog.log(h.wr.get()!!.javaClass, "${key}请求:$url?$param")
                 SimpleHttp.post(url, param)
             }.runNext(Configs.RUN_AT_THREAD_TIMEOUT, Flood2.TempResult()) {
