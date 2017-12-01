@@ -23,8 +23,9 @@ class APIClient {
      *
     APIClient.getInstance().post(APIs.getInstance().getAPI(APIs.USER_DEVICE_SETTING), MapToHttpParam.toParamString(mapOf(
     "adminId" to adminId, "equipmentId" to equipId, "lang" to lang
-    )), ui!!.h!!, { a, b -> APIClient.getInstance().standhardErrProcess(a, b) { getInfo() } }) { tr ->
+    )), ui!!.h!!,arrayListOf(adminId,equipId,lang), { tr, h -> APIClient.getInstance().standhardErrProcess(tr, h) { getInfo() } }) { tr ->
     //成功执行的方法
+        var _adminId=it.rawParam!!.get(0) as Int
     }
     这个getInfo()其实是处理和api交互的方法，然后errFuc会回调这个方法
 	可以配合loadingView的那个Dialog,
