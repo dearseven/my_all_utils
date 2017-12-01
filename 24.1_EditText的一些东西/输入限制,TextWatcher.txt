@@ -50,6 +50,12 @@ android:inputType="number"
                     edit.setSelection(1);
                 }
             }
+            //如果最高位是0则去掉
+            if (s.toString().startsWith("0") && s.toString().length() > 1) {
+                edit.setText(s.toString().substring(1));
+                //移动光标位置
+                edit.setSelection(edit.getText().toString().length());
+            }
         }
     }
 	
