@@ -1,0 +1,58 @@
+假设现在我有一个EditView，然后我要限制输入在1-99之内，
+首先：
+android:inputType="number"
+
+其次：
+定义一个TextWatcher
+	public class Less100TextWatcher implements TextWatcher {
+        private EditText edit = null;
+
+        public Less100TextWatcher(EditText edit) {
+            this.edit = edit;
+        }
+
+        int l = 0;////////记录字符串被删除字符之前，字符串的长度
+        int location = 0;//记录光标的位置
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            l = s.length();
+            location = edit.getSelectionStart();
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            Pattern p = Pattern.compile("^(100|[1-9]\\d|\\d)$");
+
+            Matcher m = p.matcher(s.toString());
+            if (m.find() || ("").equals(s.toString())) {
+                System.out.print("OK!");
+            } else {
+                System.out.print("False!");
+                //Toast.makeText(context, "请输入正确的数值", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (s.toString().trim().equals("")) {
+                edit.setText("0");
+                //移动光标位置
+                edit.setSelection(1);
+            } else {
+                if (Integer.parseInt(s.toString()) > 99) {
+                    edit.setText(s.subSequence(0, l));
+                    //移动光标位置
+                    edit.setSelection(edit.getText().toString().length());
+                } else if (Integer.parseInt(s.toString()) < 1) {
+                    edit.setText("1");
+                    //移动光标位置
+                    edit.setSelection(1);
+                }
+            }
+        }
+    }
+	
+最后：
+EditText使用这个TextWatcher
+et1.addTextChangedListener(new Less100TextWatcher(et1));
