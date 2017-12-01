@@ -82,4 +82,31 @@ class APIClient {
             })
         }
     }
+	
+	fun standardErrProcessWithTr(tr: Flood2.TempResult, h: WeakHandler, yes: (tr: Flood2.TempResult) -> Unit, no: (tr: Flood2.TempResult) -> Unit) {
+        if (tr.httpcode != 0) {
+            AskDialog().showConnectFailed(h.wr.get()!!, {
+                if (it) {
+                    yes(tr)
+                } else {
+                    no(tr)
+                }
+            })
+        } else if (tr.flag != 0) {
+            //这一段应后台设计的不同，会有不同的处理，因为这里就是显示错误嘛
+            var errMsg: String? = (tr.data as CSON).getSpecificType("errMsg", String::class.java)
+            if (errMsg == null) {
+                //后台没有带过来错误消息文本，从其他配置文件里去
+                errMsg = errMsgMap[(tr.data as CSON).getSpecificType("msgCode", String::class.java)]
+            }
+            //
+            AskDialog().showAPIFailed(if (errMsg == null) "" else errMsg, h.wr.get()!!, {
+                if (it) {
+                    yes(tr)
+                } else {
+                    no(tr)
+                }
+            })
+        }
+    }
 }
