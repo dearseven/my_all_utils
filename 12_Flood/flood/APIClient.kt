@@ -27,9 +27,10 @@ class APIClient {
     //成功执行的方法
     }
     这个getInfo()其实是处理和api交互的方法，然后errFuc会回调这个方法
-	可以配合loadingView的那个Dialog
+	可以配合loadingView的那个Dialog,
+	rawParam可以存放原始参数，然后这样便于回调的时候处理
      */
-    fun post(url: String, param: String, h: WeakHandler, errFuc: (result: Flood2.TempResult, h: WeakHandler) -> Unit, sucFuc: (result: Flood2.TempResult) -> Unit) {
+    fun post(url: String, param: String, h: WeakHandler,rawParam: ArrayList<Any>?, errFuc: (result: Flood2.TempResult, h: WeakHandler) -> Unit, sucFuc: (result: Flood2.TempResult) -> Unit) {
         val key = UUID.randomUUID()
         TotalAsynRun.getInstance()._run(Flood2()) {
             it.runSimpleHttp(Configs.RUN_AT_THREAD_TIMEOUT) {
@@ -50,6 +51,7 @@ class APIClient {
                 temp
             }.runAtUI(h) {
                 val tr = it._get<Flood2.TempResult>()
+				tr.rawParam = rawParam
                 if (tr.httpcode != 0 || tr.flag != 0) {
                     errFuc(tr, h)
                 } else {

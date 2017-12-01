@@ -187,7 +187,8 @@ class Flood2 {
         var flag = -1;
         var data: Any? = null
         var what: Any? = null
-
+		//可以原始的参数一个一个的放进来，然后带出去，这个是配合APIClient使用
+        var rawParam: ArrayList<Any>? = null
         constructor(flag: Int, Data: Any?, what: Any?) : this() {
 
         }
