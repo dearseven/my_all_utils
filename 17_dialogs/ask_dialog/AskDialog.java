@@ -36,4 +36,38 @@ public class AskDialog {
                 })
                 .show();
     }
+	
+	public void showConnectFailed(final Context ctx, final AnswerListener listener) {
+
+        new AlertDialog.Builder(new ContextThemeWrapper(ctx, R.style.AppTheme_for_input_dialog)).setTitle(R.string.qingqueren).setMessage(R.string.zhuanmentishiwangluoshibai)
+                .setPositiveButton(ctx.getString(R.string.queren), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.answer(true);
+                    }
+                })
+                .setNegativeButton(ctx.getString(R.string.quxiao), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.answer(false);
+                    }
+                })
+                .show();
+    }
+
+    public void showAPIFailed(String str,final Context ctx, final AnswerListener listener) {
+
+        new AlertDialog.Builder(new ContextThemeWrapper(ctx, R.style.AppTheme_for_input_dialog)).setTitle(R.string.qingqueren).setMessage(str+","+ctx.getString(R.string.shifouchongshi))
+                .setPositiveButton(ctx.getString(R.string.queren), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.answer(true);
+                    }
+                })
+                .setNegativeButton(ctx.getString(R.string.quxiao), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.answer(false);
+                    }
+                })
+                .show();
+    }
 }
