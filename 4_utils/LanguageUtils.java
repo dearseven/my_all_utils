@@ -12,6 +12,7 @@ import java.util.Locale;
 
 /**
  * 语言切换工具
+ * 资源文件夹values-en-US,values-zh,values-zh-rCH等
  */
 public class LanguageUtils {
 
