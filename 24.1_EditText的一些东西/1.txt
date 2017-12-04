@@ -27,3 +27,21 @@
 		3限制输入
 		android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:maxLength="20"
+					
+					
+					
+					 <EditText
+                android:id="@+id/alogin_pwd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="3"
+                android:background="@drawable/edit_text_bg_blue"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:hint="@string/mima"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColorHint="@color/text_hint_color"
+                android:windowSoftInputMode="adjustResize" />
