@@ -6,10 +6,16 @@ import org.json.JSONObject;
  */
 public class CSON {
     private JSONObject js = null;
+	private String rawJsonStr=null;
+
+    public String getRawJsonStr() {
+        return rawJsonStr;
+    }
 
     public CSON(String jsonStr) {
         try {
-            js = new JSONObject(jsonStr);
+             rawJsonStr=jsonStr;
+			js = new JSONObject(jsonStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
