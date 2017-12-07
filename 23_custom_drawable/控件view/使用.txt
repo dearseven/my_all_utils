@@ -1,0 +1,7 @@
+				if (Build.VERSION.SDK_INT >= 21) {
+                    vk.pb.progressDrawable = (resources.getDrawable(R.drawable.device_info_progress_bar1, theme))
+                } else {
+                    vk.pb.progressDrawable = resources.getDrawable(R.drawable.device_info_progress_bar1)
+                }
+				
+				theme是直接通过Activity get到的
