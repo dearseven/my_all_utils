@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
     <!-- Base application theme. -->
@@ -9,13 +9,31 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- 给自定义的InputDialog用的. -->
+    <style name="AppTheme_for_input_dialog" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here.
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/black_overlay</item>
+-->
+        <!-- 这里设置背景为透明，为了隐藏边框 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 这里是修改顶部标题背景颜色，具体颜色自己定，可以是图片 -->
+        <item name="android:topDark">@color/white</item>
+        <!-- 这里是修改内容区域背景颜色
+        <item name="android:background">@android:color/white</item>-->
+        <item name="android:centerDark">@color/white</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
     <!-- 这个是我修改以后的主题,application要用给这个，不然会报错说有toolbar了 -->
     <style name="AppTheme.BaseCompat" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
         <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:listDivider">@drawable/white_devide</item>
-		  <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
+        <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:listDivider">@drawable/white_devide</item>
@@ -24,10 +42,10 @@
     <!-- 给toolbar的菜单配置的主题,要记得应用到布局文件的toolbar上 app:theme-->
     <style name="ToolbarPopupTheme" parent="Theme.AppCompat.Light.NoActionBar"><!--@style/ThemeOverlay.AppCompat.Dark-->
         <item name="android:colorBackground">@color/pop_menu_color</item><!-- 弹出菜单的背景颜色-->
-        <item name="android:textColor">#ffffff</item><!-- 弹出菜单的文本颜色-->
-        <item name="actionMenuTextColor">@android:color/white</item><!--右侧alwaysshow的按钮的颜色-->
+        <item name="android:textColor">@color/text_blue1</item><!-- 弹出菜单的文本颜色-->
+        <item name="actionMenuTextColor">@color/text_blue1</item><!--右侧alwaysshow的按钮的颜色-->
         <!--<item name="colorButtonNormal">@android:color/holo_red_dark</item>-->
-        <item name="colorControlNormal">@android:color/white</item><!--右侧的显示颜色-->
+        <item name="colorControlNormal">@color/text_blue1</item><!--右侧的显示颜色-->
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle
         </item> <!--新增一个item，用于控制menu-->
     </style>
@@ -66,9 +84,9 @@
     </style>
 
 
-    <style name="AppTheme.BaseCompat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.BaseCompat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.BaseCompat.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.BaseCompat.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 
     <!--全屏加透明-->
@@ -91,7 +109,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
-		   <!-- -->
+        <!-- -->
         <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
         <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
         <item name="colorAccent">@color/colorAccent</item>
@@ -99,5 +117,25 @@
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:listDivider">@drawable/white_devide</item>
+    </style>
+
+    <!-- Dialog的透明背景 -->
+    <style name="myTransparentDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- dialog style -->
+    <style name="MyDialog" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- <item name="android:backgroundDimEnabled">false</item> -->
+        <item name="android:windowBackground">@drawable/shape_dialog</item>
     </style>
 </resources>

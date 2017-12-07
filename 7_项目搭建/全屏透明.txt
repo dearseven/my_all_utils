@@ -1,0 +1,2 @@
+ 全屏透明参考PermissionAskActivity（//隐藏ActionBarsupportActionBar!!.hide()）
+ 主题用NoTitleTranslucentTheme

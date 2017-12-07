@@ -15,6 +15,10 @@
         <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@drawable/white_devide</item>
+		 <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:listDivider">@drawable/white_devide</item>
     </style>
 
     <!-- 给toolbar的菜单配置的主题,要记得应用到布局文件的toolbar上 app:theme-->
@@ -87,5 +91,13 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
+		   <!-- -->
+        <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
+        <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:listDivider">@drawable/white_devide</item>
     </style>
 </resources>
