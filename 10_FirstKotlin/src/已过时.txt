@@ -1,0 +1,4 @@
+@Deprecated("已过时，被XXXActivity替代")
+class MsgActivity : BaseCompatActivity(){
+	//....
+}
