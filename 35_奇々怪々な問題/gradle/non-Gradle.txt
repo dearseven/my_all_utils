@@ -1,0 +1,6 @@
+Unfortunately you can't have non-Gradle Java modules and Android-Gradle modules in one project.
+
+1. File -> Invalidate Caches / Restart -> Invalidate Caches & Restart. 
+2. Try this if it helps File -> Invalidate Caches / Restart. 
+If it still doesn’t help click on the button in the image. ‘Sync Project with Gradle Files’
+上面的路径我是没找到，我直接按2-3次shift然后搜索的Sync Project with Gradle Files
