@@ -1,0 +1,32 @@
+解决办法：在xml文件中EditText外框架里添加上android:focusable="true" android:focusableInTouchMode="true"，这样问题就解决了。
+<RelativeLayout    
+        android:id="@+id/title"    
+        android:layout_width="fill_parent"    
+        android:layout_height="wrap_content"    
+        android:layout_alignParentLeft="true"    
+        android:layout_alignParentRight="true"    
+        android:layout_alignParentTop="true"    
+        android:background="#F8F8FF"    
+        android:focusable="true"    
+        android:focusableInTouchMode="true"    
+        android:paddingBottom="6dp" >    
+    
+        <EditText    
+            android:id="@+id/search"    
+            android:layout_width="wrap_content"    
+            android:layout_height="wrap_content"    
+            android:layout_alignParentLeft="true"    
+            android:layout_marginLeft="10dp"    
+            android:layout_marginRight="5dp"    
+            android:layout_marginTop="5dp"    
+            android:layout_toLeftOf="@+id/auto_add"    
+            android:background="@drawable/rounded_edittext"    
+            android:drawableLeft="@drawable/search"    
+            android:ems="10"    
+            android:hint="@string/hint_search"    
+            android:imeOptions="actionSearch"    
+            android:inputType="text"    
+            android:singleLine="true"    
+            android:textSize="15sp" >    
+        </EditText>   
+</RelativeLayout>
