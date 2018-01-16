@@ -1,0 +1,28 @@
+--------------ListViewAdapterBase-------------
+			//**初始化adapter
+            if (typeAdapterPower == null) {
+                typeAdapterPower = ListViewAdapterBase(R.layout.itemview_device_filter, object : ListViewAdapterBase.ItemViewKeeper {
+                    override fun createView(i: Int, view: View, any: Any) {
+                        any as ClassifyPower
+                        val tv = view!!.findViewById<TextView>(R.id.iv_df_tv1)
+                        tv.text = any.typeName
+                        view.setOnClickListener {
+                            Toast.makeText(ui!!, tv.text, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }, ui!!)
+            }
+            ui!!.adf_gonglv_type_list.adapter = typeAdapterPower
+            //初始化数据~~这段代码和这个Adapter没有什么关系，
+			//**除了ClassifyPower这个数据类要实现接口ListViewAdapterBase.DataBeanType
+            var powers = ArrayList<ClassifyPower>()
+            val typeArr = (tr.data as CSON).getSpecificType("equipmentType", JSONArray::class.java)
+            JSONArrToList().toForeach(typeArr) {
+                val cp = ClassifyPower()
+                cp.typeId = it.getInt("typeId")
+                cp.typeName = it.getString("typeName")
+                powers.add(cp)
+            }
+            //**让数据显示
+            typeAdapterPower!!.addDatas(powers, true)
+            typeAdapterPower!!.notifyDataSetChanged()
