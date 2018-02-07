@@ -16,6 +16,6 @@ Settings->Bulid,Excution,Deployment->~~
 android {
 	dexOptions {
 		incremental true
-		javaMaxHeapSize "4g" //我是自己加的这个，cyan
+		javaMaxHeapSize "2g" //我是自己加的这个，cyan
 	}
 }
