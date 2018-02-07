@@ -1,0 +1,21 @@
+1,加大分配的内存(我没用，cyan)
+打开Android Studio的安装目录，找到下面的文件进行修改，如图： 
+bin\studio64.exe.vmoptions
+添加或者修改
+-Xms2048m
+-Xmx2048m
+
+2,Android Studio设置自动编译工程
+Settings->Bulid,Excution,Deployment->Complier->Make project automatically(only works while not running/debugging)
+
+3,打开Android Studio的 instant run 功能(我没用，cyan)
+Settings->Bulid,Excution,Deployment->~~
+
+4，打开dex增量编译
+在Module的build.gradle中添加如下代码
+android {
+	dexOptions {
+		incremental true
+		javaMaxHeapSize "4g" //我是自己加的这个，cyan
+	}
+}
