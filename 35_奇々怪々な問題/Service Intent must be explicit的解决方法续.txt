@@ -1,0 +1,9 @@
+在生命intent的时候同时调用setAction和setPackage方法，这样创建出来的intent就是显性的
+
+final Intent intent = new Intent();  
+intent.setAction("com.example.user.firstapp.FIRST_SERVICE");  
+intent.setPackage(this.getPackageName());  
+bindService(intent,conn,Service.BIND_AUTO_CREATE);  
+
+        即设置了intent的action之后还要设置service所在的包名，这里是本地调用，所以用getPackageName()方法就可以获取包名。
+实测有效。
