@@ -1,0 +1,2 @@
+在project的gradle.properties中添加
+android.useDeprecatedNdk=true
