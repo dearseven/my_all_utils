@@ -1,4 +1,3 @@
-package cc.m2u.hidrogen.service;
 
 import android.app.IntentService;
 import android.content.Intent;
