@@ -1,4 +1,3 @@
-package cc.m2u.lottery.utils.ThreadPool;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

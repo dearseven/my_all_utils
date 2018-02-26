@@ -1,4 +1,3 @@
-package cc.m2u.hidrogen.utils;
 
 /**
  * 秒钟转时分秒

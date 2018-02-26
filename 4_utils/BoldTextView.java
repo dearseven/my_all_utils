@@ -1,4 +1,3 @@
-package cc.m2u.ifengbigdata.widgets;
 
 import android.content.Context;
 import android.graphics.Canvas;

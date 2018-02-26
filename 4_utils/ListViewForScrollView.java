@@ -1,4 +1,3 @@
-package com.teetaa.fmclock.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
