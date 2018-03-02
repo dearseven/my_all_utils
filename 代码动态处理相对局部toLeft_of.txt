@@ -1,0 +1,11 @@
+			if (selectId == position) {
+                RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) vh.tvName.getLayoutParams();
+                rlp.addRule(RelativeLayout.LEFT_OF, R.id.show_iv);
+                vh.tvName.setLayoutParams(rlp);
+                vh.ivName.setVisibility(View.VISIBLE);
+            } else {
+                RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) vh.tvName.getLayoutParams();
+                rlp.addRule(RelativeLayout.LEFT_OF);
+                vh.tvName.setLayoutParams(rlp);
+                vh.ivName.setVisibility(View.INVISIBLE);
+            }
