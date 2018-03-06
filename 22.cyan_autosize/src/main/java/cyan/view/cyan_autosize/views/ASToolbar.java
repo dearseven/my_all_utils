@@ -1,4 +1,4 @@
-package cyan.view.cyan_autosize.views;
+package com.teetaa.autosize.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,8 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
-import cyan.view.cyan_autosize.R;
-import cyan.view.cyan_autosize.configs.AutoSizeConfigs;
+
+import com.teetaa.autosize.R;
+import com.teetaa.autosize.configs.AutoSizeConfigs;
 
 import java.math.BigDecimal;
 
@@ -43,7 +44,8 @@ public class ASToolbar extends Toolbar {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (w != -1f && h != -1f) {//==-1就是表示不重新计算大小
-            setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+            // setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+            super.onMeasure(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
         } else if (w == -1f && h != -1f) {
             //setMeasuredDimension(widthMeasureSpec, measureHeight(heightMeasureSpec));
             super.onMeasure(widthMeasureSpec, measureHeight(heightMeasureSpec));
@@ -67,10 +69,10 @@ public class ASToolbar extends Toolbar {
         //获取和基准参数得比值w
         //获取和基准参数得比值
         AutoSizeConfigs.resetStandHardWH(ctx);
-        float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
+        float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) /*+ (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)*/) /*/ 2*/;
         //在计算出应该得w
-        int shouldW = new BigDecimal( w* factor).intValue();
-        result=MeasureSpec.makeMeasureSpec(shouldW,MeasureSpec.EXACTLY);
+        int shouldW = new BigDecimal(w * factor).intValue();
+        result = MeasureSpec.makeMeasureSpec(shouldW, MeasureSpec.EXACTLY);
         return result;
     }
 
@@ -85,15 +87,12 @@ public class ASToolbar extends Toolbar {
         //获取和基准参数得比值w
         //获取和基准参数得比值
         AutoSizeConfigs.resetStandHardWH(ctx);
-        float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
+        float factor = (/*(sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + */(sh * 1.0f / AutoSizeConfigs.STANDHARD_H))/* / 2*/;
         //在计算出应该得h
         int shouldH = new BigDecimal(h * factor).intValue();
-        result=MeasureSpec.makeMeasureSpec(shouldH,MeasureSpec.EXACTLY);
+        result = MeasureSpec.makeMeasureSpec(shouldH, MeasureSpec.EXACTLY);
         return result;
     }
-
-
-
 
 
 }

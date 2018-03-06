@@ -1,4 +1,4 @@
-package cyan.view.cyan_autosize.layouts;
+package com.teetaa.autosize.layouts;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,8 +7,10 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.FrameLayout;
-import cyan.view.cyan_autosize.R;
-import cyan.view.cyan_autosize.configs.AutoSizeConfigs;
+
+
+import com.teetaa.autosize.R;
+import com.teetaa.autosize.configs.AutoSizeConfigs;
 
 import java.math.BigDecimal;
 
@@ -44,7 +46,8 @@ public class ASFrameLayout extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (w != -1f && h != -1f) {//==-1就是表示不重新计算大小
-            setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+            //setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+            super.onMeasure(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
         } else if (w == -1f && h != -1f) {
             //setMeasuredDimension(widthMeasureSpec, measureHeight(heightMeasureSpec));
             super.onMeasure(widthMeasureSpec, measureHeight(heightMeasureSpec));
@@ -67,7 +70,8 @@ public class ASFrameLayout extends FrameLayout {
         int sh = ctx.getResources().getDisplayMetrics().heightPixels;
         //获取和基准参数得比值
         AutoSizeConfigs.resetStandHardWH(ctx);
-        float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
+        //float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
+        float factor = (sw * 1.0f / AutoSizeConfigs.STANDHARD_W);
         //在计算出应该得w
         int shouldW = new BigDecimal(w * factor).intValue();
         result = MeasureSpec.makeMeasureSpec(shouldW, MeasureSpec.EXACTLY);
@@ -85,7 +89,8 @@ public class ASFrameLayout extends FrameLayout {
         //获取和基准参数得比值w
         //获取和基准参数得比值
         AutoSizeConfigs.resetStandHardWH(ctx);
-        float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
+        //float factor = ((sw * 1.0f / AutoSizeConfigs.STANDHARD_W) + (sh * 1.0f / AutoSizeConfigs.STANDHARD_H)) / 2;
+        float factor = (sh * 1.0f / AutoSizeConfigs.STANDHARD_H);
         //在计算出应该得h
         int shouldH = new BigDecimal(h * factor).intValue();
         result = MeasureSpec.makeMeasureSpec(shouldH, MeasureSpec.EXACTLY);
