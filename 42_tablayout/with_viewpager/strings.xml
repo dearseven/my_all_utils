@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name"></string>
+    <string name="activity_label_index">首页</string>
+    <string name="activity_me_myinfo">个人信息</string>
+    <string name="activity_me_head_icon">头像</string>
+    <string name="activity_me_my_id">ID</string>
+    <string name="activity_me_my_nick">昵称</string>
+    <string name="activity_me_identity">身份认证</string>
+    <string name="activity_me_user_type">用户类型</string>
+    <string name="activity_me_driver_s_license">驾驶证</string>
+    <string name="activity_me_qr_code">二维码</string>
+    <string name="activity_orders_label">订单管理</string>
+    <array name="order_manage_tabs">
+        <item>全部</item>
+        <item>进行中</item>
+        <item>待支付</item>
+        <item>已完成</item>
+    </array>
+</resources>
