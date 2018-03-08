@@ -13,7 +13,8 @@
             name: 代表定义在Content中的字段 eg：name = "myimages" ，并且请求的内容的文件名为default_image.jpg
                 则 返回一个URI   content://com.example.myapp.fileprovider/myimages/default_image.jpg
     -->
-    <!--当path 为空时 5个全配置就可以解决-->
+    <!--当path 为空时 5个全配置就可以解决
+	如果有的说不能为空就填入pic/for_upload/，因为PicTake..java代码里用的这个-->
     <!--下载apk-->
     <external-path path="" name="sdcard_files" />
     <!--相机相册裁剪-->

@@ -209,7 +209,7 @@ public class PicTakeNotClip {
                                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                     intent.addCategory(Intent.CATEGORY_OPENABLE);
                                     intent.setType("image/*");
-                                    Uri uriForFile = FileProvider.getUriForFile(activity, "cc.m2u.lotterymerchantside.fileprovider", temp);
+                                    Uri uriForFile = FileProvider.getUriForFile(activity, "权限字符串！", temp);
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
                                     intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

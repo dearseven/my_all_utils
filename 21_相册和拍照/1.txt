@@ -3,7 +3,7 @@
 ...
      <provider
                 android:name="android.support.v4.content.FileProvider"
-                android:authorities="cc.m2u.lotterymerchantside.fileprovider"//记得修改这个权限代码里使用的时候要用这个值
+                android:authorities="cc.xxxx.fileprovider"//记得修改这个权限代码里使用的时候要用这个值
                 android:exported="false"
                 android:grantUriPermissions="true">
         <meta-data
@@ -35,4 +35,6 @@
     <external-files-path   path="" name="camera_has_sdcard"/>
     <files-path path=""     name="camera_no_sdcard"/>
 </paths>
+
+3 大概在PicTaker...java的210多行有一段FileProvider.getUriForFile(...)记得修改他的权限代码
 
