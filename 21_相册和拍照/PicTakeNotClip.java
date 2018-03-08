@@ -1,4 +1,3 @@
-package cc.m2u.lotterymerchantside.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
