@@ -3,7 +3,7 @@
 ...
      <provider
                 android:name="android.support.v4.content.FileProvider"
-                android:authorities="cc.xxxx.fileprovider"//记得修改这个权限代码里使用的时候要用这个值
+                android:authorities="cc.xxxx.fileprovider"//######################记得修改这个权限代码里使用的时候要用这个值
                 android:exported="false"
                 android:grantUriPermissions="true">
         <meta-data
@@ -30,11 +30,22 @@
     -->
     <!--当path 为空时 5个全配置就可以解决-->
     <!--下载apk-->
-    <external-path path="" name="sdcard_files" />
+    <root-path
+        name="root_path"
+        path="." />
+    <external-path
+        name="sdcard_files"
+        path="pic/for_temp//" />
     <!--相机相册裁剪-->
-    <external-files-path   path="" name="camera_has_sdcard"/>
-    <files-path path=""     name="camera_no_sdcard"/>
+    <external-files-path
+        name="camera_has_sdcard"
+        path="pic/for_temp/" />
+    <files-path
+        name="camera_no_sdcard"
+        path="pic/for_temp/" />
 </paths>
+这里用pic/for_temp/是因为代码里就是用这个目录啊~
 
+//######################
 3 大概在PicTaker...java的210多行有一段FileProvider.getUriForFile(...)记得修改他的权限代码
 
