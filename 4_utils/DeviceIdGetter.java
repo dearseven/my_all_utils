@@ -44,6 +44,7 @@ public class DeviceIdGetter {
                             if (!"9774d56d682e549c".equals(androidId)) {
                                 uuid = UUID.nameUUIDFromBytes(androidId.getBytes("utf8"));
                             } else {
+								//需要check权限 Manifest.permission.READ_PHONE_STATE
                                 final String deviceId = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
                                 uuid = deviceId != null ? UUID.nameUUIDFromBytes(deviceId.getBytes("utf8")) : UUID.randomUUID();
                             }
@@ -58,7 +59,12 @@ public class DeviceIdGetter {
     }
 
 
-    public UUID getDeviceUuid() {
-        return uuid;
+     public String getDeviceUuidStr(Context ctx) {
+        if (uuid != null)
+            return uuid.toString();
+        else {
+            DeviceIdGetter d = new DeviceIdGetter(ctx);
+            return uuid.toString();
+        }
     }
 }
