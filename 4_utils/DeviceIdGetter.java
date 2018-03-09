@@ -59,12 +59,31 @@ public class DeviceIdGetter {
     }
 
 
-     public String getDeviceUuidStr(Context ctx) {
+     /**
+     * 这个代码可以在有上下问的环境里调用
+     *
+     * @param ctx
+     * @return
+     */
+    public static String getDeviceUuidStr(Context ctx) {
         if (uuid != null)
             return uuid.toString();
         else {
             DeviceIdGetter d = new DeviceIdGetter(ctx);
             return uuid.toString();
         }
+    }
+
+    /**
+     * 这个代码在没有环境里调用，
+     * ###!!!!!!####!!!但是记得在Application中先调用过一次初始化这个类~~~
+     *
+     * @return
+     */
+    public static String getDeviceUuidStr() {
+        if (uuid != null)
+            return uuid.toString();
+        else
+            return "";
     }
 }
