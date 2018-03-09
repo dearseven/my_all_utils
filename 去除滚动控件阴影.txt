@@ -1,0 +1,16 @@
+一、删除滚动控件(比如android ScrollView)边界阴影方法方法
+
+1） 在xml中添加：android:fadingEdge=”none” 
+2） 代码中添加：ScrollView.setHorizontalFadingEdgeEnabled(false);
+
+二、删除ScrollView拉到尽头（顶部、底部），然后继续拉出现的阴影效果
+    适用于2.3及以上的 否则不用设置
+    android:overScrollMode="never"
+	
+############不过我发现################
+
+<ScrollView
+            android:requiresFadingEdge="none"
+            android:fadingEdge="none"
+            android:overScrollMode="never">
+就这样也可以~

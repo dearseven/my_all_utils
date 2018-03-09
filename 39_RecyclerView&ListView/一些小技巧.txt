@@ -1,0 +1,5 @@
+1 RecyclerView适配ScrollView
+	在RcyclerView中添加android:nestedScrollingEnabled="false"
+	不过这种情况item的高度必须确定哦
+	而且inflate的时候记得用inflater!!.inflate(resLayout!!, parent, false)的构造方法
+2 
