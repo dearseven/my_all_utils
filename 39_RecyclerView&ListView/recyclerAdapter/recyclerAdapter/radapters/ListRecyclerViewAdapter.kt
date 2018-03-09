@@ -19,37 +19,34 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ViewKeeper> {
     var resLayout: Int? = null
     var inflater: LayoutInflater? = null
 
-    override fun getItemCount(): Int = datas.size
+    override fun getItemCount(): Int = datas!!.size
 
     override fun onBindViewHolder(holder: ViewKeeper?, position: Int) {
-        callBack!!.viewCreate(holder, position, datas)
+        callBack!!.viewCreate(holder, position, datas!!)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewKeeper {
         return ViewKeeper(inflater!!.inflate(resLayout!!, parent, false))
     }
 
+    var datas: ArrayList<Any>? = null
 
-    val datas by lazy {
-        ArrayList<Any>()
-    }
-
-    /**
-     * 添加数据
-     */
-    fun addDatas(datas: ArrayList<out Any>, isAppend: Boolean) {
-        if (!isAppend) {
-            this.datas.clear()
-        }
-        datas.forEach {
-            this.datas.add(it)
-        }
-    }
+//    /**
+//     * 添加数据
+//     */
+//    fun addDatas(datas: ArrayList<out Any>, isAppend: Boolean) {
+//        if (!isAppend) {
+//            this.datas.clear()
+//        }
+//        datas.forEach {
+//            this.datas.add(it)
+//        }
+//    }
 
     fun remove(int: Int) {
-        this.datas.remove(this.datas[int])
+        this.datas!!.remove(this.datas!![int])
         notifyItemRemoved(int)
-        notifyItemRangeChanged(0, this.datas.size);
+        notifyItemRangeChanged(0, this.datas!!.size);
     }
 
     /**
@@ -63,7 +60,8 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ViewKeeper> {
         this.callBack = callBackFunc
 
         //
-        view.setLayoutManager(LinearLayoutManager(ctx))
+        val linearLayoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
+        view.setLayoutManager(linearLayoutManager)
         view.addItemDecoration(DividerGridItemDecoration(ctx))
         view.itemAnimator = DefaultItemAnimator()
     }

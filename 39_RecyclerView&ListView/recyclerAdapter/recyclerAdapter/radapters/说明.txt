@@ -1,0 +1,1 @@
+List的Adapter才是新版，区别在与把Adapter内部的data直接引用了外面的，这样方便就不用维护两套数据了
