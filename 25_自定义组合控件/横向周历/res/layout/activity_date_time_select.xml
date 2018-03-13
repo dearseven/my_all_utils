@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tb"
+        layout="@layout/base_toolbar"></include>
+    <!-- 日期区域-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/aDateTimeSelectPreMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/aDateTimeSelectYM"
+            android:background="@drawable/button_bg_lucid_lucid"
+            android:src="@drawable/left_arrow_gray" />
+
+        <TextView
+            android:id="@+id/aDateTimeSelectYM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="4dp"
+            android:text="2018年3月"
+            android:textColor="@color/middle_black"
+            android:textSize="16sp" />
+
+
+        <ImageButton
+            android:id="@+id/aDateTimeSelectNextMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/aDateTimeSelectYM"
+            android:background="@drawable/button_bg_lucid_lucid"
+            android:src="@drawable/right_arrow_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageButton
+            android:id="@+id/aDateTimeSelectLeftArrow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:background="@drawable/button_bg_lucid_lucid"
+            android:src="@drawable/left_arrow_gray" />
+
+        <ImageButton
+            android:id="@+id/aDateTimeSelectRightArrow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/button_bg_lucid_lucid"
+            android:src="@drawable/right_arrow_gray" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/aDateTimeSelectWeekCalander"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/aDateTimeSelectRightArrow2"
+            android:layout_toRightOf="@+id/aDateTimeSelectLeftArrow2"></android.support.v4.view.ViewPager>
+    </RelativeLayout>
+    <!-- 时间区域&结果显示区域
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/base_time"
+        android:textColor="@color/middle_black"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:background="#81A"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:background="#56a"></RelativeLayout>
+    </RelativeLayout>-->
+</LinearLayout>
