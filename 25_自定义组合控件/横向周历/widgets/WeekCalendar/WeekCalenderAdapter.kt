@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.sun.jna.win32.DLLCallback
 
 import kotlinx.android.synthetic.main.date_select_item_layout.view.*
 import java.lang.ref.WeakReference
@@ -19,7 +18,7 @@ import java.util.*
  * Created by wx on 2018/3/12.
  */
 class WeekCalenderAdapter : PagerAdapter {
-    private val TOTAL_WEEKS = 27 //初始化数据的总周数，也是总页面数
+    private val TOTAL_WEEKS = 52 * 3 //初始化数据的总周数，也是总页面数
     //当前所在的页面
     private var currentPage = 0
     //所中的索引所在的页面
@@ -299,13 +298,18 @@ class WeekCalenderAdapter : PagerAdapter {
      */
     fun preMonth(vp: ViewPager) {
         val wb = dates[currentPage]
-        val m = wb.m //找到第一个比这个小1的就行了
-        //var index = -1
-        for (i in 0..dates.size - 1) {
-            if (m - dates[i].m == 1) {
-                //找到了，显示
+        val m = wb.m
+        for (i in 0..currentPage - 1) {
+            val _wb = dates[i]
+            val _m = _wb.m
+            if (m == 1 && _m == 12 && wb.y - _wb.y == 1) {//当前月是1的话，那么前置月是12
                 vp.setCurrentItem(i, true)
-                break;
+                break
+            } else {
+                if (m - _m == 1&& wb.y == _wb.y ) {//普通情况就是比当前月小1
+                    vp.setCurrentItem(i, true)
+                    break
+                }
             }
         }
     }
@@ -317,11 +321,17 @@ class WeekCalenderAdapter : PagerAdapter {
         val wb = dates[currentPage]
         val m = wb.m //找到第一个比这个大1的就行了
         //var index = -1
-        for (i in 0..dates.size - 1) {
-            if (dates[i].m - m == 1) {
-                //找到了，显示
+        for (i in currentPage..dates.size - 1) {
+            val _wb = dates[i]
+            val _m = _wb.m
+            if (m == 12 && _m == 1) {//当前月是12的话，那么后置月是1
                 vp.setCurrentItem(i, true)
-                break;
+                break
+            } else {
+                if (_m - m == 1) {//普通情况就是比当前月大1
+                    vp.setCurrentItem(i, true)
+                    break
+                }
             }
         }
     }
