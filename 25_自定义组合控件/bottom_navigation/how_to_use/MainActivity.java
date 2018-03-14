@@ -32,6 +32,7 @@ public class MainActivity extends BaseCompatActivity implements CustomBottomNavi
         items.add(new CustomBottomNavigation.NavItem("tag5", "j哥", R.mipmap.ic_launcher, R.drawable.white_devide,
                 Color.parseColor("#222222"), Color.parseColor("#CC5588")));
         bottomNavigation.initViews(items,this);
+		bottomNavigation.setCurrentItem(items.get(0).tag)
     }
 
     @Override
@@ -57,5 +58,7 @@ public class MainActivity extends BaseCompatActivity implements CustomBottomNavi
     @Override
     public void onBottomNavigationItemClick(String tag) {
         Toast.makeText(this, tag, Toast.LENGTH_SHORT).show();
+		bottomNavigation.setCurrentItem(tag);
+
     }
 }

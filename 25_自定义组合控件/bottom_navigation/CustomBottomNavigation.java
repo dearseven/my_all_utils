@@ -1,5 +1,6 @@
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -8,8 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import cc.m2u.ifengbigdata.R;
 
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class CustomBottomNavigation extends LinearLayout implements View.OnTouch
             RelativeLayout rl = (RelativeLayout) findViewById(ResourceGetter.getViewID(ctx, "mbn_" + (count)));
             rl.setTag(ni.tag);
             count++;
-			rls.add(rl);
+            rls.add(rl);
             //
             ImageView iv = (ImageView) rl.getChildAt(0);
             iv.setImageResource(ni.img4Idle);
@@ -85,20 +87,31 @@ public class CustomBottomNavigation extends LinearLayout implements View.OnTouch
         return false;
     }
 
-   public void setCurrentItem(String tag) {
+    /**
+     * 要手动调用这个方法来标示选中的为谁！
+     * 有2处地方
+     * 1 当初始化以后，要把第一个置为选中
+     * 2 当回调BottomNavigationItemClick接口的方法以后，要把回调的tag再通过这个方法传回来，设置选中
+     * @param tag
+     */
+    public void setCurrentItem(String tag) {
         for (int i = 0; i < rls.size(); i++) {
             if (rls.get(i).getTag().equals(tag)) {
                 rls.get(i).setBackgroundColor(Color.parseColor("#ffffff"));
                 ImageView iv = (ImageView) rls.get(i).getChildAt(0);
-                iv .setImageResource( items.get(i).img4Action);
+                iv.setImageResource(items.get(i).img4Action);
+                TextView tv = (TextView) rls.get(i).getChildAt(1);
+                tv.setTextColor(items.get(i).color4Action);
             } else {
                 rls.get(i).setBackgroundColor(Color.parseColor("#ffffff"));
                 ImageView iv = (ImageView) rls.get(i).getChildAt(0);
-                iv .setImageResource( items.get(i).img4Idle);
+                iv.setImageResource(items.get(i).img4Idle);
+                TextView tv = (TextView) rls.get(i).getChildAt(1);
+                tv.setTextColor(items.get(i).color4Idle);
             }
         }
     }
-	
+
     public static class NavItem {
         /**
          * tag，点击事件会把这个传递回去
