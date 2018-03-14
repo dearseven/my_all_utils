@@ -10,7 +10,6 @@ import android.view.View
  * Created by wx on 2018/3/14.
  */
 class  SampleLazyFragmentImpl : ILazyLoadFragment() {
-    protected val FRAGMENT_INDEX = "fragment_index"
     protected var mFragmentView: View? = null
 
     protected var mCurIndex = -1
@@ -53,29 +52,33 @@ class  SampleLazyFragmentImpl : ILazyLoadFragment() {
         _layoutId = index
     }
 
-    /**
-     * 创建新实例
-     *
-     * @param index
-     * @param bundle
-     * @param c,要被创建的fragment的类
-     * @return
-     */
-    fun newInstance(index: Int, bundle: Bundle, c: Class<*>, layoutId: Int): ILazyLoadFragment {
-        bundle.putInt(FRAGMENT_INDEX, index)
-        var fragment: ILazyLoadFragment? = null
-        try {
-            fragment = c.newInstance() as ILazyLoadFragment
-        } catch (e: java.lang.InstantiationException) {
-            e.printStackTrace()
-        } catch (e: IllegalAccessException) {
-            e.printStackTrace()
-        }
+    companion object {
+        protected val FRAGMENT_INDEX = "fragment_index"
 
-        fragment!!.setLayoutId(layoutId)
-        fragment.fragmentIndex = index
-        fragment.arguments = bundle
-        return fragment
+        /**
+         * 创建新实例
+         *
+         * @param index
+         * @param bundle
+         * @param c,要被创建的fragment的类
+         * @return
+         */
+        fun newInstance(index: Int, bundle: Bundle, c: Class<*>, layoutId: Int): ILazyLoadFragment {
+            bundle.putInt(FRAGMENT_INDEX, index)
+            var fragment: ILazyLoadFragment? = null
+            try {
+                fragment = c.newInstance() as ILazyLoadFragment
+            } catch (e: java.lang.InstantiationException) {
+                e.printStackTrace()
+            } catch (e: IllegalAccessException) {
+                e.printStackTrace()
+            }
+
+            fragment!!.setLayoutId(layoutId)
+            fragment.fragmentIndex = index
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
