@@ -1,0 +1,29 @@
+  今天有个项目维护的好好的忽然维护不过去
+  发现说styte-v28.xml（大概是这个名字）找不到一个属性的值
+  但是我的环境一直是26，怎么会去28呢
+   compileSdkVersion 26
+    defaultConfig {
+        applicationId "*"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+	然后在gradle的dependencies中的一行报错，
+	鼠标移上去说
+	All com.android.support libraries must use the exact same 
+	version specification (mixing versions can lead to runtime crashes).
+	Found versions 28.0.0-alpha1,27.0.0.
+	Examples include com.android.support:asynclayoutinflater:28.0.0-alpha1 
+	and com.android.support:animated-vector-drawable:26.0.0.
+	找了半天不知道原因后来我发现在这一大胆里，隐藏了一个小东西就是那个design的依赖我没有显示26+，而是用的+
+	implementation 'com.android.support:appcompat-v7:26+'
+    implementation 'com.android.support:recyclerview-v7:26+'
+    implementation 'com.android.support:design:+'
+    implementation 'com.android.support:support-v4:26+'
+	改成
+	implementation 'com.android.support:design:26+'
+	就不会出问题了，因为没有限制26+就去哪最新的28里面的东西了~
+
+
