@@ -1,0 +1,56 @@
+这是在21以后的效果
+首先建立一个drawable-v21
+为了兼容21以前显示普通的效果首先我们建立一个普通的背景的xml放在drawable
+名字叫做 bg_1.xml
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 按下状态 -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#4888" />
+
+            <stroke android:width="1dp" android:color="#4888" />
+
+            <corners android:bottomLeftRadius="7.5dp" android:bottomRightRadius="7.5dp" android:topLeftRadius="7.5dp" android:topRightRadius="7.5dp" />
+        </shape>
+    </item>
+    <!-- 焦点状态 -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#4888" />
+
+            <stroke android:width="1dp" android:color="#4888" />
+
+            <corners android:bottomLeftRadius="7.5dp" android:bottomRightRadius="7.5dp" android:topLeftRadius="7.5dp" android:topRightRadius="7.5dp" />
+        </shape>
+    </item>
+    <!-- 初始状态 -->
+    <item>
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#0000" />
+
+            <stroke android:width="1dp" android:color="#4888" />
+
+            <corners android:bottomLeftRadius="7.5dp" android:bottomRightRadius="7.5dp" android:topLeftRadius="7.5dp" android:topRightRadius="7.5dp" />
+        </shape>
+    </item>
+</selector>
+然后我们再在v21中建立同名的文件bg_1.xml但是类容改成
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#88444444"
+    android:radius="16dp">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#11FFFFFF" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/for_bg_1.xml" />
+</ripple>
+然后再在v21中建立for_bg_1.xml,内容为drawable中的bg_1.xml的内容
+//
+使用的时候就在控件中上用
+android:background="@drawable/bg_1.xml"
