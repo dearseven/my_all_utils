@@ -43,7 +43,7 @@ class P_OrderStep2ChooseDriverActivity {
         //
         val cal = ViewPositionAndSizeGetter().calculate(ctx!!.get()!!.aOrderStep2ShowOrder, ctx!!.get(), ctx!!.get())
         ctx!!.get()!!.aOrderStep2ShowOrder.setOnClickListener {
-            pop!!.showAsDropDown(ctx!!.get()!!.aOrderStep2ShowOrder, 0, -cal.y)
+            pop!!.showAsDropDown(ctx!!.get()!!.aOrderStep2ShowOrder, 0, -cal.h)
         }
         //
         pop!!.setOnDismissListener {
