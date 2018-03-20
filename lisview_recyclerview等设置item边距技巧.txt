@@ -1,0 +1,10 @@
+假设一个item有margin=4
+经常会发现左边第一排的左边距会小于右边的
+最顶上第一排的top边距小于下面的
+最右边一排的右边距小于左边的
+
+其实这个时候我们只要在listview或者recyclerview本身再设置
+android:layout_marginLeft="4dp"
+android:layout_marginTop="4dp"
+android:layout_marginRight="4dp"
+就能解决啦
