@@ -6,11 +6,12 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+
 /**
- * 上拉加载更多
+ * 上拉加载更多,其实在这个里没有用到mFootView
  * Created by wx on 2017/7/24.
  */
-public class LoadMoreListView extends ListView implements AbsListView.OnScrollListener {
+public class LoadMoreListView2 extends ListView implements AbsListView.OnScrollListener {
     private View mFootView;
     private int mTotalItemCount;//item总数
     private OnLoadMoreListener mLoadMoreListener;
@@ -22,19 +23,21 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
 
     public interface OnLoadMoreListener {
         void onloadMore();
+
+        void loadMoreAnimation(boolean trueIsShow);
     }
 
-    public LoadMoreListView(Context context) {
+    public LoadMoreListView2(Context context) {
         super(context);
         init(context);
     }
 
-    public LoadMoreListView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LoadMoreListView2(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    public LoadMoreListView(Context context, AttributeSet attrs) {
+    public LoadMoreListView2(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
@@ -54,6 +57,7 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
             mIsLoading = true;
             //addFooterView(mFootView);
             if (mLoadMoreListener != null) {
+                mLoadMoreListener.loadMoreAnimation(true);
                 mLoadMoreListener.onloadMore();
             }
         }
@@ -67,9 +71,12 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
     /**
      * loadmore完成，调用这个方法隐藏动画
      */
-    public void setLoadCompleted(){
-        mIsLoading=false;
+    public void setLoadCompleted() {
+        mIsLoading = false;
         //removeFooterView(mFootView);
+        if (mLoadMoreListener != null) {
+            mLoadMoreListener.loadMoreAnimation(false);
+        }
     }
 
     @Override
