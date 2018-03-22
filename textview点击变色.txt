@@ -1,0 +1,59 @@
+首先如果是在xml里改就是设置background和textColor
+不过如果是在代码里改的话
+//设置背景
+tv.setBackgroundResource(R.drawable.button_bg_stroke_blue_grey)
+//设置文字变色 
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+	tv.setTextColor(this@XXXActivity.resources.getColorStateList(R.color.city_color_blue_grey, this@XXXActivity.theme))
+ } else {
+    tv.setTextColor(this@XXXActivity.resources.getColorStateList(R.color.city_color_blue_grey))
+}
+
+背景变色的放在drawable目录里
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 按下状态 -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#0000" />
+
+            <stroke android:width="1dp" android:color="#4888" />
+
+            <corners android:bottomLeftRadius="7.5dp" android:bottomRightRadius="7.5dp" android:topLeftRadius="7.5dp" android:topRightRadius="7.5dp" />
+        </shape>
+    </item>
+    <!-- 焦点状态 -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#0000" />
+
+            <stroke android:width="1dp" android:color="#4888" />
+
+            <corners android:bottomLeftRadius="7.5dp" android:bottomRightRadius="7.5dp" android:topLeftRadius="7.5dp" android:topRightRadius="7.5dp" />
+        </shape>
+    </item>
+    <!-- 初始状态 -->
+    <item>
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#0000" />
+
+            <stroke android:width="1dp" android:color="#5af" />
+
+            <corners android:bottomLeftRadius="7.5dp" android:bottomRightRadius="7.5dp" android:topLeftRadius="7.5dp" android:topRightRadius="7.5dp" />
+        </shape>
+    </item>
+</selector>
+
+文字变色得要新建一个color目录，放在里面
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:color="@color/light_gray"></item>
+    <item android:state_checked="true" android:color="@color/light_gray"></item>
+    <item android:state_pressed="true" android:color="@color/light_gray"></item>
+    <item android:color="@color/tab_blue"/>
+</selector>
+
+还有就是要设置clickable和focusable都为true哦
