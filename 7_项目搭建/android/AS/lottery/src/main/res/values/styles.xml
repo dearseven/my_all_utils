@@ -15,6 +15,10 @@
         <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@drawable/white_devide</item>
+		<!-- 菜单-->
+        <item name="android:textColor">#ffffff</item><!-- 弹出菜单的文本颜色-->
+        <item name="actionMenuTextColor">@android:color/white</item><!--右侧alwaysshow的按钮的颜色-->
+        <item name="android:colorBackground">@color/tool_bar_color</item><!-- 弹出菜单的背景颜色-->
 		  <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
