@@ -1,0 +1,5 @@
+ Intent intent = new Intent(AlarmManagerUtil.ALARM_ACTION);
+            intent.putExtra("title", vlTitle);
+            intent.putExtra("id", 1);
+            intent.putExtra("content", vlContent);
+            AlarmManagerUtil.setAlarmTime(activity, vlSetTime, intent);
