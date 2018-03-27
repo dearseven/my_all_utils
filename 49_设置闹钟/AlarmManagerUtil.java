@@ -8,7 +8,7 @@ import android.os.Build;
 import java.util.Calendar;
 
 /**
- * Created by loonggg on 2016/3/21.
+ * 
  */
 public class AlarmManagerUtil {
     public static final String ALARM_ACTION = "cc.m2u.intelliv.alarm.clock";
