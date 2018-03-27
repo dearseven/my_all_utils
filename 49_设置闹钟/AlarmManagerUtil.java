@@ -11,7 +11,7 @@ import java.util.Calendar;
  * 
  */
 public class AlarmManagerUtil {
-    public static final String ALARM_ACTION = "cc.m2u.intelliv.alarm.clock";
+    public static final String ALARM_ACTION = "xxxxxxx.alarm.clock";
 
     public static void setAlarmTime(Context context, long timeInMillis, Intent intent) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
