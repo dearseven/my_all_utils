@@ -1,0 +1,19 @@
+我用的方法一
+ScrollView + RecyclerView页面载入时总是滑动到最底部
+项目中遇到页面载入时总是滑动到最底部，原因是焦点在页面底部；
+
+方法一：解决方法就是在根布局设置android:descendantFocusability="blocksDescendants" ；
+
+        android:descendantFocusability 有三种值：
+
+        beforeDescendants：viewgroup会优先其子类控件而获取到焦点
+
+        afterDescendants：viewgroup只有当其子类控件不需要获取焦点时才获取焦点
+
+        blocksDescendants：viewgroup会覆盖子类控件而直接获得焦点
+
+      这种方法，会造成页面中Editext焦点被抢导致无法输入，需要用到第二种方法。
+
+方法二：对于有Editext的页面需要在根布局使用 :android:focusable="true"
+
+                                                                         android:focusableInTouchMode="true";
