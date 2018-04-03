@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.sun.jna.win32.DLLCallback
 
-import kotlinx.android.synthetic.main.date_select_item_layout.view.*
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -36,6 +36,54 @@ class WeekCalenderAdapter : PagerAdapter {
     //
     private var weekCalendarChangeListener: WeekCalendarOnChange? = null
 
+
+    //----------------------------------------------
+//    /**
+//     * 选择第N页，第N个
+//     */
+//    fun __selectWithIndex(vp: ViewPager, pageIndex: Int, itemIndex: Int) {
+//        vp.setCurrentItem(pageIndex, true)
+//    }
+
+    /**
+     *选择第一个可以用的日期，建议在初始化的时候用,而且记得在handler写一个延迟调用，不然貌似vp的child个数为0
+     */
+    fun __selectFirstItem(vp: ViewPager) {
+        val wb = dates[0]
+        vp.setCurrentItem(0, true)
+        for (i: Int in 0 until wb.days.size) {
+            if (wb.days[i] != 0) {
+                selectedPage = 0
+                selectedIndex = i
+                DLog.log(javaClass, "__selectFirstItem:${wb.y}-${wb.m}-${wb.days[i]}")
+                whenPageSeleted(vp, 0)
+                break
+            }
+        }
+    }
+
+    /**
+     * 选择某个年月日
+     */
+    fun __selectWithDate(vp: ViewPager, y: Int, m: Int, d: Int) {
+        for (i: Int in 0 until dates.size) {
+            var wb = dates[i]
+            if (y == wb.y && m == wb.m) {//检查年月是否一致
+                var pageIndex = i
+                for (j: Int in 0..wb.days.size - 1) {//检查日期是否一致
+                    if (wb.days[j] == d) {
+                        selectedIndex=j
+                        selectedPage=i
+                        vp.setCurrentItem(i,true)//这个方法会回调whenPageSeleted，因为在onPageSelected做了处理~
+                        //如果没有做处理的话 就自己处理吧
+                        break
+                    }
+                }
+            }
+        }
+    }
+    //----------------------------------------------
+
     //数据
     private val dates by lazy {
         ArrayList<WeekBean>()
@@ -50,7 +98,7 @@ class WeekCalenderAdapter : PagerAdapter {
         this.weekCalendarChangeListener = weekCalendarChangeListener
         inflate = LayoutInflater.from(ctx!!.get())
         initCalaner()
-        weekCalendarChangeListener.onChange(dates[0], -1, -1)
+        //weekCalendarChangeListener.onChange(dates[0], -1, -1, -1, -1, -1)
     }
 
     override fun isViewFromObject(view: View?, `object`: Any?): Boolean = view == `object`
@@ -94,7 +142,10 @@ class WeekCalenderAdapter : PagerAdapter {
                 selectedPage = position
                 selectedIndex = 0
                 showSelect(0, view)
-                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex)
+                val y = dates[selectedPage].y
+                val m = dates[selectedPage].m
+                val d = dates[selectedPage].days[selectedIndex]
+                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex, y, m, d)
             }
         } else {
             tv1.text = ""
@@ -105,7 +156,10 @@ class WeekCalenderAdapter : PagerAdapter {
                 selectedPage = position
                 selectedIndex = 1
                 showSelect(1, view)
-                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex)
+                val y = dates[selectedPage].y
+                val m = dates[selectedPage].m
+                val d = dates[selectedPage].days[selectedIndex]
+                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex, y, m, d)
             }
         } else {
             tv2.text = ""
@@ -116,7 +170,10 @@ class WeekCalenderAdapter : PagerAdapter {
                 selectedPage = position
                 selectedIndex = 2
                 showSelect(2, view)
-                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex)
+                val y = dates[selectedPage].y
+                val m = dates[selectedPage].m
+                val d = dates[selectedPage].days[selectedIndex]
+                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex, y, m, d)
             }
         } else {
             tv3.text = ""
@@ -127,7 +184,10 @@ class WeekCalenderAdapter : PagerAdapter {
                 selectedPage = position
                 selectedIndex = 3
                 showSelect(3, view)
-                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex)
+                val y = dates[selectedPage].y
+                val m = dates[selectedPage].m
+                val d = dates[selectedPage].days[selectedIndex]
+                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex, y, m, d)
             }
         } else {
             tv4.text = ""
@@ -138,7 +198,10 @@ class WeekCalenderAdapter : PagerAdapter {
                 selectedPage = position
                 selectedIndex = 4
                 showSelect(4, view)
-                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex)
+                val y = dates[selectedPage].y
+                val m = dates[selectedPage].m
+                val d = dates[selectedPage].days[selectedIndex]
+                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex, y, m, d)
             }
         } else {
             tv5.text = ""
@@ -149,7 +212,10 @@ class WeekCalenderAdapter : PagerAdapter {
                 selectedPage = position
                 selectedIndex = 5
                 showSelect(5, view)
-                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex)
+                val y = dates[selectedPage].y
+                val m = dates[selectedPage].m
+                val d = dates[selectedPage].days[selectedIndex]
+                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex, y, m, d)
             }
         } else {
             tv6.text = ""
@@ -160,7 +226,10 @@ class WeekCalenderAdapter : PagerAdapter {
                 selectedPage = position
                 selectedIndex = 6
                 showSelect(6, view)
-                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex)
+                val y = dates[selectedPage].y
+                val m = dates[selectedPage].m
+                val d = dates[selectedPage].days[selectedIndex]
+                weekCalendarChangeListener!!.onChange(wb, selectedPage, selectedIndex, y, m, d)
             }
         } else {
             tv7.text = ""
@@ -284,13 +353,21 @@ class WeekCalenderAdapter : PagerAdapter {
             if (tag == pageIndex) {
                 if (pageIndex == selectedPage) {
                     showSelect(selectedIndex, view)
+                    val y = dates[selectedPage].y
+                    val m = dates[selectedPage].m
+                    val d = dates[selectedPage].days[selectedIndex]
+                    weekCalendarChangeListener!!.onChange(dates[currentPage], selectedPage, selectedIndex, y, m, d)
                 } else {
                     //一个都没有选中呗
                     showSelect(-1, view)
+//                    val y = dates[selectedPage].y
+//                    val m = dates[selectedPage].m
+                    //val d=dates[selectedIndex].days[selectedIndex]
+                    weekCalendarChangeListener!!.onChange(dates[currentPage], selectedPage, selectedIndex, -1, -1, -1)
                 }
             }
         }
-        weekCalendarChangeListener!!.onChange(dates[currentPage], selectedPage, selectedIndex)
+
     }
 
     /**
@@ -306,7 +383,7 @@ class WeekCalenderAdapter : PagerAdapter {
                 vp.setCurrentItem(i, true)
                 break
             } else {
-                if (m - _m == 1&& wb.y == _wb.y ) {//普通情况就是比当前月小1
+                if (m - _m == 1 && wb.y == _wb.y) {//普通情况就是比当前月小1
                     vp.setCurrentItem(i, true)
                     break
                 }
