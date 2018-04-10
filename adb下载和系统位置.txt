@@ -7,3 +7,5 @@ https://dl-ssl.google.com/android/repository/platform-tools_r25-windows.zip
 .
 https://dl-ssl.google.com/android/repository/platform-tools_r21-windows.zip
 我都试过了可以用
+//在系统的位置
+C:\Users\Administrator\AppData\Local\Android\Sdk\platform-tools就是adb的目录
