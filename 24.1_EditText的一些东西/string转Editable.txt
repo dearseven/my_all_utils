@@ -1,0 +1,6 @@
+    public Editable getText() {  
+        String text = super.getText().toString();  
+        text = "do want u want here...";  
+        Editable editable = new SpannableStringBuilder(text);  
+        return editable;  
+    }  
