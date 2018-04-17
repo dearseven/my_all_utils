@@ -1,0 +1,12 @@
+var btn = document.getElementById("select_employee_submit");
+	btn.onclick = (function(name) {
+		return function(e) {
+			// db.tempUserIds = new Array();
+			// db.tempUserIdsJson = db.checkBoxUserIds;
+			// for ( var p in db.checkBoxUserIds) {
+			// db.tempUserIds.push(p);
+			// }
+			$("#myModal02").modal("hide");
+			refreshBindUser();
+		}
+	})("mingzi");
