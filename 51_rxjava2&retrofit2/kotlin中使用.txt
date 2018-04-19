@@ -1,0 +1,9 @@
+val o: Observable<ResponseBody> = ClientAPIUtil.getInstance().playAuthorize("c1", "t2", "s3", "pt4", "ct5", "bt6", "if7")
+        o.subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).subscribe({
+            Debug.log4op(LauncherInKotlin::class.java, "onAccept:\n${it.string()}")
+        }, {
+            Debug.log4op(LauncherInKotlin::class.java, "onError:\n${it.message}")
+        }, {
+            Debug.log4op(LauncherInKotlin::class.java, "on complete")
+        })
