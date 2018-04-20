@@ -1,0 +1,11 @@
+先连接设备
+adb connect xxxx:xxxx
+adb root
+adb remount
+adb push target.apk /system/app
+
+#adb shell
+#cd ../system/app
+#chomd 777 target.apk
+
+adb reboot
