@@ -1,0 +1,16 @@
+方法是使用adb shell进入系统，然后使用命令重新挂载“/system”目录为读写权限，具体操作及命令如下：
+
+1、打开dos窗口
+
+2、输入命名：adb shell
+
+3、切换到root权限：su
+
+4、重新挂载： mount -o remount,rw rootfs /system/
+
+     注意上面的命令一起输入，包括中间的逗号
+
+5、删除相关文件即可。
+
+adb shell "mount -o rw,remount /system" 
+adb shell "rm -rf /system/app/monitor.apk"
