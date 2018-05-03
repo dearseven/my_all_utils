@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 按下状态 -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#e55"/>
+
+            <stroke android:width="1dp" android:color="#fff"/>
+
+            <corners android:bottomLeftRadius="1.5dp" android:bottomRightRadius="1.5dp" android:topLeftRadius="1.5dp"
+                     android:topRightRadius="1.5dp"/>
+        </shape>
+    </item>
+    <!-- 焦点状态 -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#e55"/>
+
+            <stroke android:width="1dp" android:color="#fff"/>
+
+            <corners android:bottomLeftRadius="1.5dp" android:bottomRightRadius="1.5dp" android:topLeftRadius="1.5dp"
+                     android:topRightRadius="1.5dp"/>
+        </shape>
+    </item>
+    <!-- 初始状态 -->
+    <item>
+        <shape android:shape="rectangle">
+            <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp"></padding>
+            <solid android:color="#e55"/>
+
+            <stroke android:width="1dp" android:color="#E55"/>
+
+            <corners android:bottomLeftRadius="1.5dp" android:bottomRightRadius="1.5dp" android:topLeftRadius="1.5dp"
+                     android:topRightRadius="1.5dp"/>
+        </shape>
+    </item>
+</selector>

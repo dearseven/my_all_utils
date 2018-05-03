@@ -1,0 +1,107 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- 这个是我修改以后的主题,application要用给这个，不然会报错说有toolbar了 -->
+    <style name="AppTheme.BaseCompat" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
+        <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:listDivider">@drawable/white_devide</item>
+		<!-- 菜单-->
+        <item name="android:textColor">#ffffff</item><!-- 弹出菜单的文本颜色-->
+        <item name="actionMenuTextColor">@android:color/white</item><!--右侧alwaysshow的按钮的颜色-->
+        <item name="android:colorBackground">@color/tool_bar_color</item><!-- 弹出菜单的背景颜色-->
+		  <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:listDivider" tools:ignore="DuplicateDefinition">@drawable/white_devide</item>
+    </style>
+
+    <!-- 给toolbar的菜单配置的主题,要记得应用到布局文件的toolbar上 app:theme-->
+    <style name="ToolbarPopupTheme" parent="Theme.AppCompat.Light.NoActionBar"><!--@style/ThemeOverlay.AppCompat.Dark-->
+        <item name="android:colorBackground">@color/pop_menu_color</item><!-- 弹出菜单的背景颜色-->
+        <item name="android:textColor">#ffffff</item><!-- 弹出菜单的文本颜色-->
+        <item name="actionMenuTextColor">@android:color/white</item><!--右侧alwaysshow的按钮的颜色-->
+        <!--<item name="colorButtonNormal">@android:color/holo_red_dark</item>-->
+        <item name="colorControlNormal">@android:color/white</item><!--右侧的显示颜色-->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle
+        </item> <!--新增一个item，用于控制menu-->
+    </style>
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+    </style>
+
+
+    <!-- LaunchAcitivy-->
+    <style name="LaunchFullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <!--
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>-->
+
+        <!--<item name="colorPrimary">#ffffff</item>这个是toolbar的背景色-->
+        <!--<item name="colorPrimaryDark">#ffffff</item>这个是系统状态栏的背景色-->
+
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <!--EditText的背景色 -->
+    <style name="MyEditText.style" parent="AppTheme.BaseCompat">
+        <item name="colorControlNormal">@color/tool_bar_color</item>
+        <item name="colorControlActivated">@color/status_bar_color</item>
+    </style>
+
+
+    <style name="AppTheme.BaseCompat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.BaseCompat.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <!--全屏加透明-->
+    <style name="TranslucentFullScreenTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <!--一个普通的全屏-->
+    <style name="FullScreenThemeCommon" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <!--透明，有任务栏电量时间等-->
+    <style name="NoTitleTranslucentTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+		   <!-- -->
+        <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
+        <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:listDivider">@drawable/white_devide</item>
+    </style>
+</resources>
