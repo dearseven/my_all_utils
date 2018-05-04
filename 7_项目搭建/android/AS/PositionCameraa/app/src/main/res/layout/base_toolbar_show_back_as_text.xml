@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.teetaa.pleasureboatcustomer">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/base_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <!--关于 toorbalr的一部分特效，请看activity_todo_list.xml的CoordinatorLayout里的部分 -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            app:theme="@style/ToolbarPopupTheme">
+
+            <!--自定义toolbar的title 和subtitle -->
+
+            <TextView
+                android:textSize="14sp"
+                android:id="@+id/toolbar_subtitle"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:maxLines="1"
+                android:paddingRight="10dp"
+                android:text="subtitle"
+                android:textColor="@color/white" />
+
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:text="title"
+                android:textColor="@color/white" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+</merge>

@@ -1,9 +1,13 @@
+package cyan.positioncameraa.widget;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import cyan.positioncameraa.R;
+import cyan.positioncameraa.utils.SizeUtil;
 
 
 /**
