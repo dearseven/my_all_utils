@@ -49,4 +49,13 @@ class P_OrderStep2ChooseDriverActivity {
         pop!!.setOnDismissListener {
         }
     }
+	/*有时候不一定会点击外部消失，可以在Activity里写
+	 override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (pop != null && pop!!.isShowing()) {
+            pop!!.dismiss();
+            //pop = null;
+        }
+        return super.onTouchEvent(event)
+    }
+	*/
 }
