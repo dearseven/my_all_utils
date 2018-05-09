@@ -1,0 +1,32 @@
+ 关闭的代码在Activity中
+ 但是如果popupwindow设置的属性不是在P中
+         pop!!.isFocusable = true
+        pop!!.isTouchable = false
+        pop!!.isOutsideTouchable = true
+		
+ 而是
+ 三个true
+ 则表示popupwindow中有控件需要接受事件，貌似是只能在事件中调用popupwindow的dismiss了
+ 比如这一段
+ asad_channel_show.setOnClickListener {
+            //弹出popwindow
+            if (pop == null) {
+                val inflate = LayoutInflater.from(this@SummarAreadDstributionActivity)
+                val contentView = inflate!!.inflate(R.layout.channel_popwindow_layout, null, false)
+                val tv = contentView.findViewById<TextView>(R.id.c_pop_tv1)
+                tv.setOnClickListener {
+                    Toast.makeText(this@SummarAreadDstributionActivity,"c_pop_tv1",Toast.LENGTH_SHORT).show()
+                    pop!!.dismiss()
+                }
+                pop = PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                pop!!.isFocusable = true
+                pop!!.isTouchable = true
+                pop!!.isOutsideTouchable = true
+                //
+                pop!!.setOnDismissListener {
+                }
+            }
+            //
+            val cal = ViewPositionAndSizeGetter().calculate(it, this@SummarAreadDstributionActivity, this@SummarAreadDstributionActivity)
+            pop!!.showAsDropDown(it, 0, -cal.h)
+        }
