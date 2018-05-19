@@ -1,0 +1,8 @@
+用
+adb devices 看设备 比如有
+192.168.1.101:5555 Device
+192.168.1.102:5555 Device
+---- 用命令的时候要 -s
+adb -s 192.168.1.101:5555 install xxx.apk
+进入shell也是
+adb -s 192.169.1.101:5555 shell
