@@ -1,0 +1,8 @@
+将app拷贝到adb的目录比较方便
+安装：adb install app-release.apk
+
+打开应用 要先进入adb的shell里
+输入 adb shell
+然后
+am start -n $packageName/$LauncherClass
+am start -n com.xxx.xx/com.xxx.xx.LauncherActivity
