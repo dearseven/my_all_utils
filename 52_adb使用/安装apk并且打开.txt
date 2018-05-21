@@ -6,3 +6,15 @@
 然后
 am start -n $packageName/$LauncherClass
 am start -n com.xxx.xx/com.xxx.xx.LauncherActivity
+
+打开的时候代参数
+am start -n com.xxx.xx/com.xxx.xx.LauncherActivity --ei pid 10 --es str "hello, world"
+ei 表示是 extra interge
+es 表示是 extra string
+相当于启动这个Activity的时候
+val bd=Bundle()
+bd.putInt("pid",10)
+bd.putString("str","hello,world")
+it.putExtras(bd)
+
+在Activity用getIntent.getIntExtra来获取pid getStringExtra来获取 str

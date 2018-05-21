@@ -1,0 +1,45 @@
+Intent隐式调用：启动其它应用程序
+Intent的两种基用法：
+
+显式的Intent，即在构造Intent对象时就指定接收者，这种方式与普通的函数调用类似；
+
+隐式的Intent，即Intent的发送者在构造Intent对象时，并不知道也不关心接收者是谁，有利于降低发送者和接收者之间的耦合。
+
+显示调用 ：
+Intent intent = new Intent();
+intent.setClass(A.this,B.class);
+intent.setClassName("com.android.activity",B.class);//指定包名下的类名 
+startActivity(intent);
+
+隐式调用：
+1.首先在应用A的某个类中：
+
+Intent intent = new Intent();
+intent.setAction("com.android.activity");//"com.android.activity"为自定义action
+//Intent intent = new Intent("com.android.activity");或者使用这种写法
+intent.putExtra("KEY","VALUE");//传递数据
+startActivity(intent);
+
+
+2.在应用B中接收A发来的action： 
+如果DemoActivity是程序的入口：
+<activity android:name=".DemoActivity">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN"
+        <action android:name="com.android.activity" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+
+
+如果DemoActivity不是程序的入口：  
+<activity android:name=".DemoActivity">
+    <intent-filter>
+        <action android:name="com.android.activity" />
+        <category android:name="android.intent.category.DEFAULT" /><!--必须加，不要遗漏-->
+    </intent-filter>
+</activity>
+
+
+以上简单的介绍了从一个程序使用隐式意图打开另一个应用activity的用法。
+这种用法在只有一个app的情况下应用较少，主要应用于存在有相互调起的逻辑的应用之间。与显示意图相同，同样可以通过putExtra()方法传递数据。
