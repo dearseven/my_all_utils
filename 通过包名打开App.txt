@@ -1,0 +1,6 @@
+Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
+intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+intent.putExtra(key,value);
+startActivity(intent);
+
+ 

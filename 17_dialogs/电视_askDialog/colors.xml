@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="bg_color">#2B2735</color>
+    <color name="white">#FFFFFF</color>
+    <color name="player_info_image_start_color">#60000000</color>
+    <color name="player_info_image_start_color1">#30ffffff</color>
+    <color name="image_start_color">#555</color>
+    <color name="ttfh_main_dark_grey">#242424</color>
+    <color name="ttfh_main_dark_orange">#FF8C00</color>
+    <color name="ttfh_main_white_grey">#e9f9f9</color>
+    <color name="ttfh_main_key_board_text_view">#A5FFFFFF</color>
+    <color name="ttfh_main_key_board_text_view_bg_element">#88ffff99</color>
+
+    <!-- 对话框dialog -->
+    <color name="remind_infomation_split_line_color">#FFE8E8E8</color>
+    <color name="remind_infomation_btn_ok_normal">#FF1B81FF</color>
+    <color name="remind_infomation_btn_ok_pressed">#FF0F4D9B</color>
+    <color name="remind_infomation_btn_ok_disable">#FF888888</color>
+    <color name="remind_infomation_bg_color">#FFFFFFFF</color>
+
+    <drawable name="color_user_item_normal">#FFFFFFFF</drawable>
+    <drawable name="color_user_item_pressed">#FFDDDDDD</drawable>
+
+    <color name="player_view_bg_color">#bb6a1b</color>
+    <color name="player_view_tv_color">#000a24</color>
+    <color name="player_view_tv_color1">#ede3d1</color>
+    <color name="tansparent">#0000</color>
+    <color name="transparent">#0000</color>
+</resources>

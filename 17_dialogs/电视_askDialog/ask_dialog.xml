@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:background="#0000"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ttfh_ask_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="40.0dip"
+            android:background="@color/ttfh_main_white_grey"
+            android:gravity="center"
+            android:text="title"
+
+            android:textSize="21sp"
+            android:textColor="@color/ttfh_main_dark_grey"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+
+            <TextView
+                android:textSize="22sp"
+
+                android:id="@+id/ttfh_ask_dialog_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/ttfh_main_white_grey"
+                android:gravity="left|center"
+                android:lineSpacingMultiplier="1.5"
+                android:minHeight="120.0dip"
+                android:paddingBottom="35.0dip"
+                android:paddingLeft="40.0dip"
+                android:paddingRight="40.0dip"
+                android:paddingTop="35.0dip"
+                android:text="content"
+                android:textColor="@color/ttfh_main_dark_grey" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.0px"
+            android:background="#ffd0d0d0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60.0dip"
+            android:layout_gravity="bottom"
+            android:background="@color/ttfh_main_dark_orange"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ttfh_ask_dialog_ok"
+                android:layout_width="114.0dip"
+                android:layout_height="40.0dip"
+                android:textSize="23sp"
+                android:background="@drawable/ttfh_rectangle_view_background_light_gray"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:text="ok"
+                android:textColor="@color/ttfh_main_white_grey" />
+
+            <Button
+                android:textSize="23sp"
+                android:id="@+id/ttfh_ask_dialog_back"
+                android:layout_width="114.0dip"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:background="@drawable/ttfh_rectangle_view_background_light_gray"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:text="cancel"
+                android:textColor="@color/ttfh_main_white_grey" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

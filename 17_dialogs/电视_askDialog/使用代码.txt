@@ -1,0 +1,31 @@
+            //弹出对话框
+            CustomDialog mDialog = new CustomDialog(MainActivity.this);
+            LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+            View _view = inflater.inflate(R.layout.ask_dialog, null);
+            mDialog.addContentView(_view, new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            TextView title = (TextView) _view.findViewById(R.id.ttfh_ask_dialog_title);
+            TextView content = (TextView) _view.findViewById(R.id.ttfh_ask_dialog_content);
+            Button okBtn = (Button) _view.findViewById(R.id.ttfh_ask_dialog_ok);
+            okBtn.setText("退出");
+            Button backBtn = (Button) _view.findViewById(R.id.ttfh_ask_dialog_back);
+            backBtn.setText("取消");
+            title.setText("提示");
+            content.setText("您确定要吗？");
+            okBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity.super.onBackPressed();
+                    mDialog.cancel();
+                    mDialog = null;
+                }
+            });
+            backBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDialog.cancel();
+                    mDialog = null;
+                }
+            });
+            mDialog.show();
+            okBtn.requestFocus();
