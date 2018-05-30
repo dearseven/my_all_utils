@@ -1,0 +1,17 @@
+解决方法
+
+android studio的解决方案：
+
+在build.gradle中dexOptions增加jumboMode true
+
+android {
+    compileSdkVersion 26
+    dexOptions{
+        jumboMode true
+    }
+	...
+}
+
+elicpse的解决方案：
+
+将dex.force.jumbo=true添加到project.properties文件中。
