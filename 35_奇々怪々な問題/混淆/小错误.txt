@@ -1,0 +1,7 @@
+1 打包时出现
+Error:
+Uncaught translation error: com.android.dx.cf.code.SimException: 
+default or static interface method used without --min-sdk-version >= 24
+解决办法：
+在Project的gradle.properties加入
+android.enableD8=true
