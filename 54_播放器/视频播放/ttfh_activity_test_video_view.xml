@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/ttfh_video1_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
+
+        <!--             android:background="@drawable/ttfh_rectangle_view_background_light_gray"
+-->
+        <com.xxx.xxx.xxx.SurfacePlayer
+            android:id="@+id/ttfh_video1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#0000"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"></RelativeLayout>
+
+        <ImageView
+            android:id="@+id/show_fragment_top_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ttfh_first_double_iv_all" />
+
+        <LinearLayout
+            android:id="@+id/play_controller"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y70"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/x120"
+            android:layout_marginRight="@dimen/x120"
+            android:background="#3000"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/play_controller_play_pause"
+                android:paddingLeft="@dimen/x20"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/y50"
+                android:layout_weight=".75"
+                android:scaleType="centerInside"
+                android:src="@mipmap/play" />
+
+            <TextView
+                android:id="@+id/play_controller_now_tv"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/y50"
+                android:layout_weight="1.25"
+                android:gravity="center"
+                android:text="00:00"
+                android:textColor="#fff"
+                android:textSize="24sp" />
+
+            <ProgressBar
+                android:id="@+id/play_controller_progressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/y10"
+                android:layout_centerInParent="true"
+                android:layout_weight="6"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_color" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/y50"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#fff"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
