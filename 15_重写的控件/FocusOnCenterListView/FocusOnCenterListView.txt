@@ -1,0 +1,139 @@
+
+import android.content.Context;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+
+
+
+/**
+ * 焦点在中间的listview，目前用在搜索
+ * Created by wx on 2017/5/10.
+ */
+
+public class FocusOnCenterListView extends ListView implements AdapterView.OnItemSelectedListener, AbsListView.OnScrollListener {
+    private int selectedIndex = 0;
+
+    public boolean runAnimate = false;
+
+    private OnItemChangeListener listener;
+
+    public void setOnItemChangeListener(OnItemChangeListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemChangeListener {
+        void changed(int index);
+    }
+
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    @Override
+    public boolean hasFocus() {
+        return super.hasFocus();
+    }
+
+    @Override
+    protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
+        //当listview的item只有一个的时候，不会触发onItemSelected
+        //所以我只好在这里做了一个判定
+        if (gainFocus && getAdapter() != null&& getSelectedIndex() == 0 ) {
+            h.sendEmptyMessageDelayed(MSG_WATING_FOR_CHANGE, 825);
+        }
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+    }
+
+    public FocusOnCenterListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        setOnItemSelectedListener(this);
+        setOnScrollListener(this);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return super.dispatchKeyEvent(event);
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
+        selectedIndex = position;
+
+        Debug.iwx(getClass(), "####");
+
+        if (listener != null) {
+            listener.changed(selectedIndex);
+        }
+
+        h.sendEmptyMessage(MSG_CANCEL_CHANGED);
+
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int visibleItemCount = getLastVisiblePosition() - getFirstVisiblePosition() + 1;
+                if (selectedIndex >= visibleItemCount / 2) {
+                    ViewPositionAndSizeGetter.Result vr = new ViewPositionAndSizeGetter().calculate(view, getContext(), (AppCompatActivity) getContext());
+                    smoothScrollToPositionFromTop(selectedIndex, (visibleItemCount / 2 - 1) * vr.getH(), 150);
+                    h.sendEmptyMessageDelayed(MSG_WATING_FOR_CHANGE, 825);
+                } else {
+                    h.sendEmptyMessageDelayed(MSG_WATING_FOR_CHANGE, 825);
+                }
+            }
+        }, 25);
+
+    }
+
+    /**
+     * 通知焦点变化
+     */
+    private final int MSG_WATING_FOR_CHANGE = 1;
+
+    /**
+     * 通知焦点变化
+     */
+    private final int MSG_CANCEL_CHANGED = 0;
+    private Handler h = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_WATING_FOR_CHANGE:
+                    runAnimate = true;
+                    ((BaseAdapter) getAdapter()).notifyDataSetChanged();
+                    h.removeMessages(MSG_WATING_FOR_CHANGE);
+                    break;
+                case MSG_CANCEL_CHANGED:
+                    h.removeMessages(MSG_WATING_FOR_CHANGE);
+                    break;
+
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+    }
+
+
+}
