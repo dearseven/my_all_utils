@@ -33,3 +33,8 @@
 
             }
         });
+		
+		//有时候手动调用可以
+		listView.setSelection(position);
+		listViewAdapter.notifyDataSetChanged();
+        scrollCenter();
