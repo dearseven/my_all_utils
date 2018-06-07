@@ -8,10 +8,13 @@
             @Override
             public void run() {
                 int visibleItemCount = listView.getLastVisiblePosition() -listView. getFirstVisiblePosition() + 1;
-                if (selectId >= visibleItemCount / 2) {
-                    ViewPositionAndSizeGetter.Result vr = new ViewPositionAndSizeGetter().calculate(listView.getSelectedView(), XXXActivity.this,XXXActivity. this);
-                    listView.smoothScrollToPositionFromTop(selectId, (visibleItemCount / 2 - 1) * vr.getH(), 150);
-                } else {
+//                if (selectId >= visibleItemCount / 2) {
+//                    ViewPositionAndSizeGetter.Result vr = new ViewPositionAndSizeGetter().calculate(listView.getSelectedView(), InformationDetailsActivity.this,InformationDetailsActivity. this);
+//                    listView.smoothScrollToPositionFromTop(selectId, (visibleItemCount / 2 - 1) * vr.getH(), 150);
+//                } else
+                if(listView.getSelectedItemPosition()>=visibleItemCount/2) {
+                    ViewPositionAndSizeGetter.Result vr = new ViewPositionAndSizeGetter().calculate(listView.getSelectedView(), getActivity(),getActivity());
+                    listView.smoothScrollToPositionFromTop(listView.getSelectedItemPosition(), (visibleItemCount / 2 - 1) * vr.getH(), 150);
                 }
             }
         }, 25);
