@@ -1,0 +1,46 @@
+ErrorExecution failed for task 'apppreDebugAndroidTestBuild'.
+ Conflict with dependency 'com.android.supportsupport-annotations' in project 'app'. 
+ Resolved versions for app (26.1.0) and test app (27.1.1) differ. See httpsd.android.comrtoolstest-apk-dependency-conflicts.html for details.
+ 
+ 
+ 一般是处在app的build.gradle中
+ androidTestImplementation 'com.android.support.test:runner:1.0.2'
+ androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+ 
+ 个人理解是这两个依赖里面都自带了com.android.support:support-annotations依赖，并且版本是27.1.1的，
+ 因此我们需要做的就是把这里面的27.1.1的com.android.support:support-annotations换成26.1.0的版本
+ 
+ 
+ 修改一下文件
+ 
+apply plugin: 'com.android.application'  
+#修改了！！！！！这里，把他指定到26.1.0  
+configurations.all {  
+    resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'  
+}  
+  
+android {  
+    compileSdkVersion 26  
+    defaultConfig {  
+        applicationId "wzt.mytest"  
+        minSdkVersion 21  
+        targetSdkVersion 26  
+        versionCode 1  
+        versionName "1.0"  
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"  
+    }  
+    buildTypes {  
+        release {  
+            minifyEnabled false  
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'  
+        }  
+    }  
+}  
+  
+dependencies {  
+    implementation fileTree(dir: 'libs', include: ['*.jar'])  
+    implementation 'com.android.support:appcompat-v7:26.1.0'  
+    testImplementation 'junit:junit:4.12'  
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'  
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'  
+}  
