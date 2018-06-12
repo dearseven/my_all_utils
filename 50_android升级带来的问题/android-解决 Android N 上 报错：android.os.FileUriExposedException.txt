@@ -1,0 +1,46 @@
+1、在AndroidManifest.xml中添加如下代码
+<provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="app的包名.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+		注意： 
+authorities：app的包名.fileProvider 
+grantUriPermissions：必须是true，表示授予 URI 临时访问权限 
+exported：必须是false 
+resource：中的@xml/file_paths是我们接下来要添加的文件
+ 
+ 2、在res目录下新建一个xml文件夹，并且新建一个file_paths的xml文件（如下图）
+
+ 3、打开file_paths.xml文件添加如下内容
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path path="Android/data/app的包名/" name="files_root" />
+    <external-path path="." name="external_storage_root" />
+</paths>
+path：需要临时授权访问的路径（.代表所有路径） 
+name：就是你给这个访问路径起个名字
+
+4、修改代码适配Android N
+public static void installApkFile(Context context, String filePath) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(context, "com.yuneec.android.saleelfin.fileprovider", new File(filePath));
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            intent.setDataAndType(Uri.fromFile(new File(filePath)), "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent);
+    }
+复制代码
+1、首先我们对Android N及以上做判断； 
+2、然后添加flags，表明我们要被授予什么样的临时权限 
+3、以前我们直接 Uri.fromFile(apkFile)构建出一个Uri,现在我们使用FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", apkFile); 
+4、BuildConfig.APPLICATION_ID直接是应用的包名
