@@ -60,5 +60,9 @@ public class UpdateManager {
             }
         }
     }
+	
+	public void removeRequest(){
+		this.request=null;
+	}
 
 }

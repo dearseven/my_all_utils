@@ -79,6 +79,7 @@ public class UpdateService extends Service {
 
             @Override
             public void onFinished(int completeSize, String downloadUrl) {
+				UpdateManager.getInstance().removeRequest();
                 DLog.log(getClass(), "下载完成: " + filePath);
                 File apkFile = new File(filePath);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -90,6 +91,7 @@ public class UpdateService extends Service {
 
             @Override
             public void onFailure() {
+				UpdateManager.getInstance().removeRequest();
                 DLog.log(getClass(), "下载失败: ");
                 stopSelf();
             }
