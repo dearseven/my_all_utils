@@ -1,0 +1,21 @@
+
+ 
+  假设有一个project app是主项目 lib是引用的library 
+  app引用lib
+  
+  app的包名是 com.xx.abc 
+  lib的包名是 com.xx.abc.lib
+  
+  app中有一个activity com.xx.abc.main.SampleActivity
+  lib中有一个activity com.xx.abc.lib.xx.LibActivity
+  
+  如果从app调lib的Activity很简单可以直接调用
+  但是没办法从lib直接调用app的Activity。但是可以做法如下
+  
+  Intent it = new Intent();
+  it.setComponent(new ComponentName("com.xx.abc", "com.xx.abc.main.SampleActivity"));
+  //it.setPackage("com.xx.abc");其实我调用的时候没用这一句啊
+  it.setAction("com.xx.abc.from_result");//这加个action更好用嘛~当然如果需要还可以上Extras，记得放Bundle里哦
+  startActivity(it);
+  
+  这样就可以跨Moudle调用了
