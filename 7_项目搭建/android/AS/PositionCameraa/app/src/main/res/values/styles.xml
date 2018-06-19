@@ -14,32 +14,43 @@
         <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
         <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:listDivider">@drawable/white_devide</item>
+        <!--<item name="android:listDivider">@drawable/white_devide</item>-->
         <item name="android:windowBackground">@color/lavenderblush</item>
-        <item name="android:textColor">@color/thistle</item>
+
+        <!-- 菜单-->
+        <item name="android:colorBackground">@color/tool_bar_color</item>
+        <item name="android:textColor">#FF00FF</item><!-- 弹出菜单的文本颜色-->
+        <item name="actionMenuTextColor">#00FF00</item><!--右侧alwaysshow的按钮的颜色-->
+        <item name="colorControlNormal">#0FA5eF</item><!--右侧的显示颜色-->
         <!-- 菜单
         <item name="android:textColor">#555</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="android:colorBackground">#efefef</item>-->
-		  <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
-        <item name="android:statusBarColor" >@color/status_bar_color</item>
+        <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color
+        </item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
-        <item name="android:listDivider" tools:ignore="DuplicateDefinition">@drawable/white_devide</item>
+        <!--<item name="android:listDivider" tools:ignore="DuplicateDefinition">@drawable/white_devide</item>-->
     </style>
 
     <!-- 给toolbar的菜单配置的主题,要记得应用到布局文件的toolbar上 app:theme-->
     <style name="ToolbarPopupTheme" parent="Theme.AppCompat.Light.NoActionBar"><!--@style/ThemeOverlay.AppCompat.Dark-->
-        <item name="android:colorBackground">#f00</item><!-- 弹出菜单的背景颜色-->
-        <item name="android:textColor">#88ffff</item><!-- 弹出菜单的文本颜色-->
-        <item name="actionMenuTextColor">#ff88ff</item><!--右侧alwaysshow的按钮的颜色-->
-        <!--<item name="colorButtonNormal">@android:color/holo_red_dark</item>-->
-        <item name="colorControlNormal">@color/lightgreen</item><!--右侧的显示颜色-->
+        <!--<item name="android:colorBackground">#f00</item>&lt;!&ndash; 弹出菜单的背景颜色&ndash;&gt;-->
+        <!--<item name="android:textColor">#FF00FF</item>&lt;!&ndash; 弹出菜单的文本颜色&ndash;&gt;-->
+        <!--<item name="actionMenuTextColor">#00FF00</item>&lt;!&ndash;右侧alwaysshow的按钮的颜色&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="colorButtonNormal">@android:color/holo_red_dark</item>&ndash;&gt;-->
+        <!--<item name="colorControlNormal">#0FA5eF</item>&lt;!&ndash;右侧的显示颜色&ndash;&gt;-->
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle
         </item> <!--新增一个item，用于控制menu-->
     </style>
 
     <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
         <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+
+        <!--<item name="android:colorBackground">#f00</item>-->
+        <!--<item name="android:textColor">#FF00FF</item>&lt;!&ndash; 弹出菜单的文本颜色&ndash;&gt;-->
+        <!--<item name="actionMenuTextColor">#00FF00</item>&lt;!&ndash;右侧alwaysshow的按钮的颜色&ndash;&gt;-->
+        <!--<item name="colorControlNormal">#0FA5eF</item>&lt;!&ndash;右侧的显示颜色&ndash;&gt;-->
     </style>
 
 
@@ -97,14 +108,15 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
-		   <!-- -->
+        <!-- -->
         <item name="colorPrimary">@color/tool_bar_color</item><!--这个是toolbar的背景色-->
         <item name="colorPrimaryDark">@color/status_bar_color</item><!--这个是系统状态栏的背景色-->
         <item name="colorAccent">@color/colorAccent</item>
         <!-- 下面两个是6.0下，状态栏的字体颜色变化-->
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar_color
+        </item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:listDivider">@drawable/white_devide</item>
+        <!--<item name="android:listDivider">@drawable/white_devide</item>-->
     </style>
 
     <!-- 给自定义的InputDialog用的. -->
