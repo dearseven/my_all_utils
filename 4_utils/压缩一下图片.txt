@@ -1,0 +1,13 @@
+ /**
+     * 压缩一下bitmap 防止内存溢出呀
+     *
+     * @param bitmap
+     * @return
+     */
+    private static Bitmap small(Bitmap bitmap) {
+        Matrix matrix = new Matrix();
+        // 长和宽各缩小一半 会不会被人打啊
+        matrix.postScale(0.5f, 0.5f); // 长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizeBmp;
+    }
