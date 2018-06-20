@@ -1,0 +1,5 @@
+让你明明白白的使用RecyclerView——SnapHelper详解
+
+LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+加上这句之後整个布局都是横向的，我要的一个列表可以向下拉动，因为一条Item显示不了其他内容所以要左右滑动的效果
