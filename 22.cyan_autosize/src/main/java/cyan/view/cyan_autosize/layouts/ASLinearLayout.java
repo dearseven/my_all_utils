@@ -1,4 +1,4 @@
-package com.teetaa.autosize.layouts;
+package cyan.view.cyan_autosize.layouts;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,10 +7,11 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
-import com.teetaa.autosize.R;
-import com.teetaa.autosize.configs.AutoSizeConfigs;
 
 import java.math.BigDecimal;
+
+import cyan.view.cyan_autosize.R;
+import cyan.view.cyan_autosize.configs.AutoSizeConfigs;
 
 /**
  * 实现自定义控件适应高宽得一个例子，控件原本的layout-width和layout-height当w或者y在-1的情况下还是会分别起效的<br><br/>

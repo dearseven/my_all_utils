@@ -1,4 +1,4 @@
-package com.teetaa.autosize.layouts;
+package cyan.view.cyan_autosize.layouts;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,10 +9,10 @@ import android.util.Log;
 import android.widget.FrameLayout;
 
 
-import com.teetaa.autosize.R;
-import com.teetaa.autosize.configs.AutoSizeConfigs;
-
 import java.math.BigDecimal;
+
+import cyan.view.cyan_autosize.R;
+import cyan.view.cyan_autosize.configs.AutoSizeConfigs;
 
 
 /**

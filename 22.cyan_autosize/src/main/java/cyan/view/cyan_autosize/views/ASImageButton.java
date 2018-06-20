@@ -1,4 +1,4 @@
-package com.teetaa.autosize.views;
+package cyan.view.cyan_autosize.views;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,10 +6,11 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
-import com.teetaa.autosize.R;
-import com.teetaa.autosize.configs.AutoSizeConfigs;
 
 import java.math.BigDecimal;
+
+import cyan.view.cyan_autosize.R;
+import cyan.view.cyan_autosize.configs.AutoSizeConfigs;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.teetaa.autosize.configs;
+package cyan.view.cyan_autosize.configs;
 
 import android.content.Context;
 
