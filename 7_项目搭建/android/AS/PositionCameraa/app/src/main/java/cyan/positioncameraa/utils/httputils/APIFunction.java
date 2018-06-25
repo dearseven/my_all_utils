@@ -2,10 +2,22 @@ package cyan.positioncameraa.utils.httputils;
 
 import java.util.HashMap;
 
+/*
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.QueryMap;
+*/
+
+import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.http.Body;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
@@ -22,5 +34,9 @@ public interface APIFunction {
 
     @GET("/s")
     Observable<ResponseBody> seeBaidu(@QueryMap HashMap<String, Object> params);
+	
+	@FormUrlEncoded
+    @POST("news/list")
+    Observable<ResponseBody>  getNewsData(@FieldMap HashMap<String, String> params);
 
 }
