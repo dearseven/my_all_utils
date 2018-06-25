@@ -1,0 +1,3 @@
+setTextSize(TypedValue.COMPLEX_UNIT_PX,22); //22像素 
+setTextSize(TypedValue.COMPLEX_UNIT_SP,22); //22SP 
+setTextSize(TypedValue.COMPLEX_UNIT_DIP,22);//22DIP
