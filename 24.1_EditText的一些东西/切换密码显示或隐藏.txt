@@ -1,0 +1,21 @@
+ private fun regPwdShowHide() {
+        //如果没有，默认按照闭眼计算，闭眼就是0，这个是睁眼闭眼的那个图片
+        var tag = reg_login_reg_pwd_eye.getTag(R.id.view_content_id) ?: 0
+        //所以状态转换成睁眼，就是显示密码
+        if (tag == 0) {
+            tag = 1
+			//修改图片
+            reg_login_reg_pwd_eye.setImageResource(R.drawable.pwd_visiable)
+			//修改显示状态
+            reg_login_reg_pwd.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+			//修改光标移到末尾
+            reg_login_reg_pwd.setSelection(reg_login_reg_pwd.text.toString().length)
+        } else {
+            tag = 0
+            reg_login_reg_pwd_eye.setImageResource(R.drawable.pwd_invisiable)
+            reg_login_reg_pwd.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            reg_login_reg_pwd.setSelection(reg_login_reg_pwd.text.toString().length)
+        }
+		//状态存储回去
+        reg_login_reg_pwd_eye.setTag(R.id.view_content_id, tag)
+    }
