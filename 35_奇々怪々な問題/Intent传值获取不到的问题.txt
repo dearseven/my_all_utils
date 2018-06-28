@@ -1,0 +1,28 @@
+今天遇到一个问题
+就是有一个Acitivy A 和一个 B  然后还有一个其他程序的C
+首先打开A调用C，重点来是C执行完只能回调B,这个时候我想通过B再通过,startAcitivy调用A并且通过Intent传值
+设置了A的启动模式是singleTask
+
+发现A是获取不到intent里的新值得
+但是如果启动模式是 standhard就可以获取，所以推测是启动模式的问题
+
+后来发现在singleTask模式下
+“
+Task里面已经有Activity A实例，且其他其他界面跳转到A时不会产生新的A的实例时，onNewIntent()会被调用，通常这时候这里面的Intent是用来重新启动那个已经存在的A实例的
+”
+
+所以我们调用getIntent的时候
+“
+这个方法返回的是最原始启动Actvity A的Intent，而不是由Activity B跳转到Activity A使用的Intent。所以我们想要拿到Activity B跳到Activity A使用的Intent，我们要使用setIntent(Intent)方法。
+”
+
+那怎么解决
+我们重写A的方法
+@Override  
+protected void onNewIntent(Intent intent) {  
+    super.onNewIntent(intent);  
+    setIntent(intent);  
+} 
+
+在这个方法里，我们将接收到的新的Intent覆盖了第一次启动Activity A用的Intent，这样我们在getIntent()的时候，拿到的Intent就是带有B传给A带有Bundle值的Intent了。
+我们将onNewIntent(Intent)方法写在了我们的Activity A里面，成功的得到了B传给A的数据
