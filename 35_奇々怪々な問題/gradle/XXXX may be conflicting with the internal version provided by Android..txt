@@ -1,0 +1,13 @@
+Dependency xpp3:xpp3:1.1.3.3 is ignored for debug as it may be conflicting with the internal version provided by Android.
+
+今天在引入
+com.squareup.retrofit2:converter-simplexml:2.3.0
+
+后，在打签名包的时候，出现了这个错误 
+
+要稍微改一下引入的代码
+compile ('com.squareup.retrofit2:converter-simplexml:2.3.0') {
+        //exclude module: 'stax-api'
+        //exclude module: 'stax'
+        exclude module: 'xpp3'
+    }
