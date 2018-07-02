@@ -1,0 +1,28 @@
+ public Observable<ResponseBody> loginInfo(String account, String password, String sid) {
+        StringWriter xmlStr = new StringWriter();
+        String str = null;
+        XmlSerializer serializer = Xml.newSerializer();
+        try {
+            serializer.setOutput(xmlStr);
+            serializer.startDocument("UTF-8", false);
+            serializer.startTag(null, "m").attribute(null, "module", "SCSP").
+                    attribute(null, "version", "1.1");
+            serializer.startTag(null, "b").attribute(null, "action", "REQUEST").
+                    attribute(null, "command", "LOGINAUTH").endTag(null, "b");
+            serializer.startTag(null, "y").startTag(null, "x").attribute(null, "loginType", "5").
+                    attribute(null, "account", account).attribute(null, "password", password).attribute(null, "sid", sid)
+                    .endTag(null, "x").endTag(null, "y");
+            serializer.endTag(null, "m");
+            serializer.endDocument();
+            str = String.valueOf(xmlStr);
+            xmlStr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/xml"), str);
+        return mAPIFunction.loginInfo(requestBody);
+    }
+	
+	
+@POST("/loginInfo")
+Observable<ResponseBody> loginInfo(@Body RequestBody requestBody);
