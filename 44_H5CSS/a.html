@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="gb2312">
+<head>
+<style>
+</style>
+<script>
+	//1124*634
+	//using class resizable 
+	//center_h 横向居中
+	//center_v 纵向居中
+	//gravity_h span文本横向居中
+	//gravity_v span文本纵向居中
+	(function() {
+		var sw, sh;
+		function CyanLayout() {
+
+		}
+
+		//我们这个类的功能是让控件的大小是按照一个满屏进行计算，而不是传统css的方式
+		CyanLayout.prototype.relayout = function() {
+			sw = (document.documentElement.clientWidth || document.body.clientWidth)
+			sh = (document.documentElement.clientHeight || document.body.clientHeight)
+
+			if (sw > document.body.offsetWidth) {
+				sw = document.body.offsetWidth;
+			}
+			/*
+			var s = "";
+			s += " 网页可见区域宽："+  (document.documentElement.clientWidth || document.body.clientWidth);
+			s += " 网页可见区域高："+  (document.documentElement.clientHeight || document.body.clientHeight);
+			s += " 网页可见区域宽："+ document.body.offsetWidth +" (包括边线和滚动条的宽)";
+			s += " 网页可见区域高："+ document.body.offsetHeight +" (包括边线的宽)";
+			s += " 网页正文全文宽："+ document.body.scrollWidth;
+			s += " 网页正文全文高："+ document.body.scrollHeight;
+			s += " 网页被卷去的高："+ document.body.scrollTop;
+			s += " 网页被卷去的左："+ document.body.scrollLeft;
+			s += " 网页正文部分上："+ window.screenTop;
+			s += " 网页正文部分左："+ window.screenLeft;
+			s += " 屏幕分辨率的高："+ window.screen.height;
+			s += " 屏幕分辨率的宽："+ window.screen.width;
+			s += " 屏幕可用工作区高度："+ window.screen.availHeight;
+			s += " 屏幕可用工作区宽度："+ window.screen.availWidth;
+			s += " 你的屏幕设置是 "+ window.screen.colorDepth +" 位彩色";
+			s += " 你的屏幕设置 "+ window.screen.deviceXDPI +" 像素/英寸";
+			console.log(s)
+			 */
+			//修改布局大小
+			var el = document.getElementsByClassName("resizable");
+			for (var i = 0; i < el.length; i++) {
+				var e = el[i];
+				var w = parseFloat(e.style.width.replace("%", "")) / 100 * sw;
+				var h = parseFloat(e.style.height.replace("%", "")) / 100 * sh;
+				//计算出控件应该的宽高
+				e.style.width = w + "px";
+				e.style.height = h + "px";
+			}
+			//修改横向居中
+			el = document.getElementsByClassName("center_h");
+			for (var i = 0; i < el.length; i++) {
+				var e = el[i];
+				e.style.marginTop = "0px";
+				e.style.marginBottom = "0px";
+				e.style.marginLeft = "auto";
+				e.style.marginRight = "auto";
+			}
+			//修改纵向居中
+			el = document.getElementsByClassName("center_v");
+			for (var i = 0; i < el.length; i++) {
+				var e = el[i];
+				e.style.position="relative";
+				var mt=(parseFloat(e.parentNode.style.height.replace("px",""))-parseFloat(e.style.height.replace("px","")))/2	
+				e.style.top=mt+"px"
+			}
+		}
+
+		window.$cyanlayout = new CyanLayout();
+	})()
+
+	if (document.all) {
+		window.attachEvent("onload", initLoad)
+	} else {
+		window.addEventListener("load", initLoad, false)
+	}
+
+	function initLoad() {
+		$cyanlayout.relayout()
+		try {
+			//页面实现这个方法就会调用
+			if (pageLoad) {
+				pageLoad()
+			}
+		} catch (e) {
+		}
+	}
+
+	function page1Load() {
+		alert(1)
+	}
+</script>
+</head>
+<body>
+	<div class="resizable center_h"
+		style="width: 80%; height: 25%; background: #f00;"></div>
+	<div class="resizable center_h"
+		style="width: 98%; height: 4%; background: #0f0;"></div>
+	<div class="resizable center_h"
+		style="width: 80%; height: 68%; background: #00f;">
+		<div class="resizable center_h center_v"
+			style="width: 75%; height: 65%; background: #39A"></div>
+	</div>
+</body>
+</html>
