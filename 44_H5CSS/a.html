@@ -5,26 +5,7 @@
 </style>
 <script>
 	//1124*634
-	//using class resizable 
-	//center_h 横向居中
-	//center_v 纵向居中
-	//gravity_h span文本横向居中
-	//gravity_v span文本纵向居中
-	(function() {
-		var sw, sh;
-		function CyanLayout() {
-
-		}
-
-		//我们这个类的功能是让控件的大小是按照一个满屏进行计算，而不是传统css的方式
-		CyanLayout.prototype.relayout = function() {
-			sw = (document.documentElement.clientWidth || document.body.clientWidth)
-			sh = (document.documentElement.clientHeight || document.body.clientHeight)
-
-			if (sw > document.body.offsetWidth) {
-				sw = document.body.offsetWidth;
-			}
-			/*
+    /*
 			var s = "";
 			s += " 网页可见区域宽："+  (document.documentElement.clientWidth || document.body.clientWidth);
 			s += " 网页可见区域高："+  (document.documentElement.clientHeight || document.body.clientHeight);
@@ -44,6 +25,25 @@
 			s += " 你的屏幕设置 "+ window.screen.deviceXDPI +" 像素/英寸";
 			console.log(s)
 			 */
+	//using class resizable 
+	//center_h 横向居中
+	//center_v 纵向居中
+	//gravity_h span文本横向居中
+	//gravity_v span文本纵向居中
+	(function() {
+		var sw, sh;
+		function CyanLayout() {
+
+		}
+
+		//我们这个类的功能是让控件的大小是按照一个满屏进行计算，而不是传统css的方式
+		CyanLayout.prototype.relayout = function() {
+			sw = (document.documentElement.clientWidth || document.body.clientWidth)
+			sh = (document.documentElement.clientHeight || document.body.clientHeight)
+
+			if (sw > document.body.offsetWidth) {
+				sw = document.body.offsetWidth;
+			}
 			//修改布局大小
 			var el = document.getElementsByClassName("resizable");
 			for (var i = 0; i < el.length; i++) {

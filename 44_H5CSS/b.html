@@ -2,6 +2,10 @@
 <html lang="gb2312">
 <head>
 <style>
+body {
+	padding: 0px;
+	margin: 0px
+}
 </style>
 <script>
 	//1124*634
@@ -20,10 +24,12 @@
 		CyanLayout.prototype.relayout = function() {
 			sw = (document.documentElement.clientWidth || document.body.clientWidth)
 			sh = (document.documentElement.clientHeight || document.body.clientHeight)
-
+			/*
 			if (sw > document.body.offsetWidth) {
 				sw = document.body.offsetWidth;
 			}
+			*/
+			alert("w="+sw+",h="+sh);
 			/*
 			var s = "";
 			s += " ÍøÒ³¿É¼ûÇøÓò¿í£º"+  (document.documentElement.clientWidth || document.body.clientWidth);
@@ -102,11 +108,16 @@
 </head>
 <body>
 	<div class="resizable center_h"
-		style="width: 80%; height: 20%; background: #f00;"></div>
+		style="width: 80%; height: 20%; background: #f00;">
+		<div class="resizable center_h"
+			style="width: 80%; height: 2%; background: #f00;"></div>
+		<div class="resizable center_h"
+			style="width: 80%; height: 18%; background: #ff0;"></div>
+	</div>
 	<div class="resizable center_h"
 		style="width: 98%; height: 5%; background: #0f0;"></div>
 	<div class="resizable center_h"
-		style="width: 80%; height: 72%; background: #00f;">
+		style="width: 80%; height: 75%; background: #00f;">
 		<div class="resizable center_v"
 			style="float: left; width: 25%; height: 72%; background: #39A;">
 			<div class="resizable center_v center_h"
