@@ -1,0 +1,4 @@
+ //如果是css表内的样式
+                    var crtstyle = domElement.currentStyle ||  domElement.ownerDocument.defaultView.getComputedStyle( domElement, null);// 前者用于IE，后者FF
+				
+					
