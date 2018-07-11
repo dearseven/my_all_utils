@@ -1,0 +1,6 @@
+一般来说去项目的
+gradle.properties
+android.enableAapt2=false
+
+但是有时候设置了还不行，看builde的过程发现有一个错误
+AAPT err(Facade for): libpng error: Not a PNG file
