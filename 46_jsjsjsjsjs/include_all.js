@@ -1,18 +1,31 @@
+window.$_id =
+	function(id) {
+		return document.getElementById(id);
+	}
+
+function getNumberOfWH(wh) {
+	return parseFloat(wh.replace("px", "").replace("PX", ""));
+}
 /**
  * 这个js放在要做逻辑js的下方！ Created by wx on 2016/11/11.
  */
-document.write("<script src='./cyans/js/req_param.js?ts="
-		+ new Date().getTime() + "' ></script>");
-document.write("<script src='./cyans/js/Iterator.js?ts=" + new Date().getTime()
-		+ "' ></script>");
-document.write("<script src='./cyans/js/server_api.js?ts="
-		+ new Date().getTime() + "' ></script>");
-
-document.write("<script src='./cyans/js/jbase64.js?ts=" + new Date().getTime()
-		+ "' ></script>");
-
-document.write("<script src='./cyans/js/for_ie.js?ts=" + new Date().getTime()
-		+ "' ></script>");
+document.write("<script src='../js/basejs2.js?ts=" + new Date().getTime() +
+	"' ></script>");
+document.write("<script src='../js/basefocus.js?ts=" + new Date().getTime() +
+	"' ></script>");
+document.write("<script src='../js/Iterator.js?ts=" + new Date().getTime() +
+	"' ></script>");
+document.write("<script src='../js/dataandelement.js?ts=" + new Date().getTime() +
+	"' ></script>");
+document.write("<script src='../js/pagepointer.js?ts=" + new Date().getTime() +
+	"' ></script>");
+//
+document.write("<script src='../js/jquery-3.3.1.slim.min.js?ts=" + new Date().getTime() +
+	"' ></script>");
+document.write("<script src='../js/vue.js?ts=" + new Date().getTime() +
+	"' ></script>");
+document.write("<script src='../js/server_api.js?ts=" + new Date().getTime() +
+	"' ></script>");
 
 String.prototype.trim = function() {
 	return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -22,6 +35,41 @@ String.prototype.ltrim = function() {
 }
 String.prototype.rtrim = function() {
 	return this.replace(/(\s*$)/g, "");
+}
+
+
+// endWith
+String.prototype.endsWith = function(str) {
+	if(str == null || str == "" || this.length == 0 || str.length > this.length)
+		return false;
+	if(this.substring(this.length - str.length) == str)
+		return true;
+	else
+		return false;
+	return true;
+}
+
+// startWith
+String.prototype.startsWith = function(str) {
+	if(str == null || str == "" || this.length == 0 || str.length > this.length)
+		return false;
+	if(this.substr(0, str.length) == str)
+		return true;
+	else
+		return false;
+	return true;
+}
+//包含
+String.prototype.contains = function(str) {
+	if(str == null || str == "" || this.length == 0 || str.length > this.length) {
+		return false;
+	}
+	if(this.indexOf(str) >= 0) {
+		return true;
+	} else {
+		return false;
+	}
+	return true;
 }
 
 /**
@@ -45,10 +93,10 @@ function addDate(date, days) {
 	d.setDate(d.getDate() + days);
 	var month = d.getMonth() + 1;
 	var day = d.getDate();
-	if (month < 10) {
+	if(month < 10) {
 		month = "0" + month;
 	}
-	if (day < 10) {
+	if(day < 10) {
 		day = "0" + day;
 	}
 	var val = d.getFullYear() + "" + month + "" + day;
@@ -92,10 +140,10 @@ function addDate(date, days) {
  * 使用方法：_cyRegBox.regName.test(_regName)返回false就是不正确
  */
 var _cyRegBox = {
-	regEmail : /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,// 邮箱
-	regName : /^[a-zA-Z][a-zA-Z0-9_-]{0,30}$/,// 用户名
-	regMobile : /^0?1[3|4|5|8][0-9]\d{8}$/,// 手机
-	regTel : /^0[\d]{2,3}-[\d]{7,8}$/
+	regEmail: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, // 邮箱
+	regName: /^[a-zA-Z][a-zA-Z0-9_-]{0,30}$/, // 用户名
+	regMobile: /^0?1[3|4|5|8][0-9]\d{8}$/, // 手机
+	regTel: /^0[\d]{2,3}-[\d]{7,8}$/
 };
 
 /**
@@ -105,12 +153,12 @@ var _cyRegBox = {
  */
 String.prototype.testUnexpectChar = function() {
 	var pattern = new RegExp(
-			"[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%+_ ]");
+		"[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%+_ ]");
 	var specialStr = "";
-	for (var i = 0; i < this.length; i++) {
+	for(var i = 0; i < this.length; i++) {
 		specialStr += this.substr(i, 1).replace(pattern, '');
 	}
-	if (this == specialStr) {// 没有特殊字符
+	if(this == specialStr) { // 没有特殊字符
 		return true;
 	} else {
 		return false;
@@ -120,14 +168,14 @@ String.prototype.testUnexpectChar = function() {
 function _isContentChinese(str) {
 	var reg = /^[u4E00-u9FA5]+$/;
 	var flag = false;
-	for (var i = 0; i < str.length; i++) {
+	for(var i = 0; i < str.length; i++) {
 		var c = str.charAt(i);
-		if (reg.test(c) || c == " " || c == "" || c == "'" || c == "$"
-				|| ("\\" + c) == "\\\"" || c == "," || c == "." || c == "<"
-				|| c == ">" || c == ";" || c == "(" || c == ")" || c == "!"
-				|| c == "?" || c == "[" || c == "]" || c == "%" || c == "@"
-				|| c == "&" || c == "u" || c == "v" || c == "w" || c == "x"
-				|| c == "y" || c == "z") {
+		if(reg.test(c) || c == " " || c == "" || c == "'" || c == "$" ||
+			("\\" + c) == "\\\"" || c == "," || c == "." || c == "<" ||
+			c == ">" || c == ";" || c == "(" || c == ")" || c == "!" ||
+			c == "?" || c == "[" || c == "]" || c == "%" || c == "@" ||
+			c == "&" || c == "u" || c == "v" || c == "w" || c == "x" ||
+			c == "y" || c == "z") {
 			// return false;
 			continue;
 		} else {
@@ -146,7 +194,7 @@ function _isContentChinese(str) {
  */
 function replaceQuotes(str) {
 	return str.replace(/'/g, "\\\'").replace(/"/g, "\\\"").replace(/“/g, "\\“")
-			.replace(/”/g, "\\”");
+		.replace(/”/g, "\\”");
 }
 
 // function _$_CheckChinese(obj, val) {
@@ -161,7 +209,7 @@ function replaceQuotes(str) {
 
 function _$_CheckChinese(val) {
 	var reg = /^[\u4E00-\u9FA5]+$/;
-	if (!reg.test(val)) {
+	if(!reg.test(val)) {
 		alert("不是中文");
 		return false;
 	}
@@ -169,18 +217,18 @@ function _$_CheckChinese(val) {
 }
 
 function _$_CheckIlegallChar(val) {
-	for (var i = 0; i < val.length; i++) {
+	for(var i = 0; i < val.length; i++) {
 		var c = val.charAt(i);
-		if (c == "'" || c == "$" || ("\\" + c) == "\\\"" || c == ","
-				|| c == "." || c == "<" || c == ">" || c == ";" || c == "("
-				|| c == ")" || c == "!" || c == "?" || c == "[" || c == "]"
-				|| c == "%" || c == "@" || c == "&" || c == "{" || c == "}"
-				|| c == "+" || c == "-" || c == "#" || c == "/" || c == "*"
-				|| c == "~" || c == "。" || c == "^" || c == "~" || c == "！"
-				|| c == "@" || c == "#" || c == "￥" || c == "%" || c == "……"
-				|| c == "&" || c == "*" || c == "（" || c == "）" || c == "——"
-				|| c == "+" || c == "<" || c == ">" || c == "?" || c == ":"
-				|| c == "`" || c == "+") {
+		if(c == "'" || c == "$" || ("\\" + c) == "\\\"" || c == "," ||
+			c == "." || c == "<" || c == ">" || c == ";" || c == "(" ||
+			c == ")" || c == "!" || c == "?" || c == "[" || c == "]" ||
+			c == "%" || c == "@" || c == "&" || c == "{" || c == "}" ||
+			c == "+" || c == "-" || c == "#" || c == "/" || c == "*" ||
+			c == "~" || c == "。" || c == "^" || c == "~" || c == "！" ||
+			c == "@" || c == "#" || c == "￥" || c == "%" || c == "……" ||
+			c == "&" || c == "*" || c == "（" || c == "）" || c == "——" ||
+			c == "+" || c == "<" || c == ">" || c == "?" || c == ":" ||
+			c == "`" || c == "+") {
 			return true;
 		}
 	}
@@ -196,9 +244,9 @@ function _$_CheckIlegallChar(val) {
 
 /*
  * document.write("<script src='./cyans/js/alarm.js?ts=" + new Date().getTime() + "' ></script>");
- */
+ 
 document.write("<script src='./cyans/js/cyans_load.js?ts="
-		+ new Date().getTime() + "' ></script>");
+		+ new Date().getTime() + "' ></script>");*/
 //
 // if (e && e.stopPropagation) {// 阻止非IE事件冒泡
 // e.stopPropagation();
