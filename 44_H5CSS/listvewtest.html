@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.f {
+				color: white;
+			}
+			
+			.b {
+				color: black;
+			}
+		</style>
+		<script>
+			/**
+			 * 
+			 * @param {Object} height 可显示的总高度
+			 * @param {Object} root 填充数据的容器，dom元素
+			 * @param {Object} scroller 滚动的dom元素
+			 * @param {Object} data 数据 ，数组
+			 * @param {Object} views 数组，是html元素字符串
+			 * @param {Object} initSize 初始化的时候初始数据个数,
+			 * 最好的
+			 * 次好的做法是让可以显示的大小刚不是刚好填充完整的控件，比如可以显示4个办的样子，那么初始化大小为5
+			 * @param {Object} viewTypeFunction 因为views是一个数组，所以可能有多个不同的view，这个方法返回用哪个view,以及高度
+			 * 所以这个方法返回的是数组
+			 * @param {Object} createViewFucntion 这个方法是回调的，其实就是把数据和view绑在一起
+			 */
+			function RecyclerView(height, root, scroller, data, views, initSize, viewTypeFunction, createViewFucntion) {
+				this.viewTypeFunction = viewTypeFunction;
+				this.scroller = scroller;
+				this.createViewFucntion = createViewFucntion;
+				this.root = root;
+				this.data = data;
+				this.views = views;
+				this.initSize = initSize;
+				//this.updateDis = updateDis;
+				this.index = 0; //索引 
+				this.drawIndex = 0; //往下绘制到的索引
+				this.preDrawIndex = 0; //往上绘制的索引
+				this.inited = false; //是否初始化过了
+				this.measureArr = {}; //用于保留显示view的高度
+				this.height = height;
+				this.focusClaz = "";
+				this.blurClaz = "";
+			}
+			RecyclerView.prototype.setFocusClass = function(n) {
+				this.focusClaz = n;
+			}
+			RecyclerView.prototype.setBlurClass = function(n) {
+				this.blurClaz = n;
+			}
+			RecyclerView.prototype.getSize = function() {
+				return this.data.length;
+			}
+
+			//获得实例以后可以初始化
+			RecyclerView.prototype.init = function() {
+				if(this.inited == false) {
+					this.inited = true;
+					var min = this.initSize < this.data.length ? this.initSize : this.data.length;
+					for(i = 0; i < min; i++) {
+						var v = this.getViewDown();
+						this.root.innerHTML += v;
+						this.drawIndex++;
+					}
+
+					if(min > 0)
+						document.getElementById("RecyclerView0").className = this.focusClaz;
+				}
+			}
+
+			/**
+			 * 用户当前上下移动，
+			 * @param {Object} upOrDown 上1 ,下2
+			 * @param {Object} index 当前是谁
+			 */
+			RecyclerView.prototype.setCurrentIndex = function(upOrDown, index) {
+				this.index = index;
+				//console.log(this.height + ",用户移动:" + (upOrDown == 1 ? "上" : "下") + "，索引:" + index + ",滚动:" + c.scrollTop);
+				if(index < this.preDrawIndex + this.initSize / 2 - 1 && this.preDrawIndex != 0 && this.root.children.length < 2 * this.initSize) {
+					console.log(index + ",添加尾部数据，移除头部数据，" + (this.preDrawIndex - 1));
+					this.preDrawIndex--;
+					var v = this.getViewUp();
+					this.root.innerHTML = v + this.root.innerHTML;
+					this.drawIndex--;
+					this.root.removeChild(document.getElementById("RecyclerView" + this.drawIndex));
+				} else if(index > this.drawIndex - this.initSize / 2 && this.drawIndex != this.data.length && this.root.children.length < 2 * this.initSize) {
+					console.log(index + ",添加尾部数据，移除头部数据，" + (this.drawIndex - 1));
+					var v = this.getViewDown();
+					this.drawIndex++;
+					this.root.innerHTML += v;
+					this.root.removeChild(document.getElementById("RecyclerView" + this.preDrawIndex));
+					this.preDrawIndex++;
+				}
+
+				if(upOrDown == 1) {
+					document.getElementById("RecyclerView" + (index + 1)).className = this.blurClaz;
+				} else {
+					document.getElementById("RecyclerView" + (index - 1)).className = this.blurClaz;
+				}
+				document.getElementById("RecyclerView" + (index)).className = this.focusClaz;
+
+				if(index == this.data.length - 1) {
+					this.scroller.scrollTop = (index + 0) * this.measureArr[index];
+				} else if(index == 0) {
+					this.scroller.scrollTop = 0;
+				}
+
+			}
+
+			/**
+			 * 不要在外部调用这个方法，往上方填充view
+			 * @param {Object} viewTypeFunction
+			 * @param {Object} createViewFucntion
+			 */
+			RecyclerView.prototype.getViewUp = function() {
+				var v = this.views[0];
+				try {
+					//如果用户写了方法
+					if(this.viewTypeFunction) {
+						var arr = this.viewTypeFunction(this.preDrawIndex);
+						v = this.views[arr[0]];
+						this.measureArr[this.preDrawIndex + ""] = arr[1];
+					}
+				} catch(e) {
+					console.log(e)
+				}
+				try {
+					//如果用户写了方法
+					if(this.createViewFucntion) {
+						v = this.createViewFucntion(v, this.data[this.preDrawIndex], this.preDrawIndex);
+						console.log("2 " + v)
+					}
+				} catch(e) {
+					console.log(e)
+				}
+				v = "<div id='RecyclerView" + this.preDrawIndex + "'>" + v + " </div> "
+				return v;
+			}
+
+			/**
+			 * 不要在外部调用这个方法，往下方填充view
+			 * @param {Object} viewTypeFunction
+			 * @param {Object} createViewFucntion
+			 */
+			RecyclerView.prototype.getViewDown = function() {
+				var v = this.views[0];
+				try {
+					//如果用户写了方法
+					if(this.viewTypeFunction) {
+						var arr = this.viewTypeFunction(this.drawIndex);
+						v = this.views[arr[0]];
+						this.measureArr[this.drawIndex + ""] = arr[1];
+					}
+				} catch(e) {
+					console.log(e)
+				}
+				try {
+					//如果用户写了方法
+					if(this.createViewFucntion) {
+						v = this.createViewFucntion(v, this.data[this.drawIndex], this.drawIndex);
+						console.log("2 " + v)
+					}
+				} catch(e) {
+					console.log(e)
+				}
+				v = "<div id='RecyclerView" + this.drawIndex + "'>" + v + " </div> "
+				return v;
+			}
+		</script>
+		<script>
+			//--------start-配合recyclerview
+			function switchType(index) {
+				return [0, 50];//其实所有item的高度都是五十。。。。哈哈哈 这个代码没有适应控件高度不一致的情况，只有一种item类型，所以也返回的是0
+			}
+
+			function createV(v, oneData, index) {
+				//替换view string 里面的数据
+				v = v.replace("{1}", oneData.id).replace("{2}", oneData.msg)
+					.replace("{3}", oneData.img);
+				return v;
+			}
+			//--------end-配合recyclerview
+
+			//				var c = document.getElementById("c");
+			//
+			//				alert(c.scrollTop)
+			//				c.scrollTop = 100 ;
+			//				alert(c.scrollTop)
+
+			var elmt = "<div id='{1}' style='height:100px;'>{2}<img src='{3}' style='display: block;height:20px;width:50px;'/></div>"
+			window.$id = function(id) {
+				return document.getElementById(id);
+			}
+			// 数据arr
+			var data = []
+			//recyclerview组件
+			var rv = null;
+			//记录list当前的焦点
+			var index = 0;
+
+			function testRun() {
+				// 填充一些数据
+				for(var i = 0; i < 40; i++) {
+					data.push({
+						id: "id" + i,
+						img: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531890833250&di=7bdce71386f9fb7c6c08964f3aa91dd3&imgtype=0&src=http%3A%2F%2Fpic2.52pk.com%2Ffiles%2F170209%2F7229806_093408_8526.jpg",
+						msg: "我是" + i
+					});
+				}
+				//初始化组件
+				rv = new RecyclerView(500, $id("b"), $id("c"), data, [elmt], 5, switchType, createV);
+				rv.setFocusClass("f");
+				rv.setBlurClass("b")
+				rv.init();
+				//
+				//				//先填充30条数据
+				//				for(var i = 0; i < 30; i++) {
+				//					var el = elmt.replace("{1}", i).replace("{2}", "我是第" + i + "个")
+				//						.replace("{3}", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531890833250&di=7bdce71386f9fb7c6c08964f3aa91dd3&imgtype=0&src=http%3A%2F%2Fpic2.52pk.com%2Ffiles%2F170209%2F7229806_093408_8526.jpg");
+				//					ctn.innerHTML += el;
+				//				}
+				//
+				//				aabb.apply(this, [3, 5])
+			}
+
+			//			function aabb(v, b) {
+			//				alert("123")
+			//				alert(v + " " + b);
+			//			}
+
+			window.onkeydown = function(e) {
+				//alert(e.keyCode)
+				if(e.keyCode == 38) {
+					if(index > 0) {
+						rv.setCurrentIndex(1, --index);
+					}
+				} else if(e.keyCode = 40) {
+					if(index < data.length - 1) {
+						rv.setCurrentIndex(2, ++index);
+					}
+
+				}
+			}
+		</script>
+		<!--<script src="../js/include_all.js"></script>-->
+		<!--		<script src="../js/focus_data_index.js"></script>
+-->
+	</head>
+
+	<body onload="testRun()">
+		<div id="a" style="height: 500px;width: 100px;background: #FFA500;">
+			<div id="c" style="height: 100%;overflow: hidden;">
+				<div id="b"></div>
+			</div>
+		</div>
+	</body>
+
+</html>
