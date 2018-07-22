@@ -1,4 +1,0 @@
-@Deprecated("直接调用系统的选取页面，先不用这个")
-class XXXActivity : BaseCompatActivity() {
-......
-}
