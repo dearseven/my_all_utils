@@ -1,0 +1,28 @@
+假设我这样引入了一个js
+document.write("<script  id='_$mp$_' src='../js/myplayer.js?ts=" + new Date().getTime() +
+		"&wper=99.0&hper=99.0&ctn=cyanroot' ></script>");
+这个时候在对应的js文件myplayer中
+
+(function() {
+	var scripts = $_id("_$mp$_"); //给了那个js的标签一个id 这个id就是_$mp$_
+	//获取引用字符串
+	var scriptSrc = scripts.src;
+	var paras = scriptSrc.split("?")[1].split("&")
+	//拆分数据放入json
+	var params = {}
+	for(var i in paras) {
+		var kv = paras[i].split("=");
+		params[kv[0]] = kv[1];
+	}
+	//1秒后调用init，当然这个1秒其实无所谓啦
+	window.setTimeout(function() {
+		init();
+	}, 1000);
+
+	/**
+	 * 初始化，
+	 */
+	function init() {		
+		alert(params.wper+" "+params.hper+" "+params.ctn);
+	}
+})()
