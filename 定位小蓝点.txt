@@ -1,0 +1,204 @@
+
+
+在动画片里经常听到：いいじゃない这句话，网上的回答都各不一样，有说是表反问，
+即“不好吗？”；有的说是“不是挺好的吗？”；还有说是“好不？”的等等，请问いいじゃない
+这句话到底是什么意思啊、、、要准确的！！~ 于这句话相近的，
+还有： いいじゃないか（升调） いいじゃないか（降调） いいじゃないよ いいんじゃない いいじゃないん 
+这几个，都各是什么意思呀，请高手指点~~~
+
+要弄清这个问题，首先要了解日本人的语言习惯，  日本人在阐述一个观点时，为了表示委婉、缓和，不会像中文那样很肯定直接的说明，
+在用词上很多时候会使用 “ではない”来实现这种表达。   看下面这个句子   親方様は「一緒にこの国を築こうではないか」と仰いました。
+主公说：“让我们一起创造这个国家吧”。   それが一番な方法ではないかと思っております。  我觉得这是最好的方法。   
+可以看出中文都是直接表述，  而日语用了相对婉转，征求对方语气的表达ではないか来实现   じゃないか 是ではないか的口语表现形式，
+いいじゃないか 通常的含义就是反问表肯定 “不是挺好吗”   还有，这いいじゃないか 并不存在明显的升调或降调，か这个疑问助词本来就读升调。
+只有いいじゃない 存在升调或降调  いいじゃない（升调） = いいじゃないか ，是一种省略说法  表示“不是挺好吗” 
+いいじゃない（降调） = ではない正常表示否定的用法 即“不好”   另外还有一种情况，若要表达“是不好吗？”的意思  
+日语为“いいじゃないですか”或“いいじゃないか”，  但这容易引起误解，所以在书写时要作如下处理   
+いいじゃない、ですか 或 いいじゃない、か   在读的时候いいじゃない和か（ですか）之间要有停顿，这样才能加以区分。 
+这下应该可以搞清楚之间的关系了。
+  
+  
+ api.getRoomList(String.valueOf(RequestHelper.getUserID()));  //通过获取智能家居的一级菜单，筛选出场景这个菜单
+ getPointList() //获取场景种类,此接口已经包括了场景的设备信息
+ 
+
+ 
+行く　行きます　行け　行こう　行かない　行ける　行けば　行かれる　生かせる
+食べる　食べます　　たべろ　食べよう　食べない　食べられる　食べれば　食べられる　食べさせる
+くる　来ます　こい　　こよう　来ない　　来られる　来れば　来られる　こさせる
+する　します　しろ　　しよう　　しない　できる　すれば　される　させる　
+
+
+
+ msg.id = it.getInt("id")
+                                msg.timeStr = it.getString("createTime")
+                                msg.dataStr = it.getString("createDate")
+                                msg.equipId = it.getString("equipmentId")
+                                msg.type = 1
+                                msg.description1 = it.getString("equipmentName")
+                                msg.description2 = it.getString("instructionsDesc")
+                                msg.readStatus = it.getInt("isRead")
+                                msg.msgFlag = it.getInt("instructionsType")
+
+public class FragmentMap extends Fragment implements LocationSource, AMapLocationListener{
+       private static FragmentMap fragment = null;
+       @ViewInject(R.id.map)
+       private MapView mapView;
+       private AMap aMap;
+       private View mapLayout;
+       private OnLocationChangedListener mListener;
+       private LocationManagerProxy mAMapLocationManager;
+
+       public static Fragment newInstance() {
+          if (fragment == null) {
+             synchronized (FragmentMap.class) {
+                 if (fragment == null) {
+                      fragment = new FragmentMap();
+
+                 }
+           }
+        }
+       return fragment;
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+          Bundle savedInstanceState) {
+          if (mapLayout == null) {
+          mapLayout = inflater.inflate(R.layout.fragment_map, null);
+          ViewUtils.inject(this, mapLayout);
+          mapView.onCreate(savedInstanceState);
+
+         if (aMap == null) {
+              aMap = mapView.getMap();
+              aMap.setLocationSource(this);// 设置定位监听
+              aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
+              aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+              // 自定义系统定位蓝点
+              MyLocationStyle myLocationStyle = new MyLocationStyle();
+              // 自定义定位蓝点图标
+              myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.content_btn_location));
+             // 将自定义的 myLocationStyle 对象添加到地图上
+             aMap.setMyLocationStyle(myLocationStyle);
+             // 构造 LocationManagerProxy 对象
+            mAMapLocationManager = LocationManagerProxy.getInstance(getActivity());
+          }
+          } else {
+                  if (mapLayout.getParent() != null) {
+                        ((ViewGroup) mapLayout.getParent()).removeView(mapLayout);
+                  }
+           }
+      return mapLayout;
+     }
+   @Override
+   public void onAttach(Activity activity) {
+       super.onAttach(activity);
+    }
+
+   @Override
+   public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+  @Override
+  public void onResume() {
+      super.onResume();
+      mapView.onResume();
+   }
+
+/**
+* 方法必须重写
+* map的生命周期方法
+*/
+  @Override
+  public void onPause() {
+       super.onPause();
+       mapView.onPause();
+       deactivate();
+  }
+
+/**
+* 方法必须重写
+* map的生命周期方法
+*/
+ @Override
+ public void onSaveInstanceState(Bundle outState) {
+      super.onSaveInstanceState(outState);
+      mapView.onSaveInstanceState(outState);
+ }
+
+/**
+* 方法必须重写
+* map的生命周期方法
+*/
+ @Override
+  public void onDestroy() {
+     super.onDestroy();
+     mapView.onDestroy();
+  }
+
+ @Override
+ public void onLocationChanged(AMapLocation aMapLocation) {
+      if (mListener != null &amp;amp;&amp;amp; aMapLocation != null) {
+          if (aMapLocation.getAMapException().getErrorCode() == 0) {
+               mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
+
+              //获取位置信息
+             geoLat = aMapLocation.getLatitude();
+             geoLng = aMapLocation.getLongitude();
+             aMap.moveCamera(CameraUpdateFactory.zoomTo(14));
+
+          }
+
+    }
+ }
+
+@Override
+public void onLocationChanged(Location location) {
+
+}
+
+@Override
+public void onStatusChanged(String provider, int status, Bundle extras) {
+
+}
+
+@Override
+public void onProviderEnabled(String provider) {
+
+}
+
+@Override
+public void onProviderDisabled(String provider) {
+
+}
+
+//激活定位
+@Override
+public void activate(OnLocationChangedListener listener) {
+        mListener = listener;
+        if (mAMapLocationManager == null) {
+             mAMapLocationManager = LocationManagerProxy.getInstance(getActivity());
+         //此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+         //注意设置合适的定位时间的间隔，并且在合适时间调用removeUpdates()方法来取消定位请求
+         //在定位结束后，在合适的生命周期调用destroy()方法
+         //其中如果间隔时间为-1，则定位只定一次
+          mAMapLocationManager.requestLocationData(LocationProviderProxy.AMapNetwork, 60 * 1000, 10, this);
+        }
+  }
+
+//停止定位
+@Override
+public void deactivate() {
+      mListener = null;
+      if (mAMapLocationManager != null) {
+           mAMapLocationManager.removeUpdates(this);
+           mAMapLocationManager.destroy();
+       }
+     mAMapLocationManager = null;
+    }
+}
+
+
+
+
+
