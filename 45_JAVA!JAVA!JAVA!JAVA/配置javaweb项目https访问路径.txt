@@ -1,0 +1,31 @@
+配置javaweb项目https访问路径
+（tomcat用的是7）
+1 生成证书（自己查资料）
+
+2 项目xml文件中加入，路径可以针对servlet或者页面都行，针对页面的话，那页面的servlet都是https的。
+	<login-config>
+		<!-- Authorization setting for SSL -->
+		<auth-method>CLIENT-CERT</auth-method>
+		<realm-name>Client Cert Users-only Area</realm-name>
+	</login-config>
+	<security-constraint>
+		<!-- Authorization setting for SSL -->
+		<web-resource-collection>
+			<web-resource-name>SSL</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+3 找到tomcat的ssl配置（应该默认是注释掉了，端口号是8443）
+加入属性
+keystoreFile="x:\apache-tomcat-7.x.x\conf\xxx.keystore"
+keystorePass="xxxxxx"
+
+4启动tomcat7貌似会报错
+ Connector attribute SSLCertificateFile must be defined when using SSL with APR
+找到server.xml中
+<Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" /> 
+注释掉

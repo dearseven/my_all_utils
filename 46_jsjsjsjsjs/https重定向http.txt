@@ -1,0 +1,23 @@
+1 假设项目的登录页+servlet是https，项目的主页也是https，但是主页有一个连接需要是http的。这个时候如果点击这个连接（只能写全路径的http://xxxxx）会发现session丢失。
+
+2 解决方法
+cookie2是解决方案。cookie是我里面放的一个令牌。在登录的servlet登录成功以后。写这些东西
+				String uuid = UUID.randomUUID().toString();
+				// System.out.println("uuid:"+uuid);
+
+				request.getSession().setAttribute("userToken", uuid);
+				Cookie cookie = new Cookie("userToken", uuid);
+				cookie.setMaxAge(-1);
+				// System.out.println(request.getRequestURL().toString().replace(request.getRequestURI().toString(),
+				// ""));
+				cookie.setPath("/");
+				response.addCookie(cookie);
+
+				//在登录以后创建一个包含JSESSIONID的cookie，从https跳转到http需要用到
+				final Cookie cookie2 = new Cookie("JSESSIONID", request
+						.getSession().getId());
+				cookie2.setMaxAge(-1);// no store
+				cookie2.setSecure(false);
+				cookie2.setPath("/");//request.getContextPath());
+				cookie2.setHttpOnly(true);
+				response.addCookie(cookie2);
