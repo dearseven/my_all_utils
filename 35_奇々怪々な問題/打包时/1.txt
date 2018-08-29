@@ -1,0 +1,48 @@
+用Android Studio打包签名apk时,偶尔会遇到了一个问题，总结一下。
+(Errors while building APK. You can find the errors in the 'Messages' view.)
+
+1：Messages报错：
+
+Error:Execution failed for task ':app:lintVitalRelease'.
+> Lint found fatal errors while assembling a release target.
+To proceed, either fix the issues identified by lint, or modify your build script as follows:
+...
+android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+...
+方法：
+
+在app的build.gradle里的android{}中添加如下代码,然后再次运行Generate Signed Apk。
+
+android{
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+2：Messages报错：
+
+Error:Execution failed for task ':app:transformClassesWithJarMergingForDebug'.
+
+com.android.build.transform.api.TransformException: java.util.zip.ZipException: duplicate entry: android/support/v7/cardview/BuildConfig.class
+解决方法：
+
+那就是说明你在工程中libs文件夹或是build.gradle中引用了重复的依赖包或是依赖工程，自己Ctrl+N，输入BackStackState查找一下是哪个包重复，那么久删除相应的依赖即可。
+
+3：Messages报错：
+
+dexDebug ExecException finished with non-zero exit value 2
+
+解决方法：
+
+需要在gradle中配置下面的代码，原因是引用了多个libraries文件
+
+defaultConfig {
+        multiDexEnabled true
+}
