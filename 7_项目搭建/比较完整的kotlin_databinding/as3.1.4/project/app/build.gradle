@@ -5,6 +5,10 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     defaultConfig {
         applicationId "chat.sh.orz.cyan.orz"
         minSdkVersion 14
