@@ -1,0 +1,9 @@
+getFragmentManager到的是activity对所包含fragment的Manager，
+而如果是fragment嵌套fragment，那么就需要利用Fragment的getChildFragmentManager()了。
+即：需要管理相互独立的并且隶属于Activity的Fragment使用getFragmentManager（）
+，而在Fragment中动态的添加Fragment要使用getChildFragmetManager（）来管理
+
+也就是将
+Activity::getFragmentManager
+换成
+Fragment::getChildFragmetManager
