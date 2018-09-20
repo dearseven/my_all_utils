@@ -74,6 +74,9 @@ public class CWebView extends WebView {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true);
+		//移动端王爷兼容适配
+	    webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
 
         setWebViewClient(new WebViewClient() {
             @Override
