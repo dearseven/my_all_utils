@@ -1,0 +1,14 @@
+Parameter specified as non-null is null method kotlin.jvm.internal.Intrinsics.checkParameterIsNotNull, parameter data
+
+今天有一个Activity会采用startInstallPermissionSettingActivity
+的方式打开申请安装位置引用的设置页面,然后返回的时候是在
+override fun onActivityResult(...)接受返回的
+然后一开始我是这样写的
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent){
+....
+}
+就报了上面的错,后来发现其实是因为第三个形参data为null,kotlin空检查报错了
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//..
+}
+加上?判断就解决啦
