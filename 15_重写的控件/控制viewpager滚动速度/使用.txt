@@ -1,0 +1,12 @@
+try {
+			Field mScroller;
+			mScroller = ViewPager.class.getDeclaredField("mScroller");
+			mScroller.setAccessible(true);
+			Interpolator sInterpolator = new AccelerateDecelerateInterpolator();
+			FixedScroller scroller = new FixedScroller(advPager.getContext(),
+					sInterpolator);
+			mScroller.set(viewPager, scroller);
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalArgumentException e) {
+		} catch (IllegalAccessException e) {
+		}
