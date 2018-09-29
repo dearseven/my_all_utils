@@ -436,7 +436,8 @@ public class RecyclerViewCalenar extends RecyclerView.Adapter<RecyclerViewCalena
         if (todayC.get(Calendar.YEAR) == c.get(Calendar.YEAR) && todayC.get(Calendar.MONTH) == c.get(Calendar.MONTH)) {
             kd.today = todayC.get(Calendar.DAY_OF_MONTH);
         }
-        //获取这个月的天数
+        //获取这个月的天数****一定要把日期设置到一个每个月都有的日子,不然就会算错,比如今天30号 ,当时把月分选到2月的时候,没设置那么返回的就是3月的最大天数
+		//所以一般我就设置为1号
         kd.maxDayCountOfMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
         //获取这个月的第一天的星期几
         c.set(Calendar.DAY_OF_MONTH, 1);
