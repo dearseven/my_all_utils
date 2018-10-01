@@ -1,1 +1,2 @@
-zai安卓清单文件的package="..."选中要修改的文本部分shift+(Fn)+F6
+﻿zai安卓清单文件的package="..."选中要修改的文本部分shift+(Fn)+F6
+..

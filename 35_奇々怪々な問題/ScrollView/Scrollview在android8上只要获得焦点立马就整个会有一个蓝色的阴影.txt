@@ -1,0 +1,16 @@
+发现一个app的设定的那个页面的Scrollview在android8上只要获得焦点立马就整个会有一个蓝色的阴影
+解决发现是在
+***::disableAutoScrollToBottom写了一段
+里面的代码
+sv是ScrollView的实例
+ sv.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        sv.setFocusable(true);
+        sv.setFocusableInTouchMode(true);
+        sv.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent arg1) {
+                v.requestFocusFromTouch();
+                return false;
+            }
+        });
