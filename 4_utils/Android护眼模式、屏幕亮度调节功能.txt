@@ -1,0 +1,33 @@
+功能实现:就像很多护眼模式的app一样，都是基于开启悬浮窗的方法。相当于弄一个全屏的，半透明的黄色的 悬浮窗遮罩。
+
+我们需要把屏幕亮度调节的做成服务，为了防止后台服务被系统kil，还是弄成前台服务为好。
+
+首先获取windowmanager
+
+mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+然后设置类型
+
+final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+params.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+设置flag
+
+int flag=WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL| WindowManager.LayoutParams.FLAG_FULLSCREEN|
+WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+ 这个参数可以把触摸事件传递到后面去
+
+设置遮罩
+
+params.format = PixelFormat.TRANSLUCENT;
+覆盖导航栏
+
+WindowManager mWindowManager= (WindowManager) context.getSystemService(context.WINDOW_SERVICE);
+ Display display = mWindowManager.getDefaultDisplay();
+ Point p = new Point();
+ display.getRealSize(p);
+ params.width = p.x;
+ params.height = p.y;
+ 在服务里面设置前台
+
+startForeground(1, builder);
+再添加一个颜色选择器，就完成了。
+（比如使用ColorPickerDialog）
