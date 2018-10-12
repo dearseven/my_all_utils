@@ -1,0 +1,35 @@
+webview的销毁并释放资源
+
+if (webView != null) {
+   
+ webView.stopLoading();
+  
+  webView.setWebViewListener(null);
+ 
+   webView.clearHistory();
+   
+ webView.clearCache(true);
+   
+ webView.loadUrl("about:blank");
+  
+  webView.pauseTimers();
+  
+  webView = null;
+
+}
+
+
+webview清除历史记录
+需要在doUpdateVisitedHistory方法中调用clearHistory方法才能起作用
+
+
+@Override
+public void doUpdateVisitedHistory(WebView webView, String s, boolean b) {
+
+    if (needClearHistory) {
+        webView.clearHistory();
+        needClearHistory = false;
+    }
+
+}
+--------------------- 

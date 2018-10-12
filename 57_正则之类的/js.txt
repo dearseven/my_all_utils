@@ -1,0 +1,14 @@
+/**
+ * 可以用*来替代任意字符的匹配
+ * @param {Object} s1 匹配符号
+ * @param {Object} s2 待匹配的字符串
+ */
+function matchHoshiTag(s1, s2) {
+	//原字符串是 *abc*de*fg*,有的带$,要把这个符号转义~
+	s1 = s1.replace(/\*/g, ".+").replace(/\$/g, "\\$");
+	//alert(s1);
+	var re = new RegExp(s1);
+	//var re = new RegExp(".+abc.+de.+fg.+");
+	//var re=/.+abc.+de.+fg.+/;
+	return re.test(s2);
+}

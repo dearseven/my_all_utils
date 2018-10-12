@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+
+	<head>
+		<meta charset="UTF-8">
+
+		<style>
+			body {
+				padding: 0px;
+				margin: 0px
+			}
+		</style>
+		<script>
+			//------------------------ҳ��Ҫʵ�ֵķ���-------------------------------
+			function onPageLoad() {
+				alert(matchHoshiTag("*abc*de*fg*", "1abc13de1fgg"));
+			}
+
+			function onKeyClick(keycode) {
+				//alert("onKeyClick:" + keycode)
+			}
+
+			/**
+			 * 可以用*来替代任意字符的匹配
+			 * @param {Object} s1 匹配符号
+			 * @param {Object} s2 待匹配的字符串
+			 */
+			function matchHoshiTag(s1, s2) {
+				//原字符串是 *abc*de*fg*
+				var re=new RegExp(s1.replace(/\*/g,".+"));
+				//var re = new RegExp(".+abc.+de.+fg.+");
+				//var re=/.+abc.+de.+fg.+/;
+				return re.test(s2);
+			}
+		</script>
+		<script src="../js/basejs.js"></script>
+	</head>
+
+	<body style="background: #000;">
+		<div class="cyanroot" style="background: #589;">
+			<div class="resizable center_h" style="width: 80%; height: 20%; background: #f00;">
+				<div class="resizable center_h" style="width: 80%; height: 2%; background: #f00;"></div>
+				<div class="resizable center_h" style="width: 80%; height: 18%; background: #ff0;"></div>
+			</div>
+			<div class="resizable center_h" style="width: 98%; height: 5%; background: #0f0;"></div>
+			<div class="resizable center_h" style="width: 80%; height: 75%; background: #00f;">
+				<div class="resizable center_v" style="float: left; width: 25%; height: 72%; background: #39A;">
+					<div class="resizable center_v center_h" style="width: 20%; height: 72%; background: #F9A;"></div>
+				</div>
+				<div class="resizable" style="float: right; width: 52%; height: 72%; background: #FFA;">
+					<div class="resizable center_h center_v " style="width: 48%; height: 68%; background: #F00;">
+						<!--����һ�����ԣ��Լ�������Ҳ����~-->
+						<span class="textview resizable right_h top_v  gravity_h_r  gravity_v  " style="display:block;width:24%; height: 34%; background: #FFF;">����һ����ɫ��span</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
