@@ -1,0 +1,6 @@
+如果是在fragment里面再用Viewpager之类
+mPager.setAdapter(new _FragmentPagerAdapter(
+                getChildFragmentManager(), fragmentList));
+        mPager.setCurrentItem(0);// 设置当前显示标签页为第一页
+        mPager.setOnPageChangeListener(new PageChangeListener());// 页面变化时的监听器
+这里的FragmentManager要用Fragment的getChildFragmentManager()来获取

@@ -34,6 +34,21 @@ public class SizeUtil {
 	// }
 	// return 0;
 	// }
+	
+    /**
+     * convert dp to its equivalent px
+     */
+    public static float sysDp2Px(Context context, int dp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    }
+
+    /**
+     * convert sp to its equivalent px
+     */
+    public static float sysSp2Px(Context context, int sp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    }
+
 
 	/**
 	 * 将px值转换为dip或dp值，保证尺寸大小不变
