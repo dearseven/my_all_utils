@@ -1,0 +1,10 @@
+//获取文本高度
+        textPaint = new TextPaint();
+        textPaint.setColor(textColor);
+        textPaint.setTextSize(textSize);
+        textPaint.setAntiAlias(true);
+        fm = textPaint.getFontMetrics();
+        textHeight = (int) (fm.bottom - fm.top);
+
+//获取文本宽度
+ float textWidth = textPaint.measureText(text);

@@ -1,0 +1,19 @@
+div背景图片大小随div大小变化而变化
+加一个属性：background-size:100% 100%
+
+.ib_btn {
+				background: transparent;
+				border-radius: 5%;
+				color: white;
+				background-image: url(../img/detail_btn_bg_0.png);
+				background-size:100% 100%
+			}
+			
+			.if_btn {
+				/*background: #ddc783;*/
+				background: transparent;
+				border-radius: 5%;
+				color: white;
+				background-image: url(../img/detail_btn_bg_1.png);
+				background-size:100% 100%
+			}
