@@ -1,0 +1,15 @@
+No toolchains found in the NDK toolchains folder for ABI with prefix mips64el-linux-android
+今天用android studio 3.1.4 打开以前3.0.1写的一个project,直接报错
+"No toolchains found in the NDK toolchains folder for ABI with prefix mips64el-linux-android"
+
+看到网上的办法，就是下载对应旧版的NDK，将其中的toolchain复制到新版的NDK中,
+后来查其他人的资料发现其实可以修改project的build.gradle的部分
+  dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.4'//本来这里写的是3.0.1
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+--------------------- 
+把gradle的版本改成3.1.4
