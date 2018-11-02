@@ -1,0 +1,45 @@
+查看git的命令帮助 get help [命令]
+
+一 查看历史纪录
+空格向下翻页
+b向上翻译
+q退出
+1 git log 最完整的形式
+2 git log --pretty=oneline 显示一行
+3 git log --oneline 只显示6位hash值
+4 git reflog 可以显示到某一个版本要移动有多少个节点
+5 gitk (UI界面)
+
+二 基于索引值的版本前进和后退
+1 git reset --hard commitid
+2 ^ 只能往回退 git reset --hard HEAD^^^(往后退3个节点,好尴尬啊要写3个)
+3 ~ 只能往回退 git reset --hard HEAD~3 (往后退3个节点)
+
+三 soft hard mixed 的区别
+1 --soft 仅仅移动HEAD指针
+2 --mixed 在本地库移动HEAD指针,重置暂存区
+3 --hard  在本地库移动HEAD指针,重置暂存区,重置工作区
+
+4 比如现在 temp job local 都是 版本 C C C 然后 --soft以后 就变成了 B C C,这个时候看 git status 会发现有文件处于 add以后待提交状态
+5 又比如现在 temp job local 都是 版本 C C C 然后 --mixed以后 就变成了 B B C,这个时候看 git status 会发现有文件处于 等待add状态
+6 再比如现在 temp job local 都是 版本 C C C 然后 --hard以后 就变成了 B B B
+
+四 产出文件的找回
+前提:删除前,文件已经提交到了本地库,否则git无法找回
+操作:git reset --hard(不一定是hard,看具体情况) [指针位置]
+	1 如果删除已经commit,那么要指向某一个历史记录
+	2 如果删除没有提交,指针指向使用HEAD
+
+五 文件比较
+git diff [文件名] 工作区和暂存区进行比较
+git diff [本地库历史版本][文件名] 工作区和本地库进行比较
+如果不指定文件名可以比较所有文件......
+
+六 分支
+创建分支
+git branch [分支名]/git checkout -b [分支名]
+查看分支
+git branch -v
+切换分支
+git checkout [分支名]
+
