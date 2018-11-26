@@ -1,0 +1,2 @@
+1 发现gradle build出的代码有一些注解不识别了 加入这个
+annotationProcessor 'androidx.annotation:annotation:1.0.0'

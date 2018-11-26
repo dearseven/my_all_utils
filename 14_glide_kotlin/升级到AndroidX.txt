@@ -1,0 +1,9 @@
+错误: 程序包android.support.annotation不存在
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
+错误: 找不到符号
+符号:   类 NonNull
+位置: 类 GlideOptions
+
+解决方式，在build.gradle中加入
+annotationProcessor 'androidx.annotation:annotation:1.0.0'
