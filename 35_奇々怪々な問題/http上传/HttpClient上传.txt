@@ -1,0 +1,57 @@
+本来以前项目里我们是自己下载了HttpClient的包来做上传
+但是更新到28的sdk以后 就报错了
+log in date and Time:2018_11_30 15:58:30
+java.lang.RuntimeException: An error occurred while executing doInBackground()
+	at android.os.AsyncTask$3.done(AsyncTask.java:353)
+	at java.util.concurrent.FutureTask.finishCompletion(FutureTask.java:383)
+	at java.util.concurrent.FutureTask.setException(FutureTask.java:252)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:271)
+	at android.os.AsyncTask$SerialExecutor$1.run(AsyncTask.java:245)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1162)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:636)
+	at java.lang.Thread.run(Thread.java:764)
+Caused by: java.lang.NoSuchFieldError: No static field INSTANCE of type Lorg/apache/http/message/BasicHeaderValueFormatter; in class Lorg/apache/http/message/BasicHeaderValueFormatter; or its superclasses (declaration of 'org.apache.http.message.BasicHeaderValueFormatter' appears in /system/framework/org.apache.http.legacy.boot.jar)
+	at org.apache.http.entity.ContentType.toString(ContentType.java:178)
+	at org.apache.http.entity.mime.MultipartFormEntity.<init>(MultipartFormEntity.java:56)
+	at org.apache.http.entity.mime.MultipartEntityBuilder.buildEntity(MultipartEntityBuilder.java:236)
+	at org.apache.http.entity.mime.MultipartEntity.getEntity(MultipartEntity.java:119)
+	at org.apache.http.entity.mime.MultipartEntity.isChunked(MultipartEntity.java:140)
+	at org.apache.http.protocol.RequestContent.process(RequestContent.java:84)
+	at org.apache.http.protocol.BasicHttpProcessor.process(BasicHttpProcessor.java:295)
+	at org.apache.http.protocol.HttpRequestExecutor.preProcess(HttpRequestExecutor.java:165)
+	at org.apache.http.impl.client.DefaultRequestDirector.executeOriginal(DefaultRequestDirector.java:1395)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:700)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:560)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:492)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:470)
+	at com.teetaa.fengling.task.BedFriendUserInfoTask.uploadAvatar(BedFriendUserInfoTask.java:744)
+	at com.teetaa.fengling.task.BedFriendUserInfoTask.doInBackground(BedFriendUserInfoTask.java:263)
+	at com.teetaa.fengling.task.BedFriendUserInfoTask.doInBackground(BedFriendUserInfoTask.java:55)
+	at android.os.AsyncTask$2.call(AsyncTask.java:333)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	... 4 more
+最后解决方式就是移除这些包然后配置
+    implementation('org.apache.httpcomponents:httpmime:4.3.6') {
+        exclude module: 'httpclient'
+    }
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5'
+	
+	//下面这一段也许不要也可以
+	android{
+		defaultConfig {
+			packagingOptions {
+				pickFirst 'META-INF/*'
+				pickFirst 'org/apache/http/entity/mime/version.properties'
+				exclude 'META-INF/DEPENDENCIES.txt'
+				exclude 'META-INF/LICENSE.txt'
+				exclude 'META-INF/NOTICE.txt'
+				exclude 'META-INF/NOTICE'
+				exclude 'META-INF/LICENSE'
+				exclude 'META-INF/DEPENDENCIES'
+				exclude 'META-INF/notice.txt'
+				exclude 'META-INF/license.txt'
+				exclude 'META-INF/dependencies.txt'
+				exclude 'META-INF/LGPL2.1'
+			}
+		}
+	}
