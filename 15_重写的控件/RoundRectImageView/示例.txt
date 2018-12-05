@@ -1,0 +1,8 @@
+ <xxx.RoundImageView
+                android:id="@+id/buddy_list_item_avatar"
+                android:layout_width="60dp"
+                android:layout_height="58dp"
+                RoundImageView:image_radius="14dp"
+                RoundImageView:image_shadow_radius="14dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/head_icon" />
