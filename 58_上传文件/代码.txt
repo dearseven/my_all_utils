@@ -1,0 +1,67 @@
+/**
+     * 上传头像
+     *
+     * @param imgPath
+     * @param fmId
+     * @param ctx
+     * @return
+     */
+    private boolean uploadAvatar(String imgPath, String fmId, Context ctx) {
+        boolean ret = false;
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 设置通信协议版本
+            httpclient.getParams().setParameter(
+                    CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+            HttpPost httppost = new HttpPost(APIsUrl.UPLOAD_LOGO);
+
+            // 获取要上传的文件
+            File file = new File(imgPath);
+            ContentBody cbFile = new FileBody(file);
+
+            // 参数携带对象
+            MultipartEntity mpEntity = new MultipartEntity();
+            // 二进制文件参数(图片)
+            mpEntity.addPart("logo", cbFile);
+            // 普通参数
+            mpEntity.addPart("fmnumber", new StringBody(fmId));
+            // 设置参数
+            httppost.setEntity(mpEntity);
+            // 执行请求
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity resEntity = response.getEntity();
+            if (resEntity != null) {
+                ret = true;
+                String jsonRet = EntityUtils.toString(resEntity, "utf-8");
+                Map<String, String> map = new HashMap<String, String>();
+                map = jsonToMapWithNoArray(jsonRet, map);
+                if (map.get("status").equalsIgnoreCase("success")) {
+                    SharedPreferences pref = ctx.getSharedPreferences(
+                            BED_FRIEND_USER_INFO_FILE, Context.MODE_PRIVATE);
+                    Editor edt = pref.edit();
+                    edt.putString("AVATAR", map.get("logo"));
+                    edt.commit();
+
+                    // 让文件写到私有目录去
+                    File folder = ctx.getDir(Configure.USER_AVATAR_FOLDER,
+                            Context.MODE_PRIVATE);
+                    File[] fs = folder.listFiles();
+                    for (int i = 0; i < fs.length; i++) {
+                        fs[i].delete();
+                    }
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+	
+	//build.gradle
+	implementation('org.apache.httpcomponents:httpmime:4.3.6') {
+        exclude module: 'httpclient'
+    }
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5'
