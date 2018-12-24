@@ -1,0 +1,9 @@
+如果没有远程分支 dev_remote( 假设分支名叫这个 )
+当然先要推上去
+然后本地
+git checkout -b dev_remote origin/dev_remote
+但是还是有可能会报
+fatal: 'origin/dev_remote' is not a commit and a branch 'dev_remote' cannot be created from it
+这个时候我们先执行git pull
+然后再checkout一次就可以了
+
