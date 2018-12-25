@@ -1,0 +1,19 @@
+    <!-- 下面两个是通知栏的颜色适配-->
+    <style
+        name="NotificationInfo"
+        parent="android:TextAppearance.Material.Notification.Info" />
+    <style
+        name="NotificationTitle"
+        parent="android:TextAppearance.Material.Notification.Title" />
+
+使用----
+ <TextView
+            android:text="123"
+            android:id="@+id/notification_title"
+            style="@style/NotificationInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="12sp" />

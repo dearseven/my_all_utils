@@ -1,0 +1,96 @@
+写在前头,反正我的项目里,这种方式onActivityResult只回调了一次,我也没有查到具体原因
+最后还是用Activity的然后再调用的Fragment,和子Fragment
+就是
+个人中心(fragment嵌套子fragment)->登陆页(setResult,finish)->onActivityResult中心
+->在个人中心退出登陆(不跳页面)->登陆页(setResult,finish)-->(onActivityResult中心失败)
+
+Android的Fragment的子Fragment中onActivityResult不被调用的解决方案
+今天发现在Fragment中用Viewpager再嵌套子Fragment的时候OnActivityResult会不回调
+解决办法是
+1 Activity继承一个自己写的
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+
+import java.util.List;
+
+public class BaseFragmentActiviy extends FragmentActivity {
+    private static final String TAG = "BaseActivity";
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        FragmentManager fm = getSupportFragmentManager();
+        int index = requestCode >> 16;
+        if (index != 0) {
+            index--;
+            if (fm.getFragments() == null || index < 0
+                    || index >= fm.getFragments().size()) {
+
+                return;
+            }
+            Fragment frag = fm.getFragments().get(index);
+            if (frag == null) {
+
+            } else {
+                handleResult(frag, requestCode, resultCode, data);
+            }
+            return;
+        }
+
+    }
+
+    /**
+     * 递归调用，对所有子Fragement生效
+     *
+     * @param frag
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    private void handleResult(Fragment frag, int requestCode, int resultCode,
+                              Intent data) {
+        frag.onActivityResult(requestCode & 0xffff, resultCode, data);
+        List<Fragment> frags = frag.getChildFragmentManager().getFragments();
+        if (frags != null) {
+            for (Fragment f : frags) {
+                if (f != null)
+                    handleResult(f, requestCode, resultCode, data);
+            }
+        }
+    }
+
+}
+2 子fragment新增一个方法
+ /**
+     * 得到根Fragment
+     *
+     * @return
+     */
+    private Fragment getRootFragment() {
+        Fragment fragment = getParentFragment();
+        while (fragment.getParentFragment() != null) {
+            fragment = fragment.getParentFragment();
+        }
+        return fragment;
+    }
+
+3 调用方式
+  Intent intt = new Intent(getContext(),
+               xxx.class);  
+   getRootFragment().startActivityForResult(intt, REQ_LOGIN_PAGE);
+
+4 可以正常接受了
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQ_LOGIN_PAGE:
+                if (resultCode == Activity.RESULT_OK) {
+                    Toast.makeText(getActivity(), "成功", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+5 还发现这样做 父fragment也能收到回调,所以父activity也能一起同时监听
