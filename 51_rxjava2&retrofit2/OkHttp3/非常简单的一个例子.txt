@@ -1,0 +1,43 @@
+ OkHttpClient okHttpClient = new OkHttpClient();
+        String userName = EpgInfo.getEpgUsername(this).equals("") ? "1" : EpgInfo.getEpgUsername(this);
+        final Request request = new Request.Builder()
+                .url("http://" + AllConfig.SERVER_DATA + "/product/list/" + HttpConfig.ISP_ID + "/" + userName)
+                .get()//默认就是GET请求，可以不写
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Response response = null;
+                try {
+                    response = call.execute();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                Debug.log4op(SubsMultiProsNewActivity.class, response.body().toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Headers headers = response.headers();
+                for (int i = 0; i < headers.size(); i++) {
+                    Debug.log4op(SubsMultiProsNewActivity.class, headers.name(i) + ":" + headers.value(i));
+                }
+                String res=response.body().string();
+                Debug.log4op(SubsMultiProsNewActivity.class, "onResponse: " + res);
+                try {
+                    JSONObject obj = new JSONArray(res).getJSONObject(0);
+                    productInfo = obj;
+                    price=obj.getString("price");
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoading.hideDialog();
+                            changeShowView(1);
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });

@@ -1,0 +1,26 @@
+				if (confirmDialog == null)
+                    confirmDialog = new Dialog(this, R.style.AppTheme);
+                confirmDialog.show();
+                LayoutInflater inflater = LayoutInflater.from(this);
+				//这个布局就是一句话+两个按钮，不重要 是要自己替换的
+                View viewDialog = inflater.inflate(R.layout.order_payment_dialog, null);
+                Button ok = viewDialog.findViewById(R.id.frgmt_pay_switch_btn1);
+                ok.requestFocus();
+                Button cancel = viewDialog.findViewById(R.id.frgmt_pay_switch_btn2);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        changeShowView(++nowStep);
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        changeShowView(--nowStep);
+                    }
+                });
+                Display display = this.getWindowManager().getDefaultDisplay();
+                int width = display.getWidth();
+                int height = display.getHeight();
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height);
+                confirmDialog.setContentView(viewDialog, layoutParams);
