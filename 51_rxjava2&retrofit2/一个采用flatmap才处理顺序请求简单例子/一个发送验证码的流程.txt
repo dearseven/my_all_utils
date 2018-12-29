@@ -1,0 +1,35 @@
+    /**
+     * 发送验证码
+     */
+    override fun mobileSMS(str: String) {
+        //这个是点击发送短信按钮以后,倒计时,写在最上面没办法- -
+        val countDownObserver = object : DisposableObserver<Long>() {
+            override fun onComplete() {
+            }
+
+            override fun onNext(value: Long) {
+                v?.showCountAndDisable(COUNT_MAX.toInt() - value.toInt() - 1);
+            }
+
+            override fun onError(e: Throwable?) {
+            }
+        }
+        // 第一个 Observable ,执行网络api发送短信
+        val mobileSMS: Observable<ResponseBody> = ClientAPIUtil.getInstance().reqMobileSMSLogin(str)
+        mobileSMS.flatMap {
+            val cson = CSON(it.string())
+            //第二个Observable,返回结果成CSON
+            Observable.create<CSON> {
+                it.onNext(cson)
+            }
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).flatMap {
+            //这里处理CSON,然后界面弹出Toast
+            val toastString = it.getSpecificType("message", String::class.java)
+            v?.showToast(toastString)
+            //第三个Observable,开始通过interval倒计时,通过take给倒计时最大值
+            Observable.interval(0, 1, TimeUnit.SECONDS).take(COUNT_MAX)
+        }.subscribeOn(Schedulers.io())//发射在耗时IO线程(interval)
+                .observeOn(AndroidSchedulers.mainThread())//订阅在主线程(DisposableObserver)
+                .subscribeWith(countDownObserver);
+        //把倒计时(countDownObserver)加入到管理中,在activity结束时clear
+        mCompositeDisposable.add(countDownObserver)
