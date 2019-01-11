@@ -1,0 +1,19 @@
+A 访问非https
+第一步：在清单文件AndroidManifest.xml的application标签里面设置networkSecurityConfig属性如下 	
+<?xml version="1.0" encoding="utf-8"?>
+<manifest ... >
+    <application android:networkSecurityConfig="@xml/network_security_config">
+		 <!-- ... -->
+    </application>
+</manifest>
+第二步：在资源文件夹res/xml下面创建network_security_config.xml如下：
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
+
+
