@@ -1,0 +1,48 @@
+   private final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
+    private void sendStudentInfoToServer(String imgPath, String fmId, final Context ctx) {
+        //接口地址
+        File file = new File(imgPath);
+        String urlAddress = APIsUrl.UPLOAD_LOGO;
+        if (file != null && file.exists()) {
+            MultipartBody.Builder builder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("userId", fmId)
+                    .addFormDataPart("file", "img" + "_" + System.currentTimeMillis() + ".jpg",
+                            RequestBody.create(MEDIA_TYPE_PNG, file));
+            sendMultipart(urlAddress, builder.build(), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = response.body().string();
+                    DebugLog.logFl(null, "onResponse: 成功上传图片之后服务器的返回数据：" + result, getClass());
+                    //result就是图片服务器返回的图片地址。
+                    Map<String, String> map = new HashMap<String, String>();
+                    map = jsonToMapWithNoArray(result, map);
+                    if (map.get("status").equalsIgnoreCase("success")) {
+                        SharedPreferences pref = ctx.getSharedPreferences(
+                                BED_FRIEND_USER_INFO_FILE, Context.MODE_PRIVATE);
+                        Editor edt = pref.edit();
+                        edt.putString(UserInfoUtil.AVATAR, map.get("logoPath"));
+                        edt.commit();
+                    }
+                }
+            });
+        }
+    }
+
+    public static void sendMultipart(String urlAddress, RequestBody requestBody, Callback callback) {
+        //这里根据需求传，不需要可以注释掉
+//        RequestBody requestBody = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("title", "wangshu")
+//                .addFormDataPart("image", "wangshu.jpg",
+//                        RequestBody.create(MEDIA_TYPE_PNG, new File("/sdcard/wangshu.jpg")))
+//                .build();
+//        private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+        Request request = new Request.Builder().header("Authorization", "Client-ID " + "...").url(urlAddress).post(requestBody).build();
+        new OkHttpClient().newCall(request).enqueue(callback);
+    }
