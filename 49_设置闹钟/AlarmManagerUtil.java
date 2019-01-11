@@ -63,6 +63,20 @@ public class AlarmManagerUtil {
         intent.putExtra("soundOrVibrator", soundOrVibrator);
         PendingIntent sender = PendingIntent.getBroadcast(context, id, intent, PendingIntent
                 .FLAG_CANCEL_CURRENT);
+				//如果开发的时候,用这一段替代原本的if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)这一段
+				//因为呢首先我们的应用一般不会在5.0以下了,所以闹钟的setRepeating已经不准确了,
+				//做法只有一种就是每次到时以后重新执行本方法,重新设置,貌似没有更好的方法咯惹~
+		/*
+		        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.time, operation);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    manager.setExact(AlarmManager.RTC_WAKEUP, alarm.time, operation);
+                } else {
+                    manager.set(AlarmManager.RTC_WAKEUP, alarm.time, operation);
+                }
+		*/
+	
+	
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             am.setWindow(AlarmManager.RTC_WAKEUP, calMethod(week, calendar.getTimeInMillis()),
                     intervalMillis, sender);
