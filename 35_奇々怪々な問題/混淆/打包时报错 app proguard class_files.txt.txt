@@ -1,0 +1,2 @@
+打包的过程中产生class_files.txt文件，会把它放在proguard目录下，但是proguard目录并不存在，
+所有需要我们自己手动创建，在app目录下创建proguard目录即可。(app/proguard)

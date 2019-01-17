@@ -1,0 +1,21 @@
+大体意思是找不到相关的类或者方法，因为工程引入了第三方包，混淆的时候如果把第三方包也混淆了，那么相关的类在使用这些包的时候就会找不到相关方法。
+
+因此在proguard.cfg加上以下代码：
+
+-dontwarn com.baidu.**
+-keep class com.baidu.** { *;}
+ 
+-dontwarn com.lakala.**
+-keep class com.lakala.** { *;}
+ 
+-dontwarn com.lingtu.**
+-keep class com.lingtu.** { *;}
+ 
+-dontwarn com.autonavi.**
+-keep class com.autonavi.** { *;}
+          其实找不到引用的这个类是第三方包里面的，而且很多时候我们只需要打乱自己的代码就行了，第三方包的代码就是否要打乱就不要管了。我们可以使用
+
+-dontwarn com.xx.bbb.**
+-keep class com.xx.bbb.** { *;}
+参数来保持第三方库中的类而不乱，-dontwarn和-keep 结合使用，意思是保持com.xx.bbb.**这个包里面的所有类和所有方法而不混淆，接着还叫ProGuard不要警告找不到com.xx.bbb.**这个包里面的类的相关引用。
+配置好后，重新打包，一切OK！而且程序能正确运行
