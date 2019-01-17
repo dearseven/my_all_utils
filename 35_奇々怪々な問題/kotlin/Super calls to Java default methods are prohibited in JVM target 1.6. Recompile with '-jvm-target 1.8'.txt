@@ -1,0 +1,20 @@
+在 app 下的 build.gradle 中的 android 闭包中添加以下代码即可解决：
+
+ kotlinOptions{
+        jvmTarget = '1.8'
+ }
+ 
+不过完整版可能是
+android {
+  ...
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
+  lintOptions {
+    checkReleaseBuilds false
+    // Or, if you prefer, you can continue to check for errors in release builds,
+    // but continue the build even when errors are found:
+    abortOnError false
+  }
+  ...
+}
