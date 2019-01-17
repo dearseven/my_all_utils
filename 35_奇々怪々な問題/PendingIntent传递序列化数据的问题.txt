@@ -1,0 +1,49 @@
+以前在6.0作过兼容,今天在8.0系统又发现问题,记录一下.
+问题是我有一个BroadcastReceiver要接受PendingIntent传递过来的数据
+数据包括一个字符串和一个Parcelable对象
+问题来了,只传了string，那是没问题的，但是如果传了string和一个serializable你会发现，不光serializable拿不到，连string也拿不到了
+
+解决方案目前有2套
+1,直接传string,一个简单的修改方法就是把所有的对象全部转成jsonstring去传递,比如Gson,然后再还原
+2,直接把所有数据放到bundle里，然后将bundler作为参数传递即intent.putExtra("data",bundle)也可以解决问题
+
+我用的方法2
+private static PendingIntent createPendingIntent(Context context,
+                                                     AlarmItem alarm, int repeatWeekDay)
+        Intent intent = new Intent(AlarmReceiver.ACTION_ALARM_RUN);
+        intent.setPackage(FMClock.PACKAGE_NAME);
+        intent.setData(Uri.parse(AlarmReceiver.SCHEME + alarm.id + "_"
+                + repeatWeekDay));
+//这里开始,而且这个还必须是给一个key的putExtra不能是用putExtras
+        Bundle bd = new Bundle();
+        bd.putParcelable(AlarmReceiver.EXTRA_ALARM, alarm);
+        bd.putString("byservice", "false");
+        intent.putExtra("data",bd);
+        intent.setExtrasClassLoader(AlarmItem.class
+                .getClassLoader());
+//
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+       return pendingIntent;
+}
+
+//===
+     	AlarmManager manager = (AlarmManager) context
+                .getSystemService(Context.ALARM_SERVICE);
+	PendingIntent operation = createPendingIntent(context, alarm,
+                        AlarmItem.REPEAT_NONE);//这个代码就是调用了上面的创建
+                //manager.set(AlarmManager.RTC_WAKEUP, alarm.time, operation);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.time, operation);
+                    DebugLog.logFl(null, "111", AlarmControl.class);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    manager.setExact(AlarmManager.RTC_WAKEUP, alarm.time, operation);
+                    DebugLog.logFl(null, "222", AlarmControl.class);
+                } else {
+                    manager.set(AlarmManager.RTC_WAKEUP, alarm.time, operation);
+                    DebugLog.logFl(null, "333", AlarmControl.class);
+                }
+//---接收方AlarmReceiver
+ String byService = intent.getBundleExtra("data").getString("byservice");
+ AlarmItem alarm = intent.getBundleExtra("data").getParcelable(EXTRA_ALARM);

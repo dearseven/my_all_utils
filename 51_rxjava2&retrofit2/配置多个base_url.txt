@@ -1,0 +1,81 @@
+在项目开发中，使用RxJava+Retrofit 网络请求一般会遇到多个baseUrl,如果仅仅通过Retrofit 的方法设置一个baseUrl是达不到效果的。
+
+比如这样
+ Retrofit mRetrofit = new Retrofit.Builder()
+                .baseUrl(HttpConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())//添加gson转换器
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//添加rxjava转换器
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加rxjava转换器
+                .client(mOkHttpClient)
+                .build();
+这样是不够的.那么怎么做呢
+首先
+
+    @Headers({"base_url:http://*********/servlet/APIServlet"})//添加注解，更换baseUrl
+    @POST("APIServlet")
+    Observable<ResponseBody> mobileSMS(@Body RequestBody requestBody);
+
+然后我们要搞一个interceptor
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+
+/**
+ * 由于有多个baseurl,所以需要这个拦截然后重新设置一下
+ */
+public class BaseUrlInterceptor implements Interceptor {
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        //获取request
+        Request request = chain.request();
+        //获取request的创建者builder
+        Request.Builder builder = request.newBuilder();
+        //从request中获取headers，通过给定的键url_name
+        List<String> headerValues = request.headers("base_url");
+        if (headerValues != null && headerValues.size() > 0) {
+            //如果有这个header，先将配置的header删除，因此header仅用作app和okhttp之间使用
+            builder.removeHeader("base_url");
+            //匹配获得新的BaseUrl
+            String headerValue = headerValues.get(0);
+            HttpUrl newBaseUrl=HttpUrl.parse(headerValue);
+            //从request中获取原有的HttpUrl实例oldHttpUrl
+            HttpUrl oldHttpUrl = request.url();
+            //重建新的HttpUrl，修改需要修改的url部分
+            HttpUrl newFullUrl = oldHttpUrl
+                    .newBuilder()
+                    .scheme(newBaseUrl.scheme())
+                    .host(newBaseUrl.host())
+                    .port(newBaseUrl.port())
+                    .build();
+            //重建这个request，通过builder.url(newFullUrl).build()；
+            //然后返回一个response至此结束修改
+            return chain.proceed(builder.url(newFullUrl).build());
+        } else {
+            return chain.proceed(request);
+        }
+    }
+}
+最后 把他添加到OkHttpClient中
+
+private ClientAPIUtil() {
+        /*1初始化一个OKHTTP*/
+        OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
+                .readTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
+                .writeTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
+                .addInterceptor(InterceptorUtil.HeaderInterceptor())
+                .addInterceptor(new BaseUrlInterceptor())//!!这里base url 拦截器
+                .addInterceptor(InterceptorUtil.LogInterceptor())//添加日志拦截器
+                .build();
+        //
+        Retrofit mRetrofit = new Retrofit.Builder()
+                .baseUrl(HttpConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())//添加gson转换器
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//添加rxjava转换器
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加rxjava转换器
+                .client(mOkHttpClient)
+                .build();
+        mAPIFunction = mRetrofit.create(APIFunction.class);
+    }
