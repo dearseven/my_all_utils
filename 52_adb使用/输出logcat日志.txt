@@ -1,0 +1,8 @@
+有时候需要用adb的方式把日志输出的电脑的文件中
+文件需存在，
+按packagename输出的时候是需要双引号的
+
+按tag输出日志
+adb logcat -s TAGNAME > d:/logcat_190131.txt
+按packagename输出
+adb logcat | find "com.xxxxxx.xxxxxx.xxxxxx" > d:/logcat_190131.txt
