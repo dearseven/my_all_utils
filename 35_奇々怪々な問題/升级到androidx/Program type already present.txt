@@ -1,0 +1,14 @@
+今天新建一个项目，直接拷贝以前一个项目的build.gradle（用的是androidX）
+在build的时候，有一个错误为
+Program type already present: android.support.v4.app.INotificationSideChannel$Stub$Proxy
+后来在stackoverflow查到是因为build.gradle用了androidx，但是项目并没有配置
+
+解决方案1
+In Android studio, Refractor -> Migrate to AndroidX.
+解决方案2（手工方式）
+add following to gradle.properties
+   android.useAndroidX=true
+   android.enableJetifier=true
+   
+继续build发现还是报错，（没记下来这个错误，大概是说引入的版本和实际使用的不一样？？）
+发现是一个用Kotlin写的Activity还是引入的V7的AppCompactActivity，改成androidx下的即可
