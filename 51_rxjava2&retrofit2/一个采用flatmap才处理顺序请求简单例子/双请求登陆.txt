@@ -1,0 +1,49 @@
+{
+        CSON cson = new CSON(playAuthRawData);
+        final String cid = cson.getSpecificType("cid", String.class);
+        final String supercid = cson.getSpecificType("supercid", String.class);
+
+        final ClientAPIUtil api = ClientAPIUtil.getInstance();
+        Observable<ResponseBody> ob1 = api.GetVODDetail(cid);
+		//第一个是通过网络获取一个用于鉴权的id，因为要转换成PlayVOD的方法返回的Observable，所以直接flatmap
+        ob1
+                .flatMap(new Function<ResponseBody, Observable<ResponseBody>>() {
+                    @Override
+                    public Observable<ResponseBody> apply(ResponseBody responseBody) throws Exception {
+                        final JSONObject json = new JSONObject(responseBody.string().trim());
+                        //返回第二个网络请求
+                        if (api.isRetOK(json)) {
+                            Debug.logProOptim(getClass(), "11111");
+                            return api.PlayVOD(json.getJSONObject("VODDetail").getString("ID"), cid);
+                        } else {
+                            Debug.logProOptim(getClass(), "2222");
+                            return api.PlayVOD("0", cid);
+                        }
+                    }
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                //鉴权结果
+                .subscribe(new Consumer<ResponseBody>() {
+                    @Override
+                    public void accept(ResponseBody responseBody) throws Exception {
+                        JSONObject json = new JSONObject(responseBody.string().trim());
+                        String retCode = json.getJSONObject("result").getString("retCode");
+                        boolean ok = ClientAPIUtil.getInstance().isRetOK(json);
+                        if (ok || retCode.equals("000000000")) {
+                            SamplePlayAuthResultData samplePlayAuthResultData = new SamplePlayAuthResultData();
+                            samplePlayAuthResultData.setPlayAuthResult(true);
+                            samplePlayAuthResultData.getPlayUrls().add(json.getString("playURL"));
+                            EventBus.getDefault().post(samplePlayAuthResultData);
+                            //callBack.callBackPlayAuthResult(samplePlayAuthResultData);
+                            finish();
+                        } else if (retCode.equals("114020006")) {
+                            Intent it = ZheJiangH5OrderActivity.createIntent(ZhejiangPlayAndOrderActivity.this, playAuthRawData);
+                            startActivityForResult(it, REQ_ORDER);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                });
+    }
