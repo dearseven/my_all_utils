@@ -1,0 +1,33 @@
+    <view class='root' style='background-color:#fff;height:150rpx;display:flex;justify-content: space-between;align-items:center;'>
+	  <!--左-->
+      <view style='padding-left:18rpx;width:70%;'>
+        <view style='color:#555;font-size:36rpx;'>套餐一</view>
+        <view style='color:#aaa;font-size:28rpx;'>合计：￥17.9</view>
+      </view>
+	  <!--右-->
+      <view style='padding-right:18rpx;width:20%;display:flex;justify-content:space-around;'>
+        <view>-</view><view>1</view><view>+</view> 
+      </view>
+    </view>
+	
+	类似一个购物车，如下
+-----------------------
+套餐-
+					-1+
+合计	
+-----------------------
+
+第一 在小程序里 要几个控件在一行
+<view style='padding-right:18rpx;width:20%;display:flex;justify-content:space-around;'>
+        <view>-</view><view>1</view><view>+</view> 
+</view>
+主要是外层控件display:flex;justify-content:space-around;
+
+第二 要想两边左右分布+同时垂直也居中（就是分了左侧的套餐区域和右侧的数量区域）
+display:flex;
+justify-content: space-between;
+align-items:center; 
+
+第三 背景色
+给背景色的控件 要不就是有文本（理解为innerText吧） 要不就是有高度，如果class='root'的那个最外层view没有写高度150rpx
+则背景色不会出现
