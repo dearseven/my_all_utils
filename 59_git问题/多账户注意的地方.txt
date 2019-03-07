@@ -1,0 +1,33 @@
+最好记得某个项目是哪一个仓库的，有时候发现需要（把全局账号）切换到对应的账户才能push
+
+查看全局配置
+git config --list
+
+查看git用户名
+
+git config user.name
+
+查看邮箱配置
+
+git config user.email
+
+全局配置用户名
+
+git config --global user.name "nameVal"
+
+全局配置邮箱
+
+git config --global user.email "eamil@qq.com"
+
+我自己有3个
+github
+d...@s....com
+v...3
+
+code.aliyun.com
+c...k..6
+z...6..an
+
+gitee
+5...@q...com
+w..13..87..0

@@ -1,0 +1,54 @@
+win7 先安装openssh
+http://www.mls-software.com/opensshd.html
+记得不要被安装软件阻止啊！
+
+～～生成证书～～
+1,mac下的证书放在~/.ssh目录下(win应该在~/.ssh下（~/就是系统盘下的当前用户名的目录)
+（下面两步其实win也一样，只是目录不同）
+2,用cd命令进入目录然后 ssh-keygen -t rsa -C youremail@example.com 然后按照提示完成命令
+
+～～服务端配置证书证书～～
+3, 用open ~/.ssh打开文件目录，登录github,打开” settings”中的SSH Keys页面，然后点击“Add SSH Key”,填上任意title，在Key文本框里黏贴id_rsa.pub文件的内容。
+
+～～在客户端配置证书～～(进入git的命令行噢)
+4，命令行输入 ssh-agent bash,然后可以查看一下当前的证书 ssh-add -l
+5，把刚才的证书加进去 ssh-add ~/.ssh/id_rsa，注意这个不要用pub的，
+6，输入刚才生成证书的时候设置的密码短语短语
+7，ok
+
+....全局配置(我没用)
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+
+---一些错误
+ssh-agentError message: unable to start ssh-agent service, error :1058
+I found that the service was disabled. Type in services in the start menu and open the Services app. Look for OpenSSH Authentication Agent and set it to Automatic.
+
+---配置多个git账号(记得去github和aliyun配置公钥)
+配置多个github账号,在.ssh目录中,新建一个config文件
+# 配置github.com
+#Host github.com
+#HostName github.com
+#IdentityFile C:\Users\Cyan\.ssh\github_ssh_key
+#PreferredAuthentications publickey
+#User de***@s*com
+
+# 配置code.aliyun.com
+Host code.aliyun.com
+HostName code.aliyun.com
+IdentityFile C:\Users\Cyan\.ssh\tt_ssh_key
+PreferredAuthentications publickey
+User 54947****
+
+可以通过 ssh -T git@github.com
+ssh -T git@code.aliyun.com
+来测试
+
+---在win7测试的时候会有
+Bad owner or permissions on .ssh/config
+这个错误要提升权限
+进入 .ssh目录执行
+chmod 600 config [证书文件名（私）]
+chown [currentuser] config [证书文件名（私）]
+chmod：改变文件权限为当前用户可读写
+chown：改变文件所属用户为 currentuser，用户名为计算机用户，
