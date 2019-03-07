@@ -1,0 +1,25 @@
+<!--index.wxml-->
+<view class="container">
+  <view class='head'>HEAD</view>
+  <scroll-view class="body-h" scroll-x>
+    <view id="green" class="item">1</view>
+    <view id="red"  class="item">2</view>
+    <view id="yellow" class="item">3</view>
+    <view id="blue" class="item">4</view>
+  </scroll-view>
+  <scroll-view class='body-v' scroll-y >
+      <view class="item">1</view>
+      <view class="item">2</view>
+      <view class="item">3</view>
+      <view class="item">4</view>
+      <view class="item">5</view>
+      <view class="item">6</view>
+      <view class="item">1</view>
+      <view class="item">2</view>
+      <view class="item">3</view>
+      <view class="item">4</view>
+      <view class="item">5</view>
+      <view class="item">6</view>
+  </scroll-view>
+  <view class="footer">FOOTER</view>
+</view>
