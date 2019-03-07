@@ -1,0 +1,6 @@
+		Map<String, String> header = new HashMap<String, String>();
+        header.put("epgsession", "JSESSIONID=" + HttpConfig.jsessionId);//JSESSIONID=xxxxxxxxxxxxxxxx
+        //Cookie
+		header.put("Cookie", "JSESSIONID=" + HttpConfig.jsessionId+";A=B;C=D");
+		
+        webView.loadUrl(url, header);

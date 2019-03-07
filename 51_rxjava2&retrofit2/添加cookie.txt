@@ -1,0 +1,31 @@
+    public static Interceptor AddCookieInterceptor() {
+        return new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                //Debug.log4op(InterceptorUtil.class, "添加头");
+                //在这里你可以做一些想做的事,比如token失效时,重新获取token
+                //或者添加header等等,
+                Request.Builder builder = chain.request()
+                        .newBuilder();
+                Debug.log4LX(getClass(),"AddCookieInterceptor","jsessionId="+HttpConfig.jsessionId);
+                Debug.log4LX(getClass(),"AddCookieInterceptor","Location="+HttpConfig.location);
+                if (HttpConfig.jsessionId != null && HttpConfig.location != null) {
+                    builder.addHeader("Cookie", "JSESSIONID=" + HttpConfig.jsessionId
+                            + ";Location=" + HttpConfig.location);
+                }
+                Request request = builder.build();
+                return chain.proceed(request);
+            }
+        };
+    }
+	
+	然后
+	
+	 OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
+                .readTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
+                .writeTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
+                .addInterceptor(InterceptorUtil.HeaderInterceptor())
+                .addInterceptor(InterceptorUtil.LogInterceptor())
+                .addInterceptor(InterceptorUtil.AddCookieInterceptor())//添加Cookie拦截器来加入Cookie
+                .build();
