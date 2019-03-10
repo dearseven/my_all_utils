@@ -1,0 +1,29 @@
+相对复杂
+
+子组件的WXML和js
+bindtap="addToShopCart"
+
+  methods: {
+    addToShopCart:function(e){
+      //console.log(e)
+      //把数据传递给index.js
+      //index那个用的products的组件，要bind:sendAddToShopCart=xxx方法
+      this.triggerEvent('sendAddToShopCart', e) 
+    }
+  }
+  
+  
+  在上面的最后一行，可以看到子组件要触发一个sendAddToShopCart事件到父组件，假设这里的子组件叫products，父组件是index
+  那么父组件在引用products的时候要配置bind:sendAddToShopCart，
+  <products 
+       bind:sendAddToShopCart="onAddToShopCart"
+       ></products>
+	   
+  如上，那么子组件发送的sendAddToShopCart就会被父组件（这里是一个页面也就是index，products是index的WXML中的一个元素）
+  接收到，然后index的js再监听方法
+   onAddToShopCart:function(e){
+   }
+   
+   换句话说就是 子view bindTap到方法addToShopCart->子js处理方法addToShopCart->
+				子发送事件sendAddToShopCart->父中引用的子组件bind事件sendAddToShopCart
+				->父中bind的sendAddToShopCart接受方法onAddToShopCart->在onAddToShopCart最终处理业务
