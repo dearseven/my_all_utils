@@ -1,0 +1,72 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx 0;
+  box-sizing: border-box;
+}
+.center_view{
+  /*这个class内部的view都是是居中的，所以它的直接子view应该只有一个view，方便处理*/
+  background-color: #ededed;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+}
+
+.center_element_cantainer{
+  /* 直接包裹侧滑容器的父容器 */
+  margin-top: 5%; 
+  width: 100%;
+  /* 这里高度90%是因为为了让策划自己居中。然后侧滑容器的内容也才会居中。。。。 */
+  height: 90%;
+  /* background-color:yellow; */
+}
+/* //------------- */
+
+.swiper{
+  /* 侧滑容器的最外层的容器 */
+    width: 100%;
+    height: 100%;
+    /* 
+    侧滑容器有2个属性
+    next-margin="90rpx" previous-margin="90rpx" 
+    所以他这是的宽度100%其实要减去左右两侧的90rpx。但是如果没有这个两个，那就不能留出一小节，所以还是看需求吧
+    但是这个会影响接下来的.li的大小，它的最宽也只能是swiper的宽度-两侧的99，css就是这样的嘛
+    */
+}
+.li{ 
+  /* 侧滑容器的item的最外层 */
+  /* background-color: gray; */
+  width: 100%;
+  height: 100%;
+}
+.li1{
+    /*侧滑容器的item*/
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10rpx;
+  height: 80%;
+  transform: scale(0.95);
+}
+.selected{
+  transform: scale(1)
+}
+/* 变色的 */
+.red{
+  background: red;
+}
+.blue{
+  background: blue;
+}
+.green{
+  background: green;
+}
+.orange{
+  background: orange;
+}
