@@ -1,0 +1,36 @@
+<view class='container'>
+  <view class='center_view'>
+    <view class='center_element_cantainer'>123</view>
+  </view>
+</view>
+
+那么center_element_cantainer就是登陆的几个组件显示的地方（用户名，密码和登陆按钮）
+
+他的wxss
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx 0;
+  box-sizing: border-box;
+}
+.center_view{
+  /*这个class内部的view都是是居中的，所以它的直接子view应该只有一个view，方便处理*/
+  background-color: #ededed;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+}
+
+.center_element_cantainer{
+  margin-top: -100rpx;
+  width: 200rpx;
+  height: 200rpx;
+  background-color:yellow;
+}
