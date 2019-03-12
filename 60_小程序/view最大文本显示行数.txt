@@ -1,0 +1,11 @@
+.txt_max_line_limit{
+  /* 限制view的文本最大显示3行，超过部分用...代替 */
+  display: -webkit-box;      
+  word-break: break-all;
+  text-overflow: ellipsis;  
+  /* padding-left: 20px; */
+  /* padding-right: 10px; */
+  overflow: hidden;            
+  -webkit-box-orient: vertical;    
+  -webkit-line-clamp: 3;    
+}

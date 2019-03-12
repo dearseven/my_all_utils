@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+      "orderCenterItem": "../../template/orderCenterItem/orderCenterItem"
+    }
+}

@@ -1,0 +1,58 @@
+.oci_container{
+  padding: 20rpx;
+  height: 100%;
+  display:flex;
+ /* align-items:center; */
+  flex-direction: column;
+}
+
+/* 每个大条目之间的间距 */
+.oci_margin_top{
+  margin-top: 3.25%;
+}
+
+/* 条目中上下两行的间距 */
+.oci_margin_top_small{
+  margin-top: 1.25%;
+}
+
+.oci_space_between{
+  /* 子布局两侧分布 */
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.oci_small_txt{
+  /* 小文本 */
+  color:#888;
+  font-size: 26rpx;
+}
+
+.oci_small_txt_2{
+  color:#111;
+  font-size: 30rpx;
+  font-weight:600;
+}
+
+.txt_max_line_limit{
+  /* 限制view的文本最大显示3行，超过部分用...代替 */
+  display: -webkit-box;      
+  word-break: break-all;
+  text-overflow: ellipsis;  
+  /* padding-left: 20px; */
+  /* padding-right: 10px; */
+  overflow: hidden;            
+  -webkit-box-orient: vertical;    
+  -webkit-line-clamp: 3;    
+}
+
+.oci_btm_area{
+  /* 订单的下方页面的二维码区域 */
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: CENTER; */
+}

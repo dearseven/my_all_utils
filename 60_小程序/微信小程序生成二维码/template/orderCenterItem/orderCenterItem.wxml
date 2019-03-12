@@ -1,0 +1,55 @@
+<!-- 未取餐订单的卡片view ,包含套餐的详情和二维码信息-->
+<view class='oci_container'>
+<!-- 修改的时候注意去改自己的js文件中定义的orderItem属性的接收类型-->
+<!-- sdfsdf ={{orderItem}} -->
+
+<!-- 1 上部分 信息区域 -->
+<view style='margin-left:5%;height:60%'>
+  <view class="oci_space_between oci_margin_top">
+    <view class='oci_small_txt' style='width:100%'>
+      <!--订单号和时间 -->
+      <view>订单号</view>
+      <view class='oci_small_txt_2 oci_margin_top_small '>{{orderItem.orderId}}</view>
+    </view>
+    <view style='width:3%'></view>
+  </view>
+  <view class='oci_margin_top oci_small_txt' style='width:100%'>
+    <view>创建时间</view>
+    <view class='oci_small_txt_2 oci_margin_top_small '>{{orderItem.createTime}}</view>
+  </view>
+  <!--套餐名称以及数量 -->
+  <view>
+    <view class='oci_small_txt oci_margin_top'>套餐名称以及数量</view> 
+    <view class='oci_small_txt_2 oci_margin_top_small txt_max_line_limit'>{{orderItem.mealName}}</view> 
+  </view>
+  <!--支付渠道 -->
+  <view>
+    <view class='oci_small_txt oci_margin_top'>支付渠道</view> 
+    <view class='oci_small_txt_2 oci_margin_top_small'>{{orderItem.payChannelName}}</view> 
+  </view>
+  <!-- 就餐地点 -->
+  <view>
+    <view class='oci_small_txt oci_margin_top'>就餐地点</view> 
+    <view class='oci_small_txt_2 oci_margin_top_small'>{{orderItem.canteenName}}</view> 
+  </view>
+  <!-- 状态 -->
+  <view>
+    <view class='oci_small_txt oci_margin_top'>订单状态</view> 
+    <view class='oci_small_txt_2 oci_margin_top_small'>{{orderItem.statuName}}</view> 
+  </view>
+</view>
+
+<!-- 2 下部分 二位码区域 -->
+<view style='margin-top:2%;height:37%;'>
+  <!-- 凭证二维码 -->
+   <view class='oci_btm_area'>
+    <view class='oci_small_txt'>请在门店收银台扫描此凭证
+</view>
+    <!-- <image style='margin-top:25rpx;max-width:325rpx;max-height:325rpx;' src='http://www.runoob.com/try/demo_source/paris.jpg'></image> -->
+    <canvas 
+    style='margin-left:4%;margin-top:25rpx;max-width:325rpx;max-height:325rpx;width:325rpx;height:325rpx;' 
+    class='canvas' canvas-id='canvas'></canvas>
+   </view>
+</view>
+
+</view>

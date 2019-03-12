@@ -1,0 +1,22 @@
+{
+  "pages":[        
+    "pages/index/index",
+    "pages/orderList/orderList",
+    "pages/orderCenter/orderCenter",
+    "pages/reg/reg",
+    "pages/orderPage/orderPage",
+    "pages/jiesuan/jiesuan",
+    "pages/logs/logs"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "区区家饭将使用你的位置来定位附近的家饭餐厅"
+    }
+  },
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  }
+}
