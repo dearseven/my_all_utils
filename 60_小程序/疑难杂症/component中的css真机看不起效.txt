@@ -1,0 +1,12 @@
+然后我是发现上传到体验版来打开调试模式，在手机上可以看到console中写道
+VM414:2 Some selectors are not allowed in component wxss, including tag name selectors, 
+ID selectors, and attribute selectors.(./pages/xxx/xxx.wxss:288:3)This wxss file is ignored
+意思就是组件的wxss中不能有tagname和id，属性选择器。
+只能用类选择器
+我有一个是
+.aa image{
+}
+
+给那个image标签加一个class='img_'
+换成 .aa .img_{
+}
