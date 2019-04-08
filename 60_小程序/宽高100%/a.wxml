@@ -1,0 +1,9 @@
+<view class='container'>
+  <view class='charge_root'>
+    <view class='charge_top'>
+    1
+    </view>
+    <view class='charge_bottom'>2
+    </view>
+  </view>
+</view>
