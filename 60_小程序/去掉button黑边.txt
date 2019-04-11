@@ -1,0 +1,7 @@
+button::after {
+  border: none
+}
+或者假设button有class xxx
+.xxx::after {
+  border: none
+}

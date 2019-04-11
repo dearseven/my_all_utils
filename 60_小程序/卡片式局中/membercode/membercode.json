@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+        "topbar": "../../template/topbar/common/commonbar"
+  }
+}

@@ -1,0 +1,9 @@
+<view class="container" >
+  <view  class="code_root" >
+      <topbar bindbackClick="onBack" pageTitle="会员电子凭证"></topbar>
+      <view  class="code_main_panel">
+      1
+        <view class="code_main_panel_info"></view>
+      </view>
+  </view>
+</view>
