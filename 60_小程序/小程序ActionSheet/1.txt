@@ -1,0 +1,25 @@
+主要说怎么拿返回的数据
+  <action-sheet hidden="{{actionSheetHidden}}" bindchange="actionSheetChange" >
+    <block wx:for-items="{{addressList}}" wx:key="data">
+      <action-sheet-item style='font-size:32rpx;color:#555555;height:50rpx;display: flex;flex-direction: column;justify-content: center;align-items: center;'
+       data-name="{{item.estateName}}" data-id="{{item.estateId}}" bindtap="itemClick">
+        {{item.estateName}}
+      </action-sheet-item>
+    </block>
+    <action-sheet-cancel  style='font-size:32rpx;color:#555555;' >取消</action-sheet-cancel>
+  </action-sheet>
+  
+ 说明
+ actionSheetHidden 这个变量在js控制action sheet的隐藏和显示
+ action-sheet-item中的data-name="{{item.estateName}}" data-id="{{item.estateId}}" bindtap="itemClick" 这一行用来传数据
+ 
+  itemClick: function(e) {
+	//接受数据的方法,data-name="{{item.estateName}}" data-id="{{item.estateId}}" 通过刚才这两个property设置了要返回的值
+    console.log(e.currentTarget.dataset.id+" "+e.currentTarget.dataset.name);
+  },
+  actionSheetChange: function(e) {
+    this.setData({
+      actionSheetHidden: !this.data.actionSheetHidden
+    });
+    console.log("点击ation-sheet-cancel，会触发action-sheet绑定的事件。在这里可以通过改变hidden控制菜单的隐藏");
+  }
