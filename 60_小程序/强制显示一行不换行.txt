@@ -1,0 +1,5 @@
+.one-line_require {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
