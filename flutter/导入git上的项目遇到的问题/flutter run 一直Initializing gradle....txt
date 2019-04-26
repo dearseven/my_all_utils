@@ -1,0 +1,21 @@
+最后发现问题是gradle配置的版本不对
+打开
+项目根目录\android\gradle\wrapper下的gradle-wrapper.properties
+#Fri Jun 23 08:50:38 CEST 2017
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.2-all.zip
+可以看到最后一行是4.10.2-all
+我去本机的可运行的纯android项目里
+项目根目录\gradle\wrapper的gradle-wrapper.properties发现版本是
+4.6-all
+于是修改成4.6-all
+#Fri Jun 23 08:50:38 CEST 2017
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+# distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.2-all.zip
+distributionUrl=https\://services.gradle.org/distributions/gradle-4.6-all.zip
