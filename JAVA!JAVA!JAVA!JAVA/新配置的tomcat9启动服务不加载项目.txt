@@ -1,0 +1,7 @@
+soeasy
+1 在eclipse中删掉这个服务器
+2 在eclipse中重新建立一个tomcat9
+3 双击新建的tomcat9进入其配置页面
+4 在左侧的选项卡“Server Locations”中选择第二个 
+   "Use Tomcat installation (takes control of Tomcat installation)"
+5 保存，然后把项目再比如到tomcat 启动就可以访问
