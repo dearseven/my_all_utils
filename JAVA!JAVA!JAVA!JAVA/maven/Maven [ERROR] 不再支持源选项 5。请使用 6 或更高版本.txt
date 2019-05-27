@@ -1,0 +1,8 @@
+在项目的pom.xml文件中指定jdk版本
+我的jdk版本是10.0.2 所以写的是10 根据你自己的jdk版本写 1.7/1.8~~~~ 
+<properties>元素是根元素<project>的子元素
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>10</maven.compiler.source>
+    <maven.compiler.target>10</maven.compiler.target>
+</properties>

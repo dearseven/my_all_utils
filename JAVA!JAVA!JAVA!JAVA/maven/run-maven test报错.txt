@@ -1,0 +1,10 @@
+1 说找不到javax.servlet里面的东西，这个错误的情况就是实际上项目有一如javax.servlet（一般是引入了tomcat的环境嘛）
+项目本身不报错，但是用run-maven test或者部署到tomcat启动就报错，
+在POM中添加依赖来解决
+<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
