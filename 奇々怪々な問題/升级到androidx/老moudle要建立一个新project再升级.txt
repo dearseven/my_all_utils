@@ -1,0 +1,5 @@
+新建项目的时候因为我要把老的modoule放到一个新的project，然后把找个modoule弄为app modoule。
+
+新建一个android项目，然后不要选择用androidx
+
+把老项目导进来，然后修改好到能build apk 以后，再备份一下啊，然后再升级到androidx
