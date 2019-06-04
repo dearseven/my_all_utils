@@ -1,0 +1,17 @@
+今天用spring采用yam配置，并且通过
+@Component
+@ConfigurationProperties(prefix="test")
+public class Config{...
+@Value("${test.debug}")
+	public void setDebug(int debug){
+		Config.debug  = debug;
+	}
+	...}
+这两个注解把配置文件转化为类
+但是死活报错
+错误的意思就是没办法替换placeHolder ${test.debug}
+后来才发现eclipse不会自动去找配置文件，而是要手动加入到source中。
+原本我们的配置文件就在
+项目名根目录\src\main\resources这个目录里
+然后选择项目，右键->Properties->Java Build Path->第一个选项卡Source->Add Folder
+然后选择我们配置文件所在的目录，保存。就可以了
