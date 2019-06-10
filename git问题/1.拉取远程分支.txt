@@ -1,3 +1,4 @@
+1.
 如果没有远程分支 dev_remote( 假设分支名叫这个 )
 当然先要推上去
 然后本地
@@ -7,3 +8,19 @@ fatal: 'origin/dev_remote' is not a commit and a branch 'dev_remote' cannot be c
 这个时候我们先执行git pull
 然后再checkout一次就可以了
 
+2.第一次push giteen上的一个远程分支
+Updates were rejected because the tip of your current branch is behind
+its remote counterpart. Integrate the remote changes (e.g.
+'git pull ...') before pushing again.
+在第一次push一个远程分支的时候出现的
+
+于是我git pull origin master，又报了一个严重错误
+fatal: refusing to merge unrelated histories
+这种情况大概就是我因为刚生成了一个远程库，然后写了一个reamdme之类的。
+然后把本地一个写了很久仓库上传。这时会发现 github 的仓库和本地的没有一个共同的 commit 所以 git 不让提交，
+认为是写错了 origin ，如果开发者确定是这个 origin 就可以使用 --allow-unrelated-histories  告诉 git 自己确定
+git pull origin master --allow-unrelated-histories
+只想上面的来pull
+
+然后就可以愉快的
+git push origin master
