@@ -1,0 +1,9 @@
+（1）使用命令git branch -a 查看所有分支 假设要删除的分支叫DevBranch（这个分支有一个远程的也有本地的）
+
+（2）git push origin --delete DevBranch   可以删除远程分支DevBranch
+
+（3）git branch -d DevBranch 可以删除本地分支（在主分支中执行）
+	有可能会出现这个错误。
+	error: The branch 'devWx' is not fully merged.
+	If you are sure you want to delete it, run 'git branch -D devWx'.
+	git branch -D DevBranch 可以删除本地分支（在主分支中执行）
