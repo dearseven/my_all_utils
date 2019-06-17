@@ -1,0 +1,19 @@
+1.在Tomcat安装目录下，../conf/server.xml中，添加URIEncoding="utf-8"
+
+
+<Connector URIEncoding="utf-8" port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+
+2.这些都没有解决问题，后来突然想到Eclipse下配的Tomcat，在直接运行的情况下是不会deploy的Tomcat安装目录下的webapp的，
+Eclipse里可以设置Tomcat的lanch configuration。下附具体步骤：
+
+1、在Eclipse中，打开Servers视图，双击Tomcat v9.0 Server at localhost，打开OverView
+
+
+
+2、在OverView的左上区域，General Information下部，点击Open lanch configuration：
+
+
+
+3、点击Common标签页，设置Encoding为utf-8
