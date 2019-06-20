@@ -71,6 +71,7 @@
 
             //-------------循环生成数据--------------------
             //循环生成数据一开始就必须初始化一个数据，
+			//_dbin_for_items="mylist"这个才是创建的参数 而不是tag的id哦~
             var list = $_bdin.bindArr("mylist");
 
             list.setArr([{ "id": "id0", "index": 0, "name": "name0" }
@@ -87,6 +88,7 @@
 
 
             //因为没数据可能会报错 所以把 需要有数据以后再加入_dbin_for
+			//_dbin_for_items="mylist4"这个才是创建的参数 而不是tag的id哦~
             var list4 = $_bdin.bindArr("mylist4");
             list4.setArr([]);
             //******-----注意这里有一个复杂的json作为参数
@@ -220,19 +222,21 @@
 
 			<!-- E ITERATE ARRAY 下面三个数组是嵌套关系啊-->
 
+<!-- class="_dbin_for_item" 不是必须的 -->
 			<!-- 第一层数组 循环数组，class name是_dbin_for，_dbin_for_items是变量的id，也就是bindArr的第一个参数， -->
 			<div class="_dbin_for" _dbin_for_items="mylist">
-				<div class="_dbin_for_item" _dbin_for_id="{_dbin_for{$mylist.id}}">
+				<div class="_dbin_for_item" id="{_dbin_for{$mylist.id}}">
 					&nbsp;list.item.index:{_dbin_for{$mylist.index}}</div>
 
 				<!-- 第二层数组-->
 				<div class="_dbin_for" _dbin_for_items="mylist2">
-					<div class="_dbin_for_item" _dbin_for_id="2_{_dbin_for{$mylist2.id}}">
+					<div class="_dbin_for_item" id="2_{_dbin_for{$mylist2.id}}"
+						>
 						&nbsp; &nbsp;2list.item.index2:{_dbin_for{$mylist2.index}}</div>
 					<!-- 第三层数组-->
 
 					<div class="_dbin_for" _dbin_for_items="mylist3">
-						<div class="_dbin_for_item" _dbin_for_id="2_{_dbin_for{$mylist3.id}}">
+						<div class="_dbin_for_item" id="2_{_dbin_for{$mylist3.id}}">
 							&nbsp; &nbsp; &nbsp;3list.item.index3:{_dbin_for{$mylist3.index}}</div>
 						<div class="_dbin_for_item"> &nbsp; &nbsp; &nbsp;3list.item.name3:{_dbin_for{$mylist3.name}}</div>
 					</div>
@@ -250,11 +254,11 @@
 		<br />
 		<!-- 就是一个普通变量和一个arr-->
 		<div class="_dbin">{_dbin{$bbb.name}}</div>
+		<!-- class="_dbin_for_item" 不是必须的 -->
 		<div class="_dbin_for" id="mylist4" _dbin_for_items="mylist4">
-			<div class="_dbin_for_item">&nbsp;4list.item.name:{_dbin_for{$mylist4.name}}</div>
-			<div class="_dbin_for_item">&nbsp;4list.item.obj.color:{_dbin_for{$mylist4.obj.color}}</div>
-			<div class="_dbin_for_item">&nbsp;4inner json name:{_dbin_for{$mylist4.obj.innerJSON.name}}</div>
-
+			<div class="">&nbsp;4list.item.name:{_dbin_for{$mylist4.name}}</div>
+			<div class="">&nbsp;4list.item.obj.color:{_dbin_for{$mylist4.obj.color}}</div>
+			<div class="">&nbsp;4inner json name:{_dbin_for{$mylist4.obj.innerJSON.name}}</div>
 		</div>
 		<!-- F checkbox-->
 		<div>

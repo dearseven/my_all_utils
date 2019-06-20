@@ -364,7 +364,7 @@
 			//console.log(DataBindding.arrs["#" + objId].rawHtml )
 			rootHTML.innerHTML = "";
 			//console.log(rootHTML)
-
+			console.log('objId：'+objId)
 			if (DataBindding.arrs["#" + objId].elemt.length > 0) {
 				for (var j = 0; j < DataBindding.arrs["#" + objId].elemt.length; j++) {
 					var rawInnerHtml = DataBindding.arrs["#" + objId].rawHtml;
