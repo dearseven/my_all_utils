@@ -185,7 +185,7 @@
 			} else {
 				el.className = el.className.replace(checkedClass, "");
 				el.className = el.className.replace(uncheckedClass, "");
-				el.className += uncheckedClass;
+				el.className += " "+uncheckedClass;
 			}
 			el.onclick = (function() {
 				var gid = this.attributes["_groupId"].value;
@@ -256,7 +256,6 @@
 		DataBindding.elemts[("#" + id)] = {
 			"id":id,
 			elemt: el,
-			
 		}
 		var type = el.tagName;
 		if (type == "input" || type == "INPUT") {
@@ -290,17 +289,19 @@
 					console.log(("#" + this.id) + " on input： " + DataBindding.elemts[("#" + this.id)].value);
 					//console.log(this.id)
 					__onValueChange(this.id);
-
+					//console.log("11???")
 					// var d1 = DataBindding.elemts["#inputText"].value
 					// var d2 = DataBindding.elemts["#inputText2"].value
 					// console.log("d1=" + d1 + ",d2=" + d2);
 				}
 			})(DataBindding.elemts[("#" + id)].elemt)
 			DataBindding.elemts[("#" + id)].setValue = function(v) {
+				//console.log("22???")
 				DataBindding.setValue(this, v)
 			}
 			DataBindding.elemts[("#" + id)].elemt.onchange = function() {
-				console.log(this.value)
+				//__onValueChange(this.id);
+				//console.log(this.id+" #########??:"+this.value)
 			}
 			__onValueChange(id);
 		} else if (type == "select" || type == "SELECT") {
@@ -556,8 +557,14 @@
 					}
 				}
 			}
+			if(DataBindding.varWatcher){
+				console.log("varWatcher 空id~~~~"+id)
+				DataBindding.varWatcher(DataBindding.elemts[("#" + id)])
+			}
 		} else {
-			//console.log(id);只刷新对应的id
+			let callbackelemtid=id
+			console.log("callbackelemtid:"+callbackelemtid);
+
 			var elemtsJson = DataBindding.replaceIds[id];
 			if (elemtsJson != undefined) {
 				for (var p in elemtsJson) {
@@ -599,8 +606,11 @@
 					}
 				}
 			}
+			if(DataBindding.varWatcher){
+				console.log("varWatcher ~~~~"+callbackelemtid)
+				DataBindding.varWatcher(DataBindding.elemts[("#" + callbackelemtid)])
+			}
 		}
-		if(DataBindding.varWatcher)
-			DataBindding.varWatcher(DataBindding.elemts[("#" + id)])
+		
 	}
 })()
