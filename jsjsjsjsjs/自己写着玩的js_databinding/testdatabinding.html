@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>TestDataBinding</title>
+		<script src="cyandatabinding.js"></script>
+		<script>
+			function loadComplete() {
+            //-----------input--------------
+            //--初始化控件1，参数分别是id,初始值，然后返回对象，但是这个不是一个dom对象哦
+            var inputText2 = "inputText2";
+            var inputTextElemt2 = window.$_bdin.bindElemt(inputText2, 'init value from _bdin');
+
+            var inputText = "inputText";
+            var inputTextElemt = window.$_bdin.bindElemt(inputText, 'init value from _bdin');
+            //一秒后控件的值会改变
+            window.setTimeout(function () {
+                //修改值，故意延迟1秒，好看效果
+                inputTextElemt.setValue("一秒变化1");
+                inputTextElemt2.setValue("一秒变化2");
+                //$_bdin.setValue(inputTextElemt, "一秒变化1");
+                //$_bdin.setValue(inputTextElemt2, "一秒变化2");
+            }, 1000)
+
+            //-----------select-------------
+            var _select = "_select";
+            var _selectElemt = window.$_bdin.bindElemt(_select, { "index": 0 });
+            var _select2 = "_select2";
+            var _selectElemt2 = window.$_bdin.bindElemt(_select2, { "value": "v0" });
+
+            //修改select
+            window.setTimeout(function () {
+                inputTextElemt.setValue("两秒变化1");
+                inputTextElemt2.setValue("两秒变化2");
+                _selectElemt.setValue({ "value": "v3" })
+                _selectElemt2.setValue({ "index": 3 });
+                // $_bdin.setValue(_selectElemt, { "value": "v1" });
+                // $_bdin.setValue(_selectElemt2, { "index": 2 });
+            }, 2000)
+
+
+            //不管中间做了看看最终结果
+            window.setTimeout(function () {
+                console.log("经过修改的文本1是：" + inputTextElemt.value)
+                console.log("经过修改的文本2是：" + inputTextElemt2.value)
+                //这个读的是select的options的value
+                console.log("经过修改的选择1是：index=" + _selectElemt.index + " ,value=" + _selectElemt.value)
+                //这个读的是select的options的innerHTML
+                console.log("经过修改的选择2是：index=" + _selectElemt2.index + " ,optionValue=" + _selectElemt2.optValue)
+            }, 4000)
+
+            //---------普通的绑定变量-----------
+            //只绑定变量不绑定控件,
+            //aaa 是id
+            //name 是属性
+            //对用下方的{_dbin{$aaa.name}}
+            //注意方法是bindVar
+            var bindedVarName = $_bdin.bindVar("aaa", "name", '嘿嘿嘿~~~');
+            window.setTimeout(function () {
+                //$_bdin.setValue(bindedVarName, "我就是一个普通变量啊");
+                bindedVarName.setValue("我就是一个普通变量啊")
+            }, 2000)
+            window.setTimeout(function () {
+                bindedVarName.setValue("我不能在控件上接收输入哦~")
+                //$_bdin.setValue(bindedVarName, "我不能在控件上接收输入哦~ ");
+            }, 4000)
+
+            //            
+            var bindVar2 = $_bdin.bindVar("bbb", "name", " mylist4一开始的长度为0，所以不显示")
+
+            //-------------循环生成数据--------------------
+            //循环生成数据一开始就必须初始化一个数据，
+            var list = $_bdin.bindArr("mylist");
+
+            list.setArr([{ "id": "id0", "index": 0, "name": "name0" }
+                , { "id": "id1", "index": 1, "name": "name1" }]);
+
+            var list2 = $_bdin.bindArr("mylist2");
+            list2.setArr([{ "id": "2id0", "index": 900, "name": "2name0" }
+                , { "id": "2id1", "index": 901, "name": "2name1" }]);
+
+            var list3 = $_bdin.bindArr("mylist3");
+            list3.setArr([{ "id": "3id0", "index": 1900, "name": "3name0" }
+                , { "id": "3id1", "index": 1901, "name": "3name1" }
+            ]);
+
+
+            //因为没数据可能会报错 所以把 需要有数据以后再加入_dbin_for
+            var list4 = $_bdin.bindArr("mylist4");
+            list4.setArr([]);
+            //******-----注意这里有一个复杂的json作为参数
+            window.setTimeout(function () {
+                bindVar2.setValue("mylist长度为1，显示了")
+                //$_bdin.setValue(bindVar2,"mylist长度为1，显示了")
+                list4.setArr([{
+                    "name": "name4_1", "obj": {
+                        "color": "color is red", "innerJSON": {
+                            "name": "1 im  1 am  1 inner 1 json's name"
+                        }
+                    }
+                },
+                {
+                    "name": "name4_2", "obj": {
+                        "color": "color is RRREEEDD", "innerJSON": {
+                            "name": "2 im 2 am 2 inner 2 json's name"
+                        }
+                    }
+                }]);
+                //修改list记得调用 $_bdin.arrOk()
+                $_bdin.arrOk();
+
+            }, 3000)
+            //修改list记得调用 $_bdin.arrOk()
+            $_bdin.arrOk();
+			
+            //-------------check box--------------------
+			//checkboxes1是这一组的id,["cbx1id","cbx2id","cbx3id"]控件的id,[true,true,false]选中状态
+			//"checkedClass","uncheckedClass" 不同状态的class 如果没定义class对应的css有也可以,当然class对的名字可以自己定
+			//但是记得要给哦,哪怕给个"a","b"都行,最好不要取相似的名字,怕替换容易出错
+			//checkboxes1同时也作为页面显示数据的id
+			var checks1=$_bdin.bindCheckBox("checkboxes1",["cbx1id","cbx2id","cbx3id"],[true,true,false],"checkedClass","uncheckedClass")
+			//通过代码修改选中状态
+			window.setTimeout(function(){
+				console.log("未通过代码修改之前的checkbox的value:"+checks1.value)
+				checks1.setCheckStatus([false,false,true])
+				console.log("通过代码修改之后的checkbox的value:"+checks1.value)
+			},2000)
+			
+			//-------------radio box--------------------
+			//radiogroup1是这一组的id,["radio1id","radio2id","radio3id"]控件的id,[false,false,true]选中状态
+			//"checkedClass","uncheckedClass" 不同状态的class 如果没定义class对应的css有也可以,当然class对的名字可以自己定
+			//但是记得要给哦,哪怕给个"a","b"都行,最好不要取相似的名字,怕替换容易出错
+			//radiogroup1同时也作为页面显示数据的id
+			var radio1=$_bdin.bindRadioBox("radiogroup1",["radio1id","radio2id","radio3id"],[false,false,true],"checkedClass","uncheckedClass")
+			//通过代码修改选中状态
+			window.setTimeout(function(){
+				console.log("未通过代码修改之前的radio1的value:"+radio1.value)
+				radio1.setCheckStatus([true,false,false])
+				console.log("通过代码修改之后的radio1的value:"+radio1.value)
+			},2000)
+			
+			
+			//监听设置值的回调,用于代码里处理逻辑,Arr不能监听哦
+			//1.如果写在最前面,就会监听一个开始的初始化,
+			//2.也许并不要监听默认赋值就可以写在最后
+			$_bdin.setWatcher(function(obj){
+				console.log("watcher------>")
+				if(obj.type=="var"){
+					console.log("普通变量："+obj.id+" "+obj.pro+" "+obj.value)
+				}else if(obj.type=="radiobox"){
+					console.log("单选："+obj.id+" "+obj.value)
+				}else if(obj.type=="checkbox"){
+					console.log("多选："+obj.id+" "+obj.value)
+				}else if(obj.type=="select"){
+					console.log("下拉框："+obj.id+" "+obj.value)
+				}else if(obj.type=="input"){
+					console.log("输入框："+obj.id+" "+obj.value)
+				}
+				console.log("<------watcher")	
+			})	
+		}
+    </script>
+	</head>
+
+	<body onload="loadComplete()">
+
+		<!-- A INPUT-->
+		<input type="text" value="hhh ?" id="inputText" />
+		<input type="text" value="hhh ?" id="inputText2" />
+
+		<!-- B SELECT-->
+
+		<select id="_select">
+			<option value="v0">v0</option>
+			<option value="v1">v1</option>
+			<option value="v2">v2</option>
+			<option value="v3">v3</option>
+		</select>
+
+		<select id="_select2">
+			<option value="v0">vv0</option>
+			<option value="v1">vv1</option>
+			<option value="v2">vv2</option>
+			<option value="v3">vv3</option>
+		</select>
+		<!-- 
+        有替换占位符号的tag需要className里有_dbin
+		{_dbin{$inputText2.value}} {_dbin{ 表示这个tag需要替换文本
+        $ 表示开始匹配
+        inputText2 实例化变量时候的id
+        . 关键符号表示取属性
+        value 属性名
+        input的属性有 value 
+        select的属性有 index value optValue
+        }} 结尾
+    -->
+		<BR /><BR />
+		<!-- C  SHOW SELECT AND INPUT VALUE-->
+
+		<div class="_dbin a" style="color:brown;">我是input的值<span class="_dbin b" style="color:red;">{_dbin{$inputText.value}}</span><BR /><BR />
+			我是input2的值{_dbin{$inputText2.value}}<BR /><BR />
+			<div class="_dbin c">{_dbin{$_select.index}},我的select的值{_dbin{$_select.value}}=
+				<span class="_dbin d" style="color:black;">
+					~{_dbin{$_select.optValue}}
+				</span>
+				.
+			</div><BR />
+			<div class="_dbin e" style="color:black;">{_dbin{$_select2.index}},我的select2的值{_dbin{$_select2.value}}=
+				<span class="_dbin f" style="color:royalblue;">
+					~{_dbin{$_select2.optValue}}
+				</span>
+				.
+			</div>
+			<!-- D  JUST A VAR-->
+			<!-- 记得要绑定才可以生效-->
+			<br />
+			<div class="_dbin aaa">我只是变量不绑定input或select:{_dbin{$aaa.name}}</div>
+			<br />
+
+			<!-- E ITERATE ARRAY 下面三个数组是嵌套关系啊-->
+
+			<!-- 第一层数组 循环数组，class name是_dbin_for，_dbin_for_items是变量的id，也就是bindArr的第一个参数， -->
+			<div class="_dbin_for" _dbin_for_items="mylist">
+				<div class="_dbin_for_item" _dbin_for_id="{_dbin_for{$mylist.id}}">
+					&nbsp;list.item.index:{_dbin_for{$mylist.index}}</div>
+
+				<!-- 第二层数组-->
+				<div class="_dbin_for" _dbin_for_items="mylist2">
+					<div class="_dbin_for_item" _dbin_for_id="2_{_dbin_for{$mylist2.id}}">
+						&nbsp; &nbsp;2list.item.index2:{_dbin_for{$mylist2.index}}</div>
+					<!-- 第三层数组-->
+
+					<div class="_dbin_for" _dbin_for_items="mylist3">
+						<div class="_dbin_for_item" _dbin_for_id="2_{_dbin_for{$mylist3.id}}">
+							&nbsp; &nbsp; &nbsp;3list.item.index3:{_dbin_for{$mylist3.index}}</div>
+						<div class="_dbin_for_item"> &nbsp; &nbsp; &nbsp;3list.item.name3:{_dbin_for{$mylist3.name}}</div>
+					</div>
+
+					<div class="_dbin_for_item"> &nbsp; &nbsp;2list.item.name2:{_dbin_for{$mylist2.name}}</div>
+				</div>
+				<!-- -->
+
+				<div class="_dbin_for_item">&nbsp;list.item.name:{_dbin_for{$mylist.name}}</div>
+			</div>
+
+		</div>
+
+		<br />
+		<br />
+		<!-- 就是一个普通变量和一个arr-->
+		<div class="_dbin">{_dbin{$bbb.name}}</div>
+		<div class="_dbin_for" id="mylist4" _dbin_for_items="mylist4">
+			<div class="_dbin_for_item">&nbsp;4list.item.name:{_dbin_for{$mylist4.name}}</div>
+			<div class="_dbin_for_item">&nbsp;4list.item.obj.color:{_dbin_for{$mylist4.obj.color}}</div>
+			<div class="_dbin_for_item">&nbsp;4inner json name:{_dbin_for{$mylist4.obj.innerJSON.name}}</div>
+
+		</div>
+		<!-- F checkbox-->
+		<div>
+			<span class="_dbin">CHECKBOX:{_dbin{$checkboxes1.value}}</span>
+			<br />
+			<input type="checkbox" value="cbx1" id="cbx1id" />
+			<input type="checkbox" value="cbx2" id="cbx2id" />
+			<input type="checkbox" value="cbx3" id="cbx3id" />
+		</div>
+
+		<!-- F RadioBox-->
+		<div>
+			<span class="_dbin">radio:{_dbin{$radiogroup1.value}}</span>
+			<br />
+			<!-- 这个name="radiogroup1" 是html的标准哈，这样html就可以识别这3个是一组radio，
+			 同时也把这个作为组id传过去，这样就实现了统一-->
+			<input name="radiogroup1" type="radio" value="radio1" id="radio1id" />
+			<input name="radiogroup1" type="radio" value="radio2" id="radio2id" />
+			<input name="radiogroup1" type="radio" value="radio3" id="radio3id" />
+		</div>
+		<div>
+		</div>
+	</body>
+
+</html>
