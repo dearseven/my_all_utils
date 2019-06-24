@@ -1,10 +1,10 @@
 //设置自定义属性：el.setAttribute("_groupId",groupId);
 //读取自定义属性：el.attributes["_groupId"].value;
-(function() {
+(function () {
 	var DataBindding = {
 
 	}
-	DataBindding.show = function(a) {
+	DataBindding.show = function (a) {
 		alert(a)
 	}
 	DataBindding.elemts = {
@@ -22,36 +22,36 @@
 	 * @param {Object}
 	 *            watcher function(varObj)
 	 */
-	DataBindding.setWatcher = function(watcher) {
+	DataBindding.setWatcher = function (watcher) {
 		DataBindding.varWatcher = watcher;
 	}
 
-	DataBindding.bindArr = function(_id) {
+	DataBindding.bindArr = function (_id) {
 		DataBindding.arrs[("#" + _id)] = {
-			elemt : [],
-			id : _id
+			elemt: [],
+			id: _id
 		}
-		DataBindding.arrs[("#" + _id)]["setArr"] = function(arr) {
+		DataBindding.arrs[("#" + _id)]["setArr"] = function (arr) {
 			this.elemt = arr;
 		}
 		return DataBindding.arrs[("#" + _id)];
 	}
 
-	DataBindding.bindVar = function(_id, _pro, v) {
+	DataBindding.bindVar = function (_id, _pro, v) {
 		var obj = {
-			id : _id,
-			tagName : "_DBIN_VAR",
-			pro : _pro
+			id: _id,
+			tagName: "_DBIN_VAR",
+			pro: _pro
 		}
 		obj[_pro] = v;
 		DataBindding.elemts[("#" + _id)] = {
-			id : _id,
-			elemt : obj,
-			pro : _pro,
-			value : v,
-			type : "var"// 普通变量
+			id: _id,
+			elemt: obj,
+			pro: _pro,
+			value: v,
+			type: "var"// 普通变量
 		}
-		DataBindding.elemts[("#" + _id)].setValue = function(v) {
+		DataBindding.elemts[("#" + _id)].setValue = function (v) {
 			DataBindding.elemts[("#" + _id)].value = v;
 			DataBindding.setValue(this, v);
 		}
@@ -74,12 +74,12 @@
 	 * @param {Object}
 	 *            uncheckedClass
 	 */
-	DataBindding.bindRadioBox = function(groupId, ids, checkstatus,
-			checkedClass, uncheckedClass) {
+	DataBindding.bindRadioBox = function (groupId, ids, checkstatus,
+		checkedClass, uncheckedClass) {
 		DataBindding.elemts[("#" + groupId)] = {
-			id : groupId,
-			value : "",
-			type : "radiobox"// 单选
+			id: groupId,
+			value: "",
+			type: "radiobox"// 单选
 		}
 		DataBindding.elemts[("#" + groupId)].elemts = [];
 		//
@@ -99,7 +99,7 @@
 				el.className = el.className.replace(uncheckedClass, "");
 				el.className += " " + uncheckedClass;
 			}
-			el.onclick = (function() {
+			el.onclick = (function () {
 				var gid = this.attributes["_groupId"].value;
 				var idx = this.attributes["_index"].value;
 				console.log(gid + " " + idx)
@@ -107,37 +107,37 @@
 				for (var i = 0; i < DataBindding.elemts[("#" + gid)].elemts.length; i++) {
 					if (DataBindding.elemts[("#" + gid)].elemts[i].checked) { // true|false
 						DataBindding.elemts[("#" + groupId)].value += DataBindding.elemts[("#" + gid)].elemts[i].value
-								+ ",";
+							+ ",";
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(uncheckedClass, "");
+							.replace(uncheckedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(checkedClass, "");
+							.replace(checkedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className += " "
-								+ checkedClass;
+							+ checkedClass;
 					} else {
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(uncheckedClass, "");
+							.replace(uncheckedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(checkedClass, "");
+							.replace(checkedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className += " "
-								+ uncheckedClass;
+							+ uncheckedClass;
 					}
 				}
 				DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
-						.substring(
-								0,
-								DataBindding.elemts[("#" + groupId)].value.length - 1)
+					.substring(
+						0,
+						DataBindding.elemts[("#" + groupId)].value.length - 1)
 				console.log("2 radio value:"
-						+ DataBindding.elemts[("#" + groupId)].value)
+					+ DataBindding.elemts[("#" + groupId)].value)
 				__onValueChange(groupId)
 			})
 			// attributes["_dbin_for_items"].value;
 		}
 		DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
-				.substring(0,
-						DataBindding.elemts[("#" + groupId)].value.length - 1)
+			.substring(0,
+				DataBindding.elemts[("#" + groupId)].value.length - 1)
 		console.log("1 radio value:"
-				+ DataBindding.elemts[("#" + groupId)].value)
+			+ DataBindding.elemts[("#" + groupId)].value)
 		__onValueChange(groupId)
 		/**
 		 * 通过代码设置checkbox的选中状态
@@ -145,35 +145,35 @@
 		 * @param {Object}
 		 *            checkedStates [true,false,true],这一句有几个就设置几个
 		 */
-		DataBindding.elemts[("#" + groupId)].setCheckStatus = function(
-				checkedStates) {
+		DataBindding.elemts[("#" + groupId)].setCheckStatus = function (
+			checkedStates) {
 			DataBindding.elemts[("#" + groupId)].value = "";
 			for (var i = 0; i < DataBindding.elemts[("#" + groupId)].elemts.length; i++) {
 				DataBindding.elemts[("#" + groupId)].elemts[i].checked = checkedStates[i];
 				if (checkedStates[i]) { // true|false
 					DataBindding.elemts[("#" + groupId)].value += DataBindding.elemts[("#" + groupId)].elemts[i].value
-							+ ",";
+						+ ",";
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(uncheckedClass, "");
+						.replace(uncheckedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(checkedClass, "");
+						.replace(checkedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
-							+ checkedClass;
+						+ checkedClass;
 				} else {
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(uncheckedClass, "");
+						.replace(uncheckedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(checkedClass, "");
+						.replace(checkedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
-							+ uncheckedClass;
+						+ uncheckedClass;
 				}
 			}
 			DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
-					.substring(
-							0,
-							DataBindding.elemts[("#" + groupId)].value.length - 1)
+				.substring(
+					0,
+					DataBindding.elemts[("#" + groupId)].value.length - 1)
 			console.log("3 radio value:"
-					+ DataBindding.elemts[("#" + groupId)].value)
+				+ DataBindding.elemts[("#" + groupId)].value)
 			__onValueChange(groupId)
 		}
 		return DataBindding.elemts[("#" + groupId)];
@@ -193,12 +193,12 @@
 	 * @param {Object}
 	 *            uncheckedClass ""input_unchecked""
 	 */
-	DataBindding.bindCheckBox = function(groupId, ids, checkstatus,
-			checkedClass, uncheckedClass) {
+	DataBindding.bindCheckBox = function (groupId, ids, checkstatus,
+		checkedClass, uncheckedClass) {
 		DataBindding.elemts[("#" + groupId)] = {
-			id : groupId,
-			value : "",
-			type : "checkbox"// 多选
+			id: groupId,
+			value: "",
+			type: "checkbox"// 多选
 		}
 		DataBindding.elemts[("#" + groupId)].elemts = [];
 		//
@@ -218,7 +218,7 @@
 				el.className = el.className.replace(uncheckedClass, "");
 				el.className += " " + uncheckedClass;
 			}
-			el.onclick = (function() {
+			el.onclick = (function () {
 				var gid = this.attributes["_groupId"].value;
 				var idx = this.attributes["_index"].value;
 				console.log(gid + " " + idx)
@@ -226,37 +226,37 @@
 				for (var i = 0; i < DataBindding.elemts[("#" + gid)].elemts.length; i++) {
 					if (DataBindding.elemts[("#" + gid)].elemts[i].checked) { // true|false
 						DataBindding.elemts[("#" + groupId)].value += DataBindding.elemts[("#" + gid)].elemts[i].value
-								+ ",";
+							+ ",";
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(uncheckedClass, "");
+							.replace(uncheckedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(checkedClass, "");
+							.replace(checkedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className += " "
-								+ checkedClass;
+							+ checkedClass;
 					} else {
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(uncheckedClass, "");
+							.replace(uncheckedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className = DataBindding.elemts[("#" + gid)].elemts[i].className
-								.replace(checkedClass, "");
+							.replace(checkedClass, "");
 						DataBindding.elemts[("#" + gid)].elemts[i].className += " "
-								+ uncheckedClass;
+							+ uncheckedClass;
 					}
 				}
 				DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
-						.substring(
-								0,
-								DataBindding.elemts[("#" + groupId)].value.length - 1)
+					.substring(
+						0,
+						DataBindding.elemts[("#" + groupId)].value.length - 1)
 				console.log("2 group value:"
-						+ DataBindding.elemts[("#" + groupId)].value)
+					+ DataBindding.elemts[("#" + groupId)].value)
 				__onValueChange(groupId)
 			})
 			// attributes["_dbin_for_items"].value;
 		}
 		DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
-				.substring(0,
-						DataBindding.elemts[("#" + groupId)].value.length - 1)
+			.substring(0,
+				DataBindding.elemts[("#" + groupId)].value.length - 1)
 		console.log("1 group value:"
-				+ DataBindding.elemts[("#" + groupId)].value)
+			+ DataBindding.elemts[("#" + groupId)].value)
 		__onValueChange(groupId)
 
 		/**
@@ -265,45 +265,45 @@
 		 * @param {Object}
 		 *            checkedStates [true,false,true],这一句有几个就设置几个
 		 */
-		DataBindding.elemts[("#" + groupId)].setCheckStatus = function(
-				checkedStates) {
+		DataBindding.elemts[("#" + groupId)].setCheckStatus = function (
+			checkedStates) {
 			DataBindding.elemts[("#" + groupId)].value = "";
 			for (var i = 0; i < DataBindding.elemts[("#" + groupId)].elemts.length; i++) {
 				DataBindding.elemts[("#" + groupId)].elemts[i].checked = checkedStates[i];
 				if (checkedStates[i]) { // true|false
 					DataBindding.elemts[("#" + groupId)].value += DataBindding.elemts[("#" + groupId)].elemts[i].value
-							+ ",";
+						+ ",";
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(uncheckedClass, "");
+						.replace(uncheckedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(checkedClass, "");
+						.replace(checkedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
-							+ checkedClass;
+						+ checkedClass;
 				} else {
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(uncheckedClass, "");
+						.replace(uncheckedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
-							.replace(checkedClass, "");
+						.replace(checkedClass, "");
 					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
-							+ uncheckedClass;
+						+ uncheckedClass;
 				}
 			}
 			DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
-					.substring(
-							0,
-							DataBindding.elemts[("#" + groupId)].value.length - 1)
+				.substring(
+					0,
+					DataBindding.elemts[("#" + groupId)].value.length - 1)
 			console.log("3 group value:"
-					+ DataBindding.elemts[("#" + groupId)].value)
+				+ DataBindding.elemts[("#" + groupId)].value)
 			__onValueChange(groupId)
 		}
 		return DataBindding.elemts[("#" + groupId)];
 	}
 
-	DataBindding.bindElemt = function(id, initValue) {
+	DataBindding.bindElemt = function (id, initValue) {
 		var el = document.getElementById(id);
 		DataBindding.elemts[("#" + id)] = {
-			"id" : id,
-			elemt : el,
+			"id": id,
+			elemt: el,
 		}
 		var type = el.tagName;
 		if (type == "input" || type == "INPUT") {
@@ -331,11 +331,11 @@
 			// }
 			// }
 			// })
-			DataBindding.elemts[("#" + id)].elemt.oninput = (function() {
-				return function(e) {
+			DataBindding.elemts[("#" + id)].elemt.oninput = (function () {
+				return function (e) {
 					DataBindding.elemts[("#" + this.id)].value = DataBindding.elemts[("#" + this.id)].elemt.value
 					console.log(("#" + this.id) + " on input： "
-							+ DataBindding.elemts[("#" + this.id)].value);
+						+ DataBindding.elemts[("#" + this.id)].value);
 					// console.log(this.id)
 					__onValueChange(this.id);
 					// console.log("11???")
@@ -344,11 +344,11 @@
 					// console.log("d1=" + d1 + ",d2=" + d2);
 				}
 			})(DataBindding.elemts[("#" + id)].elemt)
-			DataBindding.elemts[("#" + id)].setValue = function(v) {
+			DataBindding.elemts[("#" + id)].setValue = function (v) {
 				// console.log("22???")
 				DataBindding.setValue(this, v)
 			}
-			DataBindding.elemts[("#" + id)].elemt.onchange = function() {
+			DataBindding.elemts[("#" + id)].elemt.onchange = function () {
 				// __onValueChange(this.id);
 				// console.log(this.id+" #########??:"+this.value)
 			}
@@ -375,8 +375,8 @@
 					}
 				}
 			}
-			DataBindding.elemts[("#" + id)].elemt.onchange = (function() {
-				return function(e) {
+			DataBindding.elemts[("#" + id)].elemt.onchange = (function () {
+				return function (e) {
 					DataBindding.elemts[("#" + this.id)].optValue = e.target.options[e.target.selectedIndex].innerHTML;
 					DataBindding.elemts[("#" + this.id)].index = e.target.selectedIndex;
 					DataBindding.elemts[("#" + this.id)].value = e.target.options[e.target.selectedIndex].value;
@@ -386,7 +386,7 @@
 				}
 			})()
 
-			DataBindding.elemts[("#" + id)].setValue = function(v) {
+			DataBindding.elemts[("#" + id)].setValue = function (v) {
 				DataBindding.setValue(this, v)
 			}
 			__onValueChange(id);
@@ -395,7 +395,7 @@
 		return DataBindding.elemts[("#" + id)];
 	}
 
-	DataBindding.arrOk = function() {
+	DataBindding.arrOk = function () {
 		var allFors = __getElementByClassName("_dbin_for");
 		for (var i = 0; i < allFors.length; i++) {
 			allFors = __getElementByClassName("_dbin_for")
@@ -412,10 +412,10 @@
 			if (DataBindding.arrs["#" + objId].rawHtml == undefined)
 				DataBindding.arrs["#" + objId].rawHtml = rootHTML.innerHTML;
 			// console.log(rootHTML)
-			rootHTML.innerHTML="";
+			rootHTML.innerHTML = "";
 			console.log('1 objId：' + objId)
 			if (DataBindding.arrs["#" + objId] != undefined
-					&& DataBindding.arrs["#" + objId].elemt.length > 0) {
+				&& DataBindding.arrs["#" + objId].elemt.length > 0) {
 				console.log('2 objId：' + objId)
 
 				for (var j = 0; j < DataBindding.arrs["#" + objId].elemt.length; j++) {
@@ -427,7 +427,7 @@
 					var arrs = rawInnerHtml.split("{_dbin_for{$");
 					for (var k = 0; k < arrs.length; k++) {
 						var prop = arrs[k].substring(0, arrs[k]
-								.lastIndexOf("}}"))
+							.lastIndexOf("}}"))
 						if (prop != "") {
 							prop = (prop.substring(prop.indexOf(".") + 1))
 							// console.log("item." + prop)
@@ -436,13 +436,13 @@
 							// + prop + "}}", eval("(" + "item." + prop + ")"));
 							var props = prop.split(".");
 							var v = item;
-							for ( var p in props) {
+							for (var p in props) {
 								v = v[props[p]]
 								// console.log("k="+props[p])
 								// console.log("v="+v)
 							}
 							rawInnerHtml = rawInnerHtml.replace("{_dbin_for{$"
-									+ objId + "." + prop + "}}", v);
+								+ objId + "." + prop + "}}", v);
 						}
 					}
 					// console.log(arrs);
@@ -462,13 +462,13 @@
 		}
 	}
 
-	DataBindding.setValue = function(obj, value) {
+	DataBindding.setValue = function (obj, value) {
 		if (obj.elemt.tagName == "INPUT" || obj.elemt.tagName == "input") {
 			obj.elemt.value = value;
 			DataBindding.elemts[("#" + obj.elemt.id)].value = value;
 			__onValueChange(obj.elemt.id);
 		} else if (obj.elemt.tagName == "select"
-				|| obj.elemt.tagName == "SELECT") {
+			|| obj.elemt.tagName == "SELECT") {
 			// //当是select的时候，有两种初始化方法value的值可以是索引或者值
 			if (value.index != undefined) {
 				DataBindding.elemts[("#" + obj.elemt.id)].index = parseInt(value.index);
@@ -498,7 +498,7 @@
 		}
 	}
 
-	DataBindding.getElemt = function(id) {
+	DataBindding.getElemt = function (id) {
 		return DataBindding.elemts[("#" + id)];
 	}
 
@@ -512,7 +512,7 @@
 	/**
 	 * 如果通过js创建了html并且使用了databinding， 要调用refreshElemts来重新扫描到databinding中
 	 */
-	DataBindding.refreshElemts = function() {
+	DataBindding.refreshElemts = function () {
 		__domScan()
 	}
 
@@ -523,7 +523,9 @@
 		DataBindding.rawDoms = elemts;
 		DataBindding.replaceElements = {};
 		for (var i = 0; i < elemts.length; i++) {
-			elemts[i].className = elemts[i].className + " _dbin_id_" + i
+			var name = " _dbin_id_" + i
+			if (elemts[i].className.indexOf(name) < 0)
+				elemts[i].className = elemts[i].className + name//" _dbin_id_" + i
 			for (var j = 0; j < elemts[i].childNodes.length; j++) {
 				if (elemts[i].childNodes[j].nodeName == "#text") {
 					var clazArr = elemts[i].className.split(" ");
@@ -547,11 +549,11 @@
 		var objArray = new Array(); // 定义返回对象数组
 		var tags = document.getElementsByTagName("*"); // 获取页面所有元素
 		var index = 0;
-		for ( var i in tags) {
+		for (var i in tags) {
 			if (tags[i].nodeType == 1) {
 				if (tags[i].getAttribute("class") != null
-						&& __hasArrItem(tags[i].getAttribute("class")
-								.split(" "), clazname)) { // 如果某元素的class值为所需要
+					&& __hasArrItem(tags[i].getAttribute("class")
+						.split(" "), clazname)) { // 如果某元素的class值为所需要
 					objArray[index] = tags[i];
 					index++;
 				}
@@ -573,16 +575,16 @@
 	function __onValueChange(id) {
 		if (id == "") {
 			DataBindding.replaceIds = {};
-			for ( var p in DataBindding.replaceElements) {
+			for (var p in DataBindding.replaceElements) {
 				var s = (DataBindding.replaceElements[p]);
 				// console.log("id=" + id + ",p=" + p + ",s=" + s);
 				var ar = s.split("{_dbin{");
 				var endS = "";
-				for ( var pa in ar) {
+				for (var pa in ar) {
 					var arr = (ar[pa].split("}}"));
 					for (var i = 0; i < arr.length; i++) {
 						if (i == 0 && arr[i].indexOf("$") > -1
-								&& arr[i].indexOf(".") > -1) {
+							&& arr[i].indexOf(".") > -1) {
 
 							var idp = arr[i].substring(1).split(".");
 							var id = idp[0];
@@ -622,16 +624,16 @@
 
 			var elemtsJson = DataBindding.replaceIds[id];
 			if (elemtsJson != undefined) {
-				for ( var p in elemtsJson) {
+				for (var p in elemtsJson) {
 					var s = (DataBindding.replaceElements[p])
 					// //
 					var ar = s.split("{_dbin{");
 					var endS = "";
-					for ( var pa in ar) {
+					for (var pa in ar) {
 						var arr = (ar[pa].split("}}"));
 						for (var i = 0; i < arr.length; i++) {
 							if (i == 0 && arr[i].indexOf("$") > -1
-									&& arr[i].indexOf(".") > -1) {
+								&& arr[i].indexOf(".") > -1) {
 
 								var idp = arr[i].substring(1).split(".");
 								var id = idp[0];
@@ -666,7 +668,7 @@
 			if (DataBindding.varWatcher) {
 				console.log("varWatcher ~~~~" + callbackelemtid)
 				DataBindding
-						.varWatcher(DataBindding.elemts[("#" + callbackelemtid)])
+					.varWatcher(DataBindding.elemts[("#" + callbackelemtid)])
 			}
 		}
 
