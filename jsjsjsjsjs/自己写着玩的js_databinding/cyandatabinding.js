@@ -32,7 +32,9 @@
 			id: _id
 		}
 		DataBindding.arrs[("#" + _id)]["setArr"] = function (arr) {
+			//console.log("this.id="+this.id)
 			this.elemt = arr;
+			DataBindding.__arrOk(this.id);
 		}
 		return DataBindding.arrs[("#" + _id)];
 	}
@@ -395,12 +397,21 @@
 		return DataBindding.elemts[("#" + id)];
 	}
 
+	//这个方法现在什么也不干了
 	DataBindding.arrOk = function () {
+
+	}
+	DataBindding.__arrOk = function (_dbin_for_items_id) {
 		var allFors = __getElementByClassName("_dbin_for");
 		for (var i = 0; i < allFors.length; i++) {
 			allFors = __getElementByClassName("_dbin_for")
 			// 这里时获取自定义属性,用来判断
 			var objId = allFors[i].attributes["_dbin_for_items"].value;
+			if (objId != _dbin_for_items_id) {
+				continue;//只更新对应的id的数据
+			}
+			console.log("要更新的objId=" + objId);
+			console.log("要更新的_dbin_for_items_id=" + _dbin_for_items_id);
 			// 拿到对应的html
 			// if (objId == obj.id) {
 			var rootHTML = allFors[i];
@@ -409,11 +420,12 @@
 			if (DataBindding.arrs["#" + objId] == undefined) {
 				continue;
 			}
+			console.log("要更新的DataBindding.arrs[ #" + objId + "]=" + DataBindding.arrs["#" + objId])
 			if (DataBindding.arrs["#" + objId].rawHtml == undefined)
 				DataBindding.arrs["#" + objId].rawHtml = rootHTML.innerHTML;
 			// console.log(rootHTML)
 			rootHTML.innerHTML = "";
-			console.log('1 objId：' + objId)
+			console.log("DataBindding.arrs[ #" + objId + "].elemt.length="+DataBindding.arrs["#" + objId].elemt.length )
 			if (DataBindding.arrs["#" + objId] != undefined
 				&& DataBindding.arrs["#" + objId].elemt.length > 0) {
 				console.log('2 objId：' + objId)
