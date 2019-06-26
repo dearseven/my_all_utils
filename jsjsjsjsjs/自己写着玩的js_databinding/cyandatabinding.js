@@ -142,7 +142,7 @@
 			+ DataBindding.elemts[("#" + groupId)].value)
 		__onValueChange(groupId)
 		/**
-		 * 通过代码设置checkbox的选中状态
+		 * 通过代码设置选中状态
 		 * 
 		 * @param {Object}
 		 *            checkedStates [true,false,true],这一句有几个就设置几个
@@ -178,6 +178,46 @@
 				+ DataBindding.elemts[("#" + groupId)].value)
 			__onValueChange(groupId)
 		}
+		/**
+		 *  通过代码设置选中状态
+		 * id是input的控件id
+		 */
+		DataBindding.elemts[("#" + groupId)].setCheckStatusWithId=function(id,trueOrFalse){
+			DataBindding.elemts[("#" + groupId)].value = "";
+			for (var i = 0; i < DataBindding.elemts[("#" + groupId)].elemts.length; i++) {
+				var el=DataBindding.elemts[("#" + groupId)].elemts[i];
+				if(el.id==id){
+					DataBindding.elemts[("#" + groupId)].elemts[i].checked = trueOrFalse;
+					DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].elemts[i].value
+					+ ",";
+				}
+				if (DataBindding.elemts[("#" + groupId)].elemts[i].checked ) { // true|false
+					// DataBindding.elemts[("#" + groupId)].value += DataBindding.elemts[("#" + groupId)].elemts[i].value
+					// 	+ ",";
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(uncheckedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(checkedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
+						+ checkedClass;
+				} else {
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(uncheckedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(checkedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
+						+ uncheckedClass;
+				}
+			}
+			DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
+				.substring(
+					0,
+					DataBindding.elemts[("#" + groupId)].value.length - 1)
+			console.log("4 radio value:"
+				+ DataBindding.elemts[("#" + groupId)].value)
+			__onValueChange(groupId)
+		}
+		
 		return DataBindding.elemts[("#" + groupId)];
 	}
 
@@ -295,6 +335,43 @@
 					0,
 					DataBindding.elemts[("#" + groupId)].value.length - 1)
 			console.log("3 group value:"
+				+ DataBindding.elemts[("#" + groupId)].value)
+			__onValueChange(groupId)
+		}
+			/**
+		 *  通过代码设置选中状态
+		 * id是input的控件id
+		 */
+		DataBindding.elemts[("#" + groupId)].setCheckStatusWithId=function(id,trueOrFalse){
+			DataBindding.elemts[("#" + groupId)].value = "";
+			for (var i = 0; i < DataBindding.elemts[("#" + groupId)].elemts.length; i++) {
+				var el=DataBindding.elemts[("#" + groupId)].elemts[i];
+				if(el.id==id){
+					DataBindding.elemts[("#" + groupId)].elemts[i].checked = trueOrFalse;
+				}
+				if (DataBindding.elemts[("#" + groupId)].elemts[i].checked ) { // true|false
+					DataBindding.elemts[("#" + groupId)].value += DataBindding.elemts[("#" + groupId)].elemts[i].value
+						+ ",";
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(uncheckedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(checkedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
+						+ checkedClass;
+				} else {
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(uncheckedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className = DataBindding.elemts[("#" + groupId)].elemts[i].className
+						.replace(checkedClass, "");
+					DataBindding.elemts[("#" + groupId)].elemts[i].className += " "
+						+ uncheckedClass;
+				}
+			}
+			DataBindding.elemts[("#" + groupId)].value = DataBindding.elemts[("#" + groupId)].value
+				.substring(
+					0,
+					DataBindding.elemts[("#" + groupId)].value.length - 1)
+			console.log("4 group value:"
 				+ DataBindding.elemts[("#" + groupId)].value)
 			__onValueChange(groupId)
 		}
