@@ -1,0 +1,99 @@
+一：
+需要的js
+ajaxfileuploads.js
+jquery.js
+
+二：
+页面引入这个js以后，看一下html的配置
+<!-- 这里可以放图片的地址 ，当然也可以不需要-->
+<input type="hidden" id="fileforUpdate" name="fileforUpdate"
+value="" />
+<!-- 这个是选择图片的input，id是给js用的，name是给服务端用的-->
+<input type="file"
+id="id-input-file-1" name="myImg" accept="image/*">
+<!-- 这个是用来做预览的 div的id是imgPre-->
+<span class=" wx_content_panel_label ">预览:</span>
+<div id="imgPre" style="width:150px; height:150px;" >
+<!-- 考虑到img标签是不能修改src，其实实际上预览的时候是整个替换imgPre的innerHTML
+<img width="150" height="150" alt="150x150" src="" />-->
+</div>
+
+三：
+js的写法
+几个要点，经过我的测试，这方法只能用get传递普通参数
+fileElementId参数是input控件的id数组，这里就是["id-input-file-1"]
+dataType参数必须是text
+返回的参数res也不是json必须按照例子里这样解析
+$.ajaxFileUpload({
+			url: url+"?"+paramStr,
+			type: "GET",
+			fileElementId: fileIdArr,
+			//data: paramStr,
+			// contentType: "application/x-www-form-urlencoded",
+			dataType: "text",
+			success: function (res) {
+				var s = res;
+			    var json = JSON.parse(s.substring(s.indexOf('{'),s.indexOf('}')+1));
+			}，
+			error: function () {
+			}
+})
+
+我们看看预览怎么做的
+	document.getElementById("id-input-file-1").onchange = function(e) {
+		//！！！这一行不重要 不管他先，其实这个看业务了 在例子中这个当然没用
+		document.getElementById("id-input-file-1-name").setAttribute(
+				"data-title", e.srcElement.files[0].name);
+
+		// 预览这个是核心的预览实现
+		$('#imgPre').html('');
+		let names = "";
+		let files = e.srcElement.files;
+		for (var i = 0; i < files.length; i++) {
+			names += files[i].name + ",";
+			var reads = new FileReader();
+			reads.readAsDataURL(files[i]);
+			reads.onload = function(e) {
+				var html = '<img width="150" height="150" alt="150x150" src="'
+						+ this.result + '" />';
+				console.log($('#imgPre'))
+				console.log(html)
+				$('#imgPre').append(html);
+			};
+		}
+
+		// 存图片名，其实这个看业务了 在例子中这个当然没用
+		if (names != "")
+			names = names.substring(0, names.length - 1);
+		 $('#fileforUpdate').val(names);
+	}
+
+四:
+服务端,服务端使用spring的代码接受的
+//import org.springframework.web.multipart.MultipartFile;
+myImg这个参数名要和input的name一致，换句话说如果有个多个input，也都要用这个name
+@RequestMapping("/xxx/saveXXX")
+	//@ResponseBody
+	public void saveXXX(@RequestParam MultipartFile[] myImg, String title,HttpServletResponse resp){
+		//...
+		
+		// 不管怎么样 创建存储目录,TomcatFoldResolver是自己实现的工具类
+		String path = TomcatFoldResolver.mkDirBaseCatalinaHome("\\webapps\\XXX");
+		//移动文件到目录
+		String filePath = null;
+		for (MultipartFile file : myImg) {
+			if (!file.isEmpty()) {
+				System.out.println("file.getOriginalFilename()："+file.getOriginalFilename());
+				File newFile = new File(path +"\\"+ UUID.randomUUID()+"."+(file.getOriginalFilename().split("\\.")[1]));// file.getOriginalFilename());
+				try {
+					file.transferTo(newFile);
+					filePath = newFile.getAbsolutePath();
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		//---
+		resp.getWriter().append("{\"a\":\"1\"}");
+	}
