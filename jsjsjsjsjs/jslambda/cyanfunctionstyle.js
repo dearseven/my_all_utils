@@ -16,7 +16,7 @@
 		console.log(this.els)
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			if (func(this.els[i])) {
+			if (func(this.els[i],this)) {
 				arr.push(this.els[i]);
 			}
 		}
@@ -30,7 +30,7 @@
 	CyanLambda.prototype.map = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			arr.push(func(this.els[i]));
+			arr.push(func(this.els[i],this));
 		}
 		this.els = arr;
 		return this;
@@ -44,7 +44,7 @@
 	CyanLambda.prototype.flatMap = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			var tempArr = (func(this.els[i]));
+			var tempArr = (func(this.els[i],this));
 			if (tempArr instanceof Array) {
 				for (var j = 0; j < tempArr.length; j++) {
 					arr.push(tempArr[j]);
@@ -98,7 +98,7 @@
 		for (var i = 0; i < this.els.length; i++) {
 			tempArr.push({
 				"index": i,
-				"factor": func(this.els[i])
+				"factor": func(this.els[i],this)
 			})
 		}
 		//
@@ -128,7 +128,7 @@
 		for (var i = 0; i < this.els.length; i++) {
 			tempArr.push({
 				"index": i,
-				"factor": func(this.els[i])
+				"factor": func(this.els[i],this)
 			})
 		}
 		//
@@ -150,13 +150,13 @@
 
 
 	/**
-	 * 转换
+	 * 分组
 	 * @param {Object} func
 	 */
 	CyanLambda.prototype.groupBy = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			var flag = func(this.els[i]);
+			var flag = func(this.els[i],this);
 			if (!hasKey(arr, flag)) {
 				arr.push({
 					"key": flag,
@@ -190,9 +190,9 @@
 	CyanLambda.prototype.forEach = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			func(this.els[i]);
+			func(this.els[i],this);
 		}
-		this.els = arr;
+		//this.els = arr;
 		return this;
 	}
 

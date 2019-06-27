@@ -98,6 +98,12 @@
 				console.log("最终结果")
 				console.log(x.getWhat("one"))
 			})
+			//F##----注意我最后一个循环,其实每个回调都可以携带this参数也就是stream对象
+			.forEach(function(item,_this){
+				console.log("----------forEach")
+				console.log(_this.getWhat("one"))
+				console.log(item)
+			})
 		</script>
 	</head>
 	<body>
