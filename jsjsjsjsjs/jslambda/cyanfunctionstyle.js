@@ -5,6 +5,7 @@
 
 	CyanLambda.prototype.els = [];
 	CyanLambda.prototype.progressValue = undefined;
+	CyanLambda.prototype.what = {};
 
 	window.$_cyanLambda = CyanLambda;
 
@@ -195,6 +196,19 @@
 		return this;
 	}
 
+	CyanLambda.prototype.pushWhat = function(k, v) {
+		this.what[k] = v;
+		return this;
+	}
+
+	CyanLambda.prototype.getWhat = function(k) {
+		return this.what[k]
+	}
+
+	CyanLambda.prototype.doSome = function(func) {
+		func(this)
+		return this;
+	}
 
 	CyanLambda.prototype.eachPrint = function(str) {
 		if (str == undefined)
@@ -214,7 +228,7 @@
  * @param arr
  * @returns
  */
-function __toCyanStream(arr){
+function __toCyanStream(arr) {
 	var _cl = new $_cyanLambda();
 	_cl.els = arr;
 	return _cl;
