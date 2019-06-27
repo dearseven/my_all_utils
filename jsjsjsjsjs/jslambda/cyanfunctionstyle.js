@@ -1,4 +1,4 @@
-(function(x, y) {
+(function() {
 	function CyanLambda() {
 
 	}
@@ -209,8 +209,18 @@
 
 })()
 
-Array.prototype.stream = function() {
-	let _cl = new $_cyanLambda();
-	_cl.els = this;
+/**
+ * 不是我想这么写，而是我发现我用prototype会导致有时候和其他js配合的时候有其他问题，
+ * @param arr
+ * @returns
+ */
+function __toCyanStream(arr){
+	var _cl = new $_cyanLambda();
+	_cl.els = arr;
 	return _cl;
-};
+}
+//Array.prototype.stream = function() {
+//	var _cl = new $_cyanLambda();
+//	_cl.els = this;
+//	return _cl;
+//};

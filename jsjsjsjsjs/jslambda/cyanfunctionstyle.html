@@ -1,92 +1,94 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-		<script src="cyanfunctionstyle.js"></script>
-		<script>
-			var sumFunc = ["1", "2.2", "3"].stream()
-				//留下大于1的
-				.filter(function($it) {
-					return $it > 1;
-				}).eachPrint("留下大于1的")
-				//转换成立一个前缀是elemt_的字符串
-				.map(function($it) {
-					return "elemt_" + $it
-				}).eachPrint("转换成立一个前缀是elemt_的字符串")
-				//切分字符出,所以用flatmap返回,直接用map没办法返回啊
-				.flatMap(function($it) {
-					return $it.split("_");
-				}).eachPrint("切分字符出,所以用flatmap返回,直接用map没办法返回啊")
-				//留下数字部分
-				.filter(function($it) {
-					return !isNaN(parseFloat($it))
-				}).eachPrint("留下数字部分")
-				//求和
-				.sum();
-			//打印求和值,这个参数叫progressValue,意思是过程值
-			console.log("sum=" + sumFunc.progressValue)
-			//还可以继续用sumFunc来做操作
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="cyanfunctionstyle.js"></script>
+<script>
+	//var sumFunc = ["1", "2.2", "3"].stream()
+	var sumFunc = __toCyanStream([ "1", "2.2", "3" ])
+	//留下大于1的
+	.filter(function($it) {
+		return $it > 1;
+	}).eachPrint("留下大于1的")
+	//转换成立一个前缀是elemt_的字符串
+	.map(function($it) {
+		return "elemt_" + $it
+	}).eachPrint("转换成立一个前缀是elemt_的字符串")
+	//切分字符出,所以用flatmap返回,直接用map没办法返回啊
+	.flatMap(function($it) {
+		return $it.split("_");
+	}).eachPrint("切分字符出,所以用flatmap返回,直接用map没办法返回啊")
+	//留下数字部分
+	.filter(function($it) {
+		return !isNaN(parseFloat($it))
+	}).eachPrint("留下数字部分")
+	//求和
+	.sum();
+	//打印求和值,这个参数叫progressValue,意思是过程值
+	console.log("sum=" + sumFunc.progressValue)
+	//还可以继续用sumFunc来做操作
 
-			sumFunc
-				//添加元素
-				.append(100).append(6).append(7).append(10).append(13).append(17).append(22).eachPrint()
-				//全部转成int
-				.map(function($it) {
-					return parseInt($it)
-				}).eachPrint("添加元素")
-				//添加在最前面
-				.addFirst(5).eachPrint("添加在最前面")
-				//求和
-				.sum();
-			console.log("sum=" + sumFunc.progressValue)
+	sumFunc
+	//添加元素
+	.append(100).append(6).append(7).append(10).append(13).append(17)
+			.append(22).eachPrint()
+			//全部转成int
+			.map(function($it) {
+				return parseInt($it)
+			}).eachPrint("添加元素")
+			//添加在最前面
+			.addFirst(5).eachPrint("添加在最前面")
+			//求和
+			.sum();
+	console.log("sum=" + sumFunc.progressValue)
 
-			//继续变化,做排序
-			sumFunc
-				//数字直接排序
-				.sort(function(x) {
-					return x
-				}).eachPrint("数字直接排序")
-				//数字直接排序
-				.sortDesc(function(y) {
-					return y
-				}).eachPrint("数字直接倒序排序")
-				//变成json对象
-				.map(function(z) {
-					return {
-						"id": z,
-						"name": "name" + z
-					}
-				}).eachPrint("变成json对象")
-				//json对象排序
-				.sort(function(a) {
-					return a.id;
-				}).eachPrint("json对象排序")
-				//json对象排序
-				.sortDesc(function(b) {
-					return b.id;
-				}).eachPrint("json对象倒序排序")
+	//继续变化,做排序
+	sumFunc
+	//数字直接排序
+	.sort(function(x) {
+		return x
+	}).eachPrint("数字直接排序")
+	//数字直接排序
+	.sortDesc(function(y) {
+		return y
+	}).eachPrint("数字直接倒序排序")
+	//变成json对象
+	.map(function(z) {
+		return {
+			"id" : z,
+			"name" : "name" + z
+		}
+	}).eachPrint("变成json对象")
+	//json对象排序
+	.sort(function(a) {
+		return a.id;
+	}).eachPrint("json对象排序")
+	//json对象排序
+	.sortDesc(function(b) {
+		return b.id;
+	}).eachPrint("json对象倒序排序")
 
-			//在变化一下,做分组
-			sumFunc.map(function(json) {
-					json.id % 2 == 0 ? json.type = "偶数" : json.type = "奇数";
-					return json
-				}).eachPrint("添加奇数偶数属性")
-				//分组
-				.groupBy(function(item) {
-					return item.type;
-				}).eachPrint("分组以后的数据")
-				//forEach
-				.forEach(function(x){
-					console.log("===做简单的forEach来迭代分组后的数据")
-					console.log(x)
-					//迭代分组的数组
-					x.arr.stream().forEach(function(y){
-						console.log(x.key+" "+y.name)
-					})
-				})
-		</script>
-	</head>
-	<body>
-	</body>
+	//在变化一下,做分组
+	sumFunc.map(function(json) {
+		json.id % 2 == 0 ? json.type = "偶数" : json.type = "奇数";
+		return json
+	}).eachPrint("添加奇数偶数属性")
+	//分组
+	.groupBy(function(item) {
+		return item.type;
+	}).eachPrint("分组以后的数据")
+	//forEach
+	.forEach(function(x) {
+		console.log("===做简单的forEach来迭代分组后的数据")
+		console.log(x)
+		//迭代分组的数组
+		__toCyanStream(x.arr).forEach(function(y) {
+			console.log(x.key + " " + y.name)
+		})
+	})
+</script>
+</head>
+<body>
+</body>
 </html>
