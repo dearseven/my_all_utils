@@ -5,6 +5,19 @@
 		<title></title>
 		<script src="cyanfunctionstyle.js"></script>
 		<script>
+			//--额外展示一下flatMap,比如,如果要切分一个字符串,比如像这样的A,B,C,D,E,F和ABCDEF
+			//那么,首先把它变成一个数组
+			var letterArr=["A,B,C,D,E,F"];
+			__toCyanStream(letterArr).flatMap(function(it,_this){
+				//flatMap要返回数组哦!!!!
+				return it.split(",")
+			}).eachPrint("看看flatMap后的字符串A,B,C,D,E,F")
+			letterArr=["ABCDEF"];
+			__toCyanStream(letterArr).flatMap(function(it,_this){
+				//flatMap要返回数组哦!!!!
+				return it.split("")
+			}).eachPrint("看看flatMap后的字符串ABCDEF")
+			console.log("---------下面是其他的操作---------")
 			//var sumFunc = ["1", "2.2", "3"].stream()
 			//A##-------基本操作
 			var sumFunc = __toCyanStream(["1", "2.2", "3"])
@@ -104,6 +117,20 @@
 				console.log(_this.getWhat("one"))
 				console.log(item)
 			})
+			//G##---- 是否包含某个数据
+			var ifHas=sumFunc.returnIfHas(function(x,y){
+				return x.key=="奇数"
+			})
+			console.log("ifHas="+ifHas);
+			var returnIfHasFirst=sumFunc.returnIfHasFirst(function(x,y){
+				return x.key=="偶数"
+			})
+			console.log("returnIfHasFirst：");
+			console.log(returnIfHasFirst);
+			//H##---- 把数据返回来,其实它的数据就是els,使用的时候也可以这样访问function(x,y){y.els....}
+			var els=sumFunc.returnArray();
+			console.log("returnArray:")
+			console.log(els)
 		</script>
 	</head>
 	<body>

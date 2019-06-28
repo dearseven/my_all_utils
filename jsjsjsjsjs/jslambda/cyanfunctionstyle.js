@@ -9,14 +9,40 @@
 
 	window.$_cyanLambda = CyanLambda;
 
+	/**
+	 * 是否包含
+	 * @param {Object} func
+	 */
+	CyanLambda.prototype.returnIfHas = function(func) {
+		for (var i = 0; i < this.els.length; i++) {
+			if (func(this.els[i], this)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 找到第一个数据并返回
+	 * @param {Object} func
+	 */
+	CyanLambda.prototype.returnIfHasFirst = function(func) {
+		for (var i = 0; i < this.els.length; i++) {
+			if (func(this.els[i], this)) {
+				return this.els[i];
+			}
+		}
+		return undefined;
+	}
+	
+
 	/**过滤
 	 * @param {Object} func
 	 */
 	CyanLambda.prototype.filter = function(func) {
-		console.log(this.els)
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			if (func(this.els[i],this)) {
+			if (func(this.els[i], this)) {
 				arr.push(this.els[i]);
 			}
 		}
@@ -30,7 +56,7 @@
 	CyanLambda.prototype.map = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			arr.push(func(this.els[i],this));
+			arr.push(func(this.els[i], this));
 		}
 		this.els = arr;
 		return this;
@@ -44,7 +70,7 @@
 	CyanLambda.prototype.flatMap = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			var tempArr = (func(this.els[i],this));
+			var tempArr = (func(this.els[i], this));
 			if (tempArr instanceof Array) {
 				for (var j = 0; j < tempArr.length; j++) {
 					arr.push(tempArr[j]);
@@ -98,7 +124,7 @@
 		for (var i = 0; i < this.els.length; i++) {
 			tempArr.push({
 				"index": i,
-				"factor": func(this.els[i],this)
+				"factor": func(this.els[i], this)
 			})
 		}
 		//
@@ -128,7 +154,7 @@
 		for (var i = 0; i < this.els.length; i++) {
 			tempArr.push({
 				"index": i,
-				"factor": func(this.els[i],this)
+				"factor": func(this.els[i], this)
 			})
 		}
 		//
@@ -156,7 +182,7 @@
 	CyanLambda.prototype.groupBy = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			var flag = func(this.els[i],this);
+			var flag = func(this.els[i], this);
 			if (!hasKey(arr, flag)) {
 				arr.push({
 					"key": flag,
@@ -190,26 +216,45 @@
 	CyanLambda.prototype.forEach = function(func) {
 		var arr = [];
 		for (var i = 0; i < this.els.length; i++) {
-			func(this.els[i],this);
+			func(this.els[i], this);
 		}
 		//this.els = arr;
 		return this;
 	}
-
+	/**
+	 * 往what中存放信息
+	 * @param {Object} k
+	 * @param {Object} v
+	 */
 	CyanLambda.prototype.pushWhat = function(k, v) {
 		this.what[k] = v;
 		return this;
 	}
 
+	/**
+	 * 获取what中的数据
+	 * @param {Object} k
+	 */
 	CyanLambda.prototype.getWhat = function(k) {
 		return this.what[k]
 	}
 
+	/**
+	 * 可以执行一些行为
+	 * @param {Object} func
+	 */
 	CyanLambda.prototype.doSome = function(func) {
 		func(this)
 		return this;
 	}
-
+	/**
+	 * 返回数据
+	 */
+	CyanLambda.prototype.returnArray = function(){
+		return this.els;
+	}
+	
+	
 	CyanLambda.prototype.eachPrint = function(str) {
 		if (str == undefined)
 			console.log("----------eachPrint-----------")
