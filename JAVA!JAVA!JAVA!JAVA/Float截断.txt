@@ -1,2 +1,2 @@
-			BigDecimal bg = new BigDecimal( Float.parseFloat(arr[0])).setScale(1, RoundingMode.FLOOR);
+			BigDecimal bg = new BigDecimal( Float.parseFloat(arr[0])).setScale(1, RoundingMode.HALF_UP);
 			double androidVersion=bg.doubleValue();

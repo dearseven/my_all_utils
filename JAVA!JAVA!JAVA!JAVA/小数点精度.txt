@@ -5,3 +5,6 @@ System.out.println(decimalFormat.format(number));  //number是double类型吧，
 DecimalFormat decimalFormat = new DecimalFormat("#.00000");  
 System.out.println(decimalFormat.format(number));  //number是double类型吧，我用的
 //这样的话就是取小数点后N为，如果末尾是0保留
+
+			BigDecimal bg = new BigDecimal( Float.parseFloat(arr[0])).setScale(1, RoundingMode.HALF_UP);
+			double androidVersion=bg.doubleValue();
