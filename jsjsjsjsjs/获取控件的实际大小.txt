@@ -1,0 +1,16 @@
+var box = $("#widgetBox")[0]
+	var contentHeight = window.getComputedStyle(box).height 
+	var contentWidth = window.getComputedStyle(box).width
+	console.log("widgetBox的宽高："+contentWidth+","+contentHeight)
+	// 获取盒子自身实际高度
+	// box.offsetHeight //输出160 (内容高度 + 内边距*2 +边框*2)
+	var nodes=getNodeByClass("resize_form_elemt")
+	__toCyanStream(nodes).forEach((x)=>{
+		let width=parseFloat(contentWidth.replace("px",""))*0.3;
+		x.style.width=width+"px";
+	})
+	nodes=getNodeByClass("resize_form_elemt_small")
+	__toCyanStream(nodes).forEach((x)=>{
+		let width=parseFloat(contentWidth.replace("px",""))*0.15;
+		x.style.width=width+"px";
+	})
