@@ -1,0 +1,174 @@
+/**/
+.cy_shink_some {
+	padding: 0px .5rem 10px .8rem;
+}
+
+.cy_adjust_row_width {
+	width: 110%;
+}
+
+.cy_title {
+	min-height: 1.5rem;
+	text-align: center;
+	color: #4A90E2;
+	font-size:16px;
+}
+
+.cy_get_data_last_time_1 {
+	float: left;
+	display: inline-block;
+}
+
+.cy_get_data_last_time_2 {
+	margin-top: -.5rem;
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 700;
+	text-align: left;
+	color: darkgrey;
+	white-space: nowrap;
+	vertical-align: middle;
+	border-radius: .25em;
+}
+
+.cy_get_data_last_time_mark {
+	float: right;
+	font-size: 13px;
+}
+
+.cy_vertical_status_img {
+	float: right;
+	margin-right: .3rem;
+	height: 80px;
+}
+
+.cy_top_label {
+	position: absolute;
+	margin-top: .35rem;
+	color: #818C9E;
+	font-size: 17px;
+}
+
+.cy_top_label_value {
+	position: absolute;
+	margin-top: .35rem;
+	color: #4A90E2;
+	font-size: 15px;
+}
+
+.cy_middle_status_title {
+	position: absolute;
+	color: #818C9E;
+	font-size: 12px;
+}
+/*进度条颜色*/
+.cy_bar_red {
+	background-color: #ff5757;
+}
+/*进度条颜色*/
+.cy_bar_orange {
+	background-color: #FE9a57;
+}
+/*进度条颜色*/
+.cy_bar_blue {
+	background-color: #5797bf;
+}
+/*进度条颜色*/
+.cy_bar_green {
+	background-color: #57bf97;
+}
+
+.cy_adjust_list_group_padding {
+	padding: .5rem .75rem .35rem;
+}
+
+.cy_list_bar_item_div {
+	height: 1.5rem;
+	margin: 0px;
+	10
+	px;
+}
+
+.cy_list_bar_item_txt_left {
+	float: left;
+	color: #818C9E;
+	font-size: 15px;
+}
+
+.cy_list_bar_item_txt_right {
+	float: right;
+	color: #818C9E;
+	font-size: 15px;
+}
+
+.cy_section4_txt1 {
+	font-family: bold;
+	font-weight: 500;
+	color: #555;
+	font-size: 14px;
+}
+
+.cy_section4_txt2 {
+	font-family: bold;
+	font-weight: 900;
+	color: #555;
+	font-size: 14px;
+}
+
+.cy_section4_ctn {
+	height: 80px;
+	background-color: #eee;
+	margin-top: .5rem;
+}
+
+.cy_section4_wrapper { /*让灰色块那几个垂直居中*/
+	text-align: center;
+	position: relative;
+	top: 25%;
+}
+
+.cy_section5_txt1 {
+	float: left;
+	font-weight: 800;
+	color: #555;
+	font-size: 15px;
+}
+
+.cy_section5_txt2 {
+	float: right;
+	color: #0091EA;
+	font-weight: 400;
+	font-size: 15px;
+}
+
+.cy_badge_danger {
+	display: inline-block;
+	min-width: 25px;
+	margin: 3px auto 3px;
+	padding: 3px 7px;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: #dc3545 !important;
+	border-radius: 10px;
+}
+
+.cy_badge_warn {
+	display: inline-block;
+	min-width: 25px;
+	margin: 3px auto 3px;
+	padding: 3px 7px;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: #ffc107 !important;
+	border-radius: 10px;
+}

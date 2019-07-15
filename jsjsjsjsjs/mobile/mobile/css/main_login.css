@@ -1,0 +1,45 @@
+.cy_login-body{
+    background-color: #f1f2f7;
+    font-family: 'Open Sans', sans-serif;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 12px;
+}
+.cy_login-form{
+    background-color: aquamarine;
+    max-width: 330px;
+    margin: 100px auto 0 auto;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.cy_login-form-wrap{
+    padding: 20px;
+}
+
+.cy_login-form h2.cy_login-form-heading {
+    margin: 0;
+    padding: 20px 15px;
+    text-align: center;
+    background: #41cac0;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}
+.cy_login_input{
+    margin: 0px 0px 10px 0px;
+}
+
+.cy_btn-login{
+    background: #f67a6e;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 4px #e56b60;
+    margin-bottom: 20px;
+}

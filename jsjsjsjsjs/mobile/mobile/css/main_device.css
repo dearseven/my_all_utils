@@ -1,0 +1,73 @@
+.cy_pull-right {
+	float: right !important;
+}
+
+.cy_pull-left {
+	float: left !important;
+	margin-right: 20px;
+}
+
+.cy_ul {
+	margin: 10px auto 0px auto;
+}
+
+.cy_badge_danger {
+	display: inline-block;
+	min-width: 25px;
+	margin: 3px auto 3px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: #dc3545 !important;
+	border-radius: 10px;
+}
+
+.cy_badge_warn {
+	display: inline-block;
+	min-width: 25px;
+	margin: 3px auto 3px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: #ffc107 !important;
+	border-radius: 10px;
+}
+
+.cy_badge_off {
+	display: inline-block;
+	min-width: 25px;
+	margin: 3px auto 3px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: #BBB;
+	border-radius: 10px;
+}
+
+.cy_list_item_a {
+	width: 83%;
+}
+
+.cy_list_item_a:link {color: #888}
+.cy_list_item_a:visited {color: #888}
+.cy_list_item_a:hover {color: #444}
+.cy_list_item_a:active {color: #444}
+
+/*.cy_off{
+	color:#a8aFb8!important
+}*/
