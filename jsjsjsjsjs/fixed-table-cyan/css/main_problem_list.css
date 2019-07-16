@@ -1,0 +1,62 @@
+.cy_list_item_a {
+	margin-left: 20px;
+	width: 80px;
+	font-size: 14px;
+	text-align: center;
+	position: relative;
+	vertical-align: middle;
+}
+
+.cy_list_item_a:link {
+	color: #888
+}
+
+.cy_list_item_a:visited {
+	color: #888
+}
+
+.cy_list_item_a:hover {
+	color: #444
+}
+
+.cy_list_item_a:active {
+	color: #444
+}
+
+.cy_txt_green {
+    padding-left:.5rem;
+	color: #57bf97;
+	font-size: 14px;
+	vertical-align: middle;
+	position: relative;
+}
+
+.cy_txt_red {
+    padding-left:.5rem;
+	color: #ff5757;
+	font-size: 14px;
+	vertical-align: middle;
+	position: relative;
+}
+
+.cy_txt_orange {
+    padding-left:.5rem; 
+	color: #FE9a57;
+	font-size: 14px;
+	vertical-align: middle;
+	position: relative;
+}
+
+.cy_list_item_status {
+    padding-left: .5rem;
+    text-align: center;
+	vertical-align: middle;
+	position: relative;
+}
+
+.cy_list_item_txt {
+	vertical-align: middle;
+    color: #567;
+	font-size: 14px;
+	position: relative;
+}
