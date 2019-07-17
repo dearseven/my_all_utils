@@ -1,0 +1,111 @@
+/*凤凰大数据 用户留存的页面*/
+.body_bgc {
+	background-color: gainsboro;
+}
+
+.elemt_bgc {
+	background-color: white;
+}
+
+.cy_title {
+	height: 2.5rem;
+	text-align: center;
+	color: black;
+	font-size: 1.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cy_adjust_row_width {
+	width: 110%;
+}
+
+/*分割块*/
+.divider {
+	height: 0.5rem;
+}
+
+/*选择按钮的区块*/
+.option_area {
+	height: 5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+/*按钮*/
+.option_button {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	/* text-align: center; */
+	border: 1px solid lightgrey;
+	background: white;
+	/*#fe6931*/
+	color: gray;
+	/* 	width: 175px;*/
+	height: 2.5rem;
+	font-weight: 300;
+	font-size: 23px;
+	/* margin: 35px 7px 0 auto; */
+	border-radius: 5px;
+}
+
+.option_button:active {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	/* text-align: center; */
+	border: 1px solid lightgrey;
+	background: lightgrey;
+	/*#fe6931*/
+	color: gray;
+	/* width: 175px;*/
+	height: 2.5rem;
+	font-weight: 300;
+	font-size: 23px;
+	/* margin: 35px 7px 0 auto; */
+	border-radius: 5px;
+}
+
+.option_button_txt {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1rem;
+}
+
+/*文本只显示一行而且超过大小就省略*/
+.option_button_txt span{
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+}
+
+.option_button_arrow {
+	transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	/* IE 9 */
+	-moz-transform: rotate(270deg);
+	/* Firefox */
+	-webkit-transform: rotate(270deg);
+	/* Safari 和 Chrome */
+	-o-transform: rotate(270deg);
+}
+/*表格内部item的样式*/
+.td_item{
+	display: flex;
+	flex-direction: column;
+}
+
+.td_item_top{
+	flex-grow: 1;
+	font-size: 1.2rem;
+}
+.td_item_btm{
+	flex-grow: 1;
+	font-size: 1.2rem;
+	color:darkgray;
+}

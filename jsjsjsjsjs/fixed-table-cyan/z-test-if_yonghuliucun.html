@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 注意引用的main.css和main.js-->
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/main_base.css">
+		<link rel="stylesheet" href="css/if_yonghuliucun.css">
+		<!--##注意这个main.css是可滚动表格的css！ -->
+		<link rel="stylesheet" href="css/main.css" />
+		<style>
+
+		</style>
+		<title>用户留存</title>
+	</head>
+
+	<body class="cy_shink_some body_bgc">
+		<div class="container">
+			<!-- cy_adjust_row_width -->
+			<div class="row elemt_bgc" id="area_1">
+				<div class="cy_col-3 cy_center">
+					<img class="cy_col-3 " src="images/left_arrow_gray.png" />
+				</div>
+				<div class="cy_col-14 cy_title">
+					<span class="center-block">用户留存</span>
+				</div>
+				<!-- 占位-->
+				<div class="cy_col-3 ">
+				</div>
+			</div>
+			<!-- 过渡-->
+			<div class="divider " id="area_2"></div>
+			<!-- 条件按钮区块-->
+			<div class="row elemt_bgc option_area" id="area_3">
+				<div class="cy_col-7 option_button ">
+					<div class="cy_col-17 option_button_txt"><span>展示所有可选择的时间段</span></div>
+					<div class="cy_col-3 ">
+						<img class="cy_col-8 option_button_arrow" src="images/left_arrow_gray.png" />
+					</div>
+				</div>
+
+				<div class="cy_col-7 option_button ">
+					<div class="cy_col-17 option_button_txt"><span>展示所有可以选择的渠道</span></div>
+					<div class="cy_col-3 ">
+						<img class="cy_col-8 option_button_arrow" src="images/left_arrow_gray.png" />
+					</div>
+				</div>
+			</div>
+			<!-- 过渡-->
+			<div class="divider " id="area_4"></div>
+			<!--表格区域 -->
+			<div  class="row" style="background-color: white;">
+				<div class="data-table" >
+					<div class="t_l">
+						<!--左上顶角标题 -->
+						<table>
+							<tbody>
+								<tr id="ST_MainTiltle">
+								</tr>
+							</tbody>
+						</table>
+						<div class="t_l_freeze">
+							<!--左侧第一列标题 -->
+							<table id="ST_YTitile">
+							</table>
+						</div>
+					</div>
+					<div class="t_r">
+						<div class="t_r_t">
+							<!--水平方向第一行，也就是每一个列的头 -->
+							<table>
+								<tbody>
+									<tr id="ST_XTitile">
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="t_r_content">
+							<!-- 数据-->
+							<table>
+								<tbody id="ST_ContentRows">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Optional JavaScript -->
+		<script>
+			function demoUse() {
+				//颜色由深到浅
+				let colorArr = [
+					"#ffad5c", "#ffb56b", "#ffbd7a", "#ffc48a", "#ffcc99",
+					"#ffd4a8", "#ffdbb8", "#ffe3c7", "#ffebd6",
+					"#fff2e5"
+				]
+				//实例化
+				let st = new SlideTable("ST_MainTiltle", "ST_YTitile", "ST_XTitile", "ST_ContentRows");
+				//中心标题
+				st.setMainTitle("周")
+				//y轴的第一列
+				st.setYTitles(["2019.01.01<BR/>-2019.07", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07"])
+				//x轴的第一行
+				st.setXTitles(["新用户", "第一周", "第二周", "第二周", "第四周", "第五周"])
+				//设置内容区块的总宽度
+				st.setContentAllWidth(420);
+				//1--------简单设置数据
+				let datas = [
+					[100, 90, 80, 70, 40, 10],
+					[100, 90, 80, 70, 40, 10],
+					[100, 90, 80, 70, 40, 10],
+					[100, 90, 80, 70, 40, 10],
+					[100, 90, 80, 70, 40, 10],
+					[100, 90, 80, 70, 40, 10],
+					[100, 90, 80, 70, 40, 10]
+				]
+				st.setContentRows(datas);
+				//2--------设置有色彩的数据,会覆盖上面设置的数据哈
+				datas = [];
+				var count = 0;
+				for (let i = 0; i < 13; i++) {
+					var arr = []
+					for (let j = 0; j < 6; j++) {
+						arr.push({
+							"data": "<div class='td_item'><span class='td_item_top' >"+(i+""+j)+"</span><span class='td_item_btm' >"+((count % 10)*10)+"%"+"</span><div>",
+							"bgc": colorArr[9 - (count % 10)],
+						})
+						count++
+					}
+					datas.push(arr);
+				}
+				st.setContentBgcRows(datas);
+				//大小调整-----------
+				//设置第一列的大小,**要在数据设置完成以后修改
+				st.setFirstYWidth(85);
+				//设置第一行的高度，**要在数据设置完成以后修改
+				st.setFirstRowHeight(70);
+				//设置内容区每一行的高度，**要在数据设置完成以后修改
+				st.setContentHeight(60)
+				//设置MainTitle的文本大小，**要在数据设置完成以后修改
+				st.setMainTitleFontSize("2rem")
+				//修改第一行数据的文本大小
+				st.setFirstRowFontSize("1rem");
+				//设置内容区文本大小，**要在数据设置完成以后修改
+				st.setContentFontSize("1.5rem")
+				//设置标题列文本大小，**要在数据设置完成以后修改
+				st.setFirstColFontSize("1.1rem")
+			}
+
+			/**
+			 *就当作是构造方法吧
+			 */
+			function SlideTable(mainTitleId, yTitleId, xTitleId, contentRowsId) {
+				this.mainTitle = document.getElementById(mainTitleId);
+				this.yTitle = document.getElementById(yTitleId);
+				this.xTitle = document.getElementById(xTitleId);
+				this.contentRows = document.getElementById(contentRowsId);
+			}
+			//设置中心标题
+			SlideTable.prototype.setMainTitle = function(titleName) {
+				this.mainTitle.innerHTML = ""
+				this.mainTitle.innerHTML = "<th>" + titleName + "</th>";
+			}
+			//设置y轴的标题
+			SlideTable.prototype.setYTitles = function(titleArr) {
+				this.yTitle.innerHTML = ""
+				for (let i = 0; i < titleArr.length; i++) {
+					this.yTitle.innerHTML += "<tr><td style='background-color:white;'>" + titleArr[i] + "</td></tr>";
+				}
+			}
+			//设置x轴的标题
+			SlideTable.prototype.setXTitles = function(titleArr) {
+				this.xTitle.innerHTML = ""
+				for (let i = 0; i < titleArr.length; i++) {
+					this.xTitle.innerHTML += "<th>" + titleArr[i] + "</th>";
+				}
+			}
+			//设置内容
+			SlideTable.prototype.setContentRows = function(rows) {
+				this.contentRows.innerHTML = "";
+				for (let i = 0; i < rows.length; i++) {
+					this.contentRows.innerHTML += "<tr>";
+					let contents = rows[i];
+					let str = ""
+					for (let j = 0; j < contents.length; j++) {
+						str += "<td>" + contents[j] + "</td>";
+
+					}
+					this.contentRows.innerHTML += str + "</tr>";
+				}
+			}
+			SlideTable.prototype.setContentBgcRows = function(rows) {
+				this.contentRows.innerHTML = "";
+				for (let i = 0; i < rows.length; i++) {
+					this.contentRows.innerHTML += "<tr>";
+					let contents = rows[i];
+					let str = ""
+					for (let j = 0; j < contents.length; j++) {
+						str += "<td style='background-color:" + contents[j].bgc + "'>" + contents[j].data + "</td>";
+					}
+					this.contentRows.innerHTML += str + "</tr>";
+				}
+			}
+
+			//设置内容区域的总宽度，根据内容的个数会平均切分
+			SlideTable.prototype.setContentAllWidth = function(pxInt) {
+				this.xTitle.parentNode.parentNode.style.width = pxInt + "px"
+				this.contentRows.parentNode.style.width = pxInt + "px"
+			}
+			//设置第一列的宽度，**要在数据设置完成以后修改
+			SlideTable.prototype.setFirstYWidth = function(pxInt) {
+				this.mainTitle.parentNode.parentNode.parentNode.style.width = pxInt + "px"
+				this.xTitle.parentNode.parentNode.parentNode.parentNode.style.marginLeft = pxInt + "px"
+
+				let ths = this.xTitle.getElementsByTagName("th");
+				for (let i = 0; i < ths.length; i++) {
+					ths[i].style.width = pxInt + "px"
+				}
+
+				let tds = this.contentRows.getElementsByTagName("td");
+				for (let i = 0; i < tds.length; i++) {
+					tds[i].style.width = pxInt + "px"
+				}
+			}
+			//设置第一行的高度，**要在数据设置完成以后修改
+			SlideTable.prototype.setFirstRowHeight = function(pxInt) {
+				this.mainTitle.style.height = pxInt + "px"
+				let ths = this.xTitle.getElementsByTagName("th");
+				for (let i = 0; i < ths.length; i++) {
+					ths[i].style.height = pxInt + "px"
+				}
+			}
+			//设置内容区每一行的高度，**要在数据设置完成以后修改
+			SlideTable.prototype.setContentHeight = function(pxInt) {
+				let tds = this.contentRows.getElementsByTagName("td");
+				for (let i = 0; i < tds.length; i++) {
+					tds[i].style.height = pxInt + "px"
+				}
+				tds = this.yTitle.getElementsByTagName("td");
+				for (let i = 0; i < tds.length; i++) {
+					tds[i].style.height = pxInt + "px"
+				}
+			}
+			//设置MainTitle的文本大小，**要在数据设置完成以后修改
+			SlideTable.prototype.setMainTitleFontSize = function(_fontSize) {
+				this.mainTitle.getElementsByTagName("th")[0].style.fontSize = _fontSize
+			}
+			//设置第一行标题的文本大小，**要在数据设置完成以后修改
+			SlideTable.prototype.setFirstRowFontSize = function(_fontSize) {
+				let ths = this.xTitle.getElementsByTagName("th");
+				for (let i = 0; i < ths.length; i++) {
+					ths[i].style.fontSize = _fontSize
+				}
+			}
+			//设置标题列的文本大小，**要在数据设置完成以后修改
+			SlideTable.prototype.setFirstColFontSize = function(_fontSize) {
+				tds = this.yTitle.getElementsByTagName("td");
+				for (let i = 0; i < tds.length; i++) {
+					tds[i].style.fontSize = _fontSize
+				}
+			}
+			//设置内容区的文本大小，**要在数据设置完成以后修改
+			SlideTable.prototype.setContentFontSize = function(_fontSize) {
+				let tds = this.contentRows.getElementsByTagName("td");
+				for (let i = 0; i < tds.length; i++) {
+					tds[i].style.fontSize = _fontSize
+				}
+			}
+			demoUse();
+		</script>
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
+		<script src="js/iscroll-probe.min.js"></script>
+		<!--##注意这个main.js是可滚动表格的js！里面有要注意的地方 -->
+		<script src="js/main.js"></script>
+	</body>
+
+</html>
