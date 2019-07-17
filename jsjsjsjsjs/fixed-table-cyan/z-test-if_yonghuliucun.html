@@ -274,6 +274,15 @@
 				}
 			}
 			demoUse();
+			
+        /** 得到屏幕的宽度*/
+        let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+        /** 得到html的Dom元素*/
+        let htmlDom = document.getElementsByTagName('html')[0];
+        /** 设置根元素字体大小 */
+        htmlDom.style.fontSize = htmlWidth / 25 + 'px';
+    
+
 		</script>
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 		<script src="js/jquery-3.2.1.min.js"></script>
