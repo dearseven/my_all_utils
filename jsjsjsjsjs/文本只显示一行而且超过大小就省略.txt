@@ -1,0 +1,7 @@
+/*文本只显示一行而且超过大小就省略*/
+.option_button_txt span {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-break: break-all;
+}
