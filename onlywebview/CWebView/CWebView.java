@@ -77,7 +77,7 @@ public class CWebView extends WebView {
 		//移动端王爷兼容适配
 	    webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
-
+		webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
