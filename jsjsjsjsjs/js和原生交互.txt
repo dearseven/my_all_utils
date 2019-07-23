@@ -1,0 +1,31 @@
+	//这是js部分
+	$('#__channelPick')[0].onclick = (() => {
+		return () => {
+			if (window.androidjs) { //判断是否安卓app
+				window.androidjs.selectChannel();
+			} else { //ios App
+				if (typeOf(appLogin) == 'function') { //ios 老的webview调用方式
+					appLogin();
+				} else { //新的webview调用方式
+					//try {
+					window.webkit.messageHandlers.appLogIn.postMessage('');
+					//} else {
+					//alert('原生app不存在applogin方法');
+					//}
+				}
+			}
+		}
+	})()
+	
+	//在android中这就是给webview中注入js的对象在window上，对象名是后面的androidjs
+	webView.addJavascriptInterface(object : Object() {
+            @JavascriptInterface
+            fun selectChannel() {
+                val it = Intent(this@XXXActivity, YYYActivity::class.java)
+                it.putExtra("selectType", 0)
+                it.putExtra("fromSelectedTags", selectedChannelsId)
+                startActivityForResult(it, XXXActivity.REQ_ID_CHANNEL)
+            }
+        }, "androidjs")
+		
+		所以window.androidjs.selectChannel就调用到了fun selectChannel()
