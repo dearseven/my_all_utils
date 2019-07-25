@@ -70,6 +70,7 @@ public class CWebView extends WebView {
     }
 
     private void init(Context context) {
+		clearCache(true);//就可清除webview缓存。
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
