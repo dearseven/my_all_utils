@@ -1,0 +1,51 @@
+解决ListView与SwipeRefreshLayout滑动冲突的问题
+：SwipeRefreshLayout作为官方下拉刷新控件，
+要将 ListView控件包裹在里面，这样才能在滑动ListView的时候监听到滑动事件进而从顶部调出下拉刷新控件
+
+问题:
+ListView内容如果大于一屏，滚动到下面就无法回到顶部了，因为滚回顶部需要下拉滑动，
+就会首先触发SwipeRefreshLayout的下拉事件
+
+解决方式java
+lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+                boolean enable = false;
+                if (lv != null && lv.getChildCount() > 0) {
+                    boolean firstItemVisible = lv.getFirstVisiblePosition() == 0;
+                    boolean topOfFirstItemVisible = lv.getChildAt(0).getTop() == 0;
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                lyRefresh.setEnabled(enable);
+            }
+        });
+
+解决方式kotlin
+  listview?.setOnScrollListener(object : AbsListView.OnScrollListener {
+            override fun onScroll(
+                view: AbsListView?,
+                firstVisibleItem: Int,
+                visibleItemCount: Int,
+                totalItemCount: Int
+            ) {
+                var enable = false;
+                if (listview != null && listview!!.getChildCount() > 0) {
+                    var firstItemVisible = listview!!.getFirstVisiblePosition() == 0;
+                    var topOfFirstItemVisible = listview!!.getChildAt(0).getTop() == 0;
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipe?.setEnabled(enable);
+            }
+
+            override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+            }
+
+        });
+		
+		原理很简单，监听ListView的OnScrollListener事件，如果item没有滑到最顶端，
+		就禁用SwipeRefreshLayout，到了顶端以后再启用，就不会产生冲突了
