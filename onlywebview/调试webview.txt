@@ -1,0 +1,21 @@
+介绍参照
+https://developers.google.cn/web/tools/chrome-devtools/remote-debugging/webviews?hl=zh-cn
+大概的使用总结
+
+1 配置webview的调试
+      1.1在webview的静态方法上设置
+
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        WebView.setWebContentsDebuggingEnabled(true);
+    }
+     1.2 如果需要仅在 debuggable 为 true时启用 WebView 调试
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE))
+        { WebView.setWebContentsDebuggingEnabled(true); }
+    }
+
+2 在DevTools打开WebView
+    打开chrome，输入chrome://inspect 页面将显示您的设备上已启用调试的 WebView 列表。
+    点击想要调试的 WebView 下方的 inspect。（需要翻墙啊，或者找离线包）
+    然后在手机上操作即可
