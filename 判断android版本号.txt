@@ -1,0 +1,6 @@
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){..9}
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){..8}
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){..7}
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){..6}
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L){..5}
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.K){..4}

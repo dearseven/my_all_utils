@@ -1,0 +1,23 @@
+public class MainActivity extends Activity {
+
+	@CyanView(R.id.tv)
+	private TextView mTextView;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		//初始化
+		CyanInjector.inject(this);
+	}
+
+	@CyanClick({R.id.bt1,R.id.bt2})
+    public void btnClick(Button view) {
+        final int id = view.getId();
+        if (id == R.id.bt1) {
+        	mTextView.setText("按钮一被点击");
+        }else if (id == R.id.bt2) {
+        	mTextView.setText("按钮二被点击");
+        }
+    }
+}
+
