@@ -1,0 +1,13 @@
+1
+Android Studio 3.0会在debug apk的manifest文件application标签里自动添加 android:testOnly="true"属性，
+导致IDE中run跑出的apk在大部分手机上只能用adb install -t <apk>来安装
+
+解决办法
+在gradle.properties(项目根目录或者gradle全局配置目录 ~/.gradle/)文件中添加
+
+android.injected.testOnly=false
+
+ 
+2
+如果是解析软件包失败，打开File-Setting-Build,Execution,Deployment-Instant Run 
+取消勾选 Enable Instant Run to hot swap...保存
