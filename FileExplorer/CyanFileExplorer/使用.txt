@@ -1,0 +1,50 @@
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	
+	fun startFileExplorer(v: Button?) {
+        var flag = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flag = (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && flag) {
+            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE), 5002)
+        } else {
+            val it = Intent(this@FileStorageActivity, CyanFileExplorerActivity::class.java)
+            startActivityForResult(it, 6001)
+        }
+    }
+	
+	
+	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 5002) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startFileExplorer(null)
+            }
+        }
+    }
+	
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 6001 && resultCode == Activity.RESULT_OK) {//选择文件（夹）
+            //读出传递回来的文件
+            val list = data?.extras?.get(CyanFileExplorerActivity.DATA_KEY)
+                    ?: ArrayList<HashMap<String, Any>>()
+            list as ArrayList<HashMap<String, Any>>
+            list.forEachIndexed { a, b ->
+                Dlog.log(javaClass, "$a selected:$b")
+                //做上传操作
+                var pathOrFile = b[GetFilesUtils.FILE_INFO_PATH];
+                when (pathOrFile) {
+                    is String -> {//it is a folder
+                        pathOrFile as String
+                    }
+                    is File -> {
+                        var _path = pathOrFile.absolutePath
+                        val mimetype = MimetypeUtils.instance.getMimeType(pathOrFile)
+                    }
+                }
+            }
+        }
+    }
