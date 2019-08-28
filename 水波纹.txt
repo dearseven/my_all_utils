@@ -1,0 +1,5 @@
+<androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/file_rv_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"></androidx.appcompat.widget.AppCompatButton>
