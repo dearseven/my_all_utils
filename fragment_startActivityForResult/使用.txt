@@ -1,0 +1,6 @@
+		val it = Intent(activity, CyanFileExplorerActivity::class.java)
+        (activity as SuperActivity).startActivityForResult(6001,it,object:IActivityResultCallBack{
+            override fun activityResultCallBack(requestCode: Int, resultCode: Int, data: Intent?) {
+                Dlog.Toast(activity,"selectDirectory activityResultCallBack")
+            }
+        })

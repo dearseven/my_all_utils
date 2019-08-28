@@ -1,0 +1,19 @@
+class SuperActivity:AppCompatActivity{
+//==============================startActivityForResult======================================
+    var activityResultCallBack: IActivityResultCallBack? = null
+
+    fun startActivityForResult(requestCode: Int, intent: Intent, callBack: IActivityResultCallBack) {
+        activityResultCallBack = callBack
+        startActivityForResult(intent, requestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        activityResultCallBack?.activityResultCallBack(requestCode, resultCode, data)
+    }
+	
+}
+
+interface IActivityResultCallBack {
+    open fun activityResultCallBack(requestCode: Int, resultCode: Int, data: Intent?)
+}
