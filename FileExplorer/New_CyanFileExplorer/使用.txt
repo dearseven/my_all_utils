@@ -16,6 +16,8 @@
 				this.putBoolean(CyanFileExplorerActivity.KEY_IS_ONLY_DIRECTORY, true)
 				//最大可选择item数量
 				this.putInt(CyanFileExplorerActivity.KEY_PICK_MAX_COUNT, 1)
+				//显示标题
+				this.putString(CyanFileExplorerActivity.KEY_TITLE, "我是标题")
 			})
             startActivityForResult(it, 6001)
         }

@@ -1,9 +1,9 @@
 
-
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,17 +19,23 @@ class CyanFileExplorerActivity : AppCompatActivity() {
         val KEY_IS_ONLY_DIRECTORY = "IS_ONLY_DIRECTORY"
         //
         val KEY_PICK_MAX_COUNT = "PICK_MAX_COUNT"
+        //
+        val KEY_TITLE = "_TITLE"
     }
 
     //是否只选择目录
     var isOnlyDirectory = false
     //可以最大勾选的数量
     var pickMaxCount = 9
+    //显示的标题
+    var topTitle = ""
 
     @CyanView(R.id.cyanFileExplorer_recyclerview)
     lateinit var recyclerView: RecyclerView
     @CyanView(R.id.cyanFileExplorer_ok_btn)
     lateinit var okBtn: AppCompatButton
+    @CyanView(R.id.cyanFileExplorer_title)
+    lateinit var titleTv: TextView
 
 
 //    lateinit var fileUtils: GetFilesUtils
@@ -41,9 +47,15 @@ class CyanFileExplorerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cyan_file_explorer)
         CyanInjector.injectActivity(this)
+
+
         //
         isOnlyDirectory = intent.extras.getBoolean(KEY_IS_ONLY_DIRECTORY, isOnlyDirectory)
         pickMaxCount = intent.extras.getInt(KEY_PICK_MAX_COUNT, pickMaxCount)
+        topTitle = intent.extras.getString(KEY_TITLE, topTitle)
+
+        //设置标题
+        titleTv.text = topTitle
 
 //        fileUtils = GetFilesUtils.getInstance()
 
