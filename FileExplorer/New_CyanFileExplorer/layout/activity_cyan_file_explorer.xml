@@ -1,0 +1,33 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cyanFileExplorer_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cyanFileExplorer_bottom_area"
+        app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/cyanFileExplorer_bottom_area"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cyanFileExplorer_recyclerview">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cyanFileExplorer_ok_btn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:text="@string/select_ok"
+            android:textColor="#fff"
+            android:background="@drawable/cyan_file_explorer_ok_btn_normal"
+            android:layout_width="100dp"
+            android:layout_height="32dp" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

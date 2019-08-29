@@ -1,0 +1,57 @@
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/cfeid_iv1"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="18dp"
+        android:background="#eee"
+        android:gravity="center"
+        android:textColor="#f83"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cfeid_tv2"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical|left"
+        android:maxLines="2"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:text="1"
+        android:textColor="#777"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/cfeid_iv1"
+        app:layout_constraintRight_toLeftOf="@+id/cfeid_1v3_area"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RelativeLayout
+        android:id="@+id/cfeid_1v3_area"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/cfeid_1v3"
+            android:src="@drawable/raptor_select_icon_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:textColor="#58f"></ImageView>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

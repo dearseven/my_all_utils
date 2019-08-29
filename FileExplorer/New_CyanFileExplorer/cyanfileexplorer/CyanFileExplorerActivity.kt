@@ -1,7 +1,10 @@
+
+
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,15 +18,18 @@ class CyanFileExplorerActivity : AppCompatActivity() {
         //
         val KEY_IS_ONLY_DIRECTORY = "IS_ONLY_DIRECTORY"
         //
-        val KEY_PICK_MAX_COUNT= "PICK_MAX_COUNT"
+        val KEY_PICK_MAX_COUNT = "PICK_MAX_COUNT"
     }
+
     //是否只选择目录
     var isOnlyDirectory = false
     //可以最大勾选的数量
-    var pickMaxCount=9
+    var pickMaxCount = 9
 
     @CyanView(R.id.cyanFileExplorer_recyclerview)
     lateinit var recyclerView: RecyclerView
+    @CyanView(R.id.cyanFileExplorer_ok_btn)
+    lateinit var okBtn: AppCompatButton
 
 
 //    lateinit var fileUtils: GetFilesUtils
@@ -37,7 +43,7 @@ class CyanFileExplorerActivity : AppCompatActivity() {
         CyanInjector.injectActivity(this)
         //
         isOnlyDirectory = intent.extras.getBoolean(KEY_IS_ONLY_DIRECTORY, isOnlyDirectory)
-        pickMaxCount=intent.extras.getInt(KEY_PICK_MAX_COUNT,pickMaxCount)
+        pickMaxCount = intent.extras.getInt(KEY_PICK_MAX_COUNT, pickMaxCount)
 
 //        fileUtils = GetFilesUtils.getInstance()
 
@@ -45,7 +51,7 @@ class CyanFileExplorerActivity : AppCompatActivity() {
             it.layoutManager = LinearLayoutManager(this@CyanFileExplorerActivity, RecyclerView.VERTICAL, false)
             it.addItemDecoration(CyanFileExplorerDecoration(this@CyanFileExplorerActivity, CyanFileExplorerDecoration.VERTICAL_LIST))
             it.itemAnimator = DefaultItemAnimator()
-            adapter = CyanFileExplorerAdapter(this@CyanFileExplorerActivity,isOnlyDirectory,pickMaxCount)
+            adapter = CyanFileExplorerAdapter(this@CyanFileExplorerActivity, isOnlyDirectory, pickMaxCount)
             it.adapter = adapter
         }
     }

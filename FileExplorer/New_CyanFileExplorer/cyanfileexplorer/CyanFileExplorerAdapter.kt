@@ -1,4 +1,9 @@
+
+
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -159,7 +164,7 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
 
             if (pickMaxCount == 1) {
                 if (selectedSet.isEmpty()) {
-                    selectedSet.add(item)
+                    addSelect(item)
                 } else {
                     //要找到移除的是谁
                     var needRemoveId = -1
@@ -171,12 +176,12 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
                             }
                         }
                     }
-                    selectedSet.clear()
+                    clearSelected()
                     //修改item
                     if (needRemoveId != -1) {
                         notifyItemChanged(needRemoveId)
                     }
-                    selectedSet.add(item)
+                    addSelect(item)
                 }
             } else {
                 val size = selectedSet.size
@@ -184,13 +189,59 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
                     Toast.makeText(weakCtx.get(), "${weakCtx.get()?.getString(R.string.max_can_pick)}$pickMaxCount", Toast.LENGTH_SHORT).show()
                 } else {
                     if (selectedSet.contains(item)) {
-                        selectedSet.remove(item)
+                        removeSelected(item)
                     } else {
-                        selectedSet.add(item)
+                        addSelect(item)
                     }
                 }
             }
             notifyItemChanged(index)
+        }
+    }
+
+    private fun clearSelected() {
+        selectedSet.clear()
+        val activity = (weakCtx.get() as CyanFileExplorerActivity)
+        activity.okBtn.setBackgroundResource(R.drawable.cyan_file_explorer_ok_btn_normal)
+        activity.okBtn.text = "(${selectedSet.size}) ${activity.getString(R.string.select_ok)}"
+        activity.okBtn.setOnClickListener { }
+    }
+
+    private fun removeSelected(item: Map<String, Any>) {
+        val activity = (weakCtx.get() as CyanFileExplorerActivity)
+        selectedSet.remove(item)
+        if (selectedSet.isEmpty()) {
+            activity.okBtn.setBackgroundResource(R.drawable.cyan_file_explorer_ok_btn_normal)
+            activity.okBtn.setOnClickListener { }
+        } else {
+            activity.okBtn.setBackgroundResource(R.drawable.cyan_file_explorer_ok_btn_selected)
+            addOkClickEvent()
+        }
+        activity.okBtn.text = "(${selectedSet.size}) ${activity.getString(R.string.select_ok)}"
+    }
+
+
+    private fun addSelect(item: Map<String, Any>) {
+        val activity = (weakCtx.get() as CyanFileExplorerActivity)
+        selectedSet.add(item)
+        activity.okBtn.setBackgroundResource(R.drawable.cyan_file_explorer_ok_btn_selected)
+        activity.okBtn.text = "(${selectedSet.size}) ${activity.getString(R.string.select_ok)}"
+        addOkClickEvent()
+    }
+
+    private fun addOkClickEvent() {
+        val activity = (weakCtx.get() as CyanFileExplorerActivity)
+        activity.okBtn.setOnClickListener {
+            activity.setResult(Activity.RESULT_OK, Intent().apply {
+                this.putExtras(Bundle().also {
+                    val list = ArrayList<Map<String, Any>>(selectedSet.size + 1);
+                    selectedSet.forEach { i ->
+                        list.add(i)
+                    }
+                    it.putSerializable(CyanFileExplorerActivity.DATA_KEY, list)
+                })
+            })
+            activity.finish()
         }
     }
 
