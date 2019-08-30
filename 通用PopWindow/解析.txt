@@ -1,0 +1,52 @@
+SuperActivity中是通用popwindow的实现
+
+
+layout里放的是要展示的布局--要求跟布局是线性布局（展示出来以后背景色是透明的哦！要自己处理背景色）
+anim放的是出现和隐藏的动画
+values里放的是把动画弄到一起
+
+使用
+
+				//弹出popwindowmenu
+                (activity as SuperActivity).bottomMenu(layoutid, view, dataParam, object : IPopMenuShownCallBack {
+                    override fun onPopMenuShownCallBack(view: View, callBackParam: Any?, popupWindow: PopupWindow) {
+                        itemMoreShown(view, callBackParam, popupWindow)//调用逻辑处理
+                    }
+                })
+
+layoutid 是要展示的布局id
+view     是触发行为的view实例
+dataParam     是要被回调的参数，回调以后形参名叫callBackParam
+
+
+/**
+* view是展示的视图实例，可以用来获取控件对象
+callBackParam 是调用时候传递的 dataParam
+popupWindow 是弹出框本身
+*/
+private fun itemMoreShown(view: View, callBackParam: Any?, popupWindow: PopupWindow) {
+        callBackParam as XXXX
+        var downloadBtn: AppCompatButton? = null
+        var shareBtn: AppCompatButton? = null
+        var deleteBtn: AppCompatButton? = null
+    
+            downloadBtn = view.findViewById(R.id.file_item_more_pop_btn1)
+            shareBtn = view.findViewById(R.id.file_item_more_pop_btn2)
+            deleteBtn = view.findViewById(R.id.file_item_more_pop_btn3)
+        
+        //下载按钮
+        downloadBtn?.setOnClickListener {
+            popupWindow.dismiss()
+            val permissions = arrayOf<String>(
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+			//--这个请参考动态权限封装
+            (activity as SuperActivity).askPermission(permissions, object : IPermissionCallBack {
+                override fun askPermissionResult(result: Boolean) {
+                    if (result) {
+                        selectDirectory(callBackParam)
+                    }
+                }
+            }, getString(R.string.we_need_wr_extelnal_storage_to_next))
+        }
