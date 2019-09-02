@@ -3,3 +3,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"></androidx.appcompat.widget.AppCompatButton>
+			
+			其实最好是水波纹用前景色foreground
+			android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/cyan_file_explorer_ok_btn_normal"
