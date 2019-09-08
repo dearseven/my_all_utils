@@ -1,0 +1,10 @@
+androidx.appcompat.widget.AppCompatButton
+
+1 去掉阴影和立体效果
+style="?android:attr/borderlessButtonStyle"
+ 
+2 添加水波纹前景
+android:foreground="?attr/selectableItemBackground"
+
+3 取消英文全部大写
+android:textAllCaps="false"
