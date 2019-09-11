@@ -1,0 +1,11 @@
+
+	implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'androidx.annotation:annotation:1.1.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+	
+	主要是第二行
+	
+	当然 gradle.properties中
+	android.useAndroidX=true
+    android.enableJetifier=true
