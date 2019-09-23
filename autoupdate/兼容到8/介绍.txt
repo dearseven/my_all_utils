@@ -1,0 +1,1 @@
+cc.m2u.ifengbigdata.activity.MainActivity::getUpdateInfo是更新查询

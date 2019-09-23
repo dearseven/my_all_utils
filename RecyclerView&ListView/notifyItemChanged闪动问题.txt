@@ -1,0 +1,36 @@
+解决方案1
+使用 notifyDataSetChanged() 但是这样的话会刷新整个视图，很多时候我们当然不想这样
+
+解决方案2
+使用 notifyItemChanged(position,payload)
+
+平时我们使用RecyclerAdapter的时候只实现
+override fun onBindViewHolder(holder: TransferPorgerssViewHolder, position: Int)
+如果使用了notifyItemChanged(position,payload)我们还要实现
+override fun onBindViewHolder(holder: TransferPorgerssViewHolder, position: Int, payloads: MutableList<Any>) 
+
+按照习惯，本来的各种状态的视图效果还是写在
+override fun onBindViewHolder(holder: TransferPorgerssViewHolder, position: Int)
+之中，
+
+但是，如果我要更新一个下载进度，那么
+我只要刷新进度条，我可以这样写
+	notifyItemChanged(position,HashMap<String, Any>().also {
+						it["type"] = 0 //0是更新进度
+						it["data"] = obj.progressInt
+					})
+然后
+    override fun onBindViewHolder(holder: TransferPorgerssViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            //payloads为空，说明是更新整个 ViewHolder
+            onBindViewHolder(holder, position);
+        }else{
+            val m=payloads[0] as HashMap<String, Any>
+            when(m["type"]){
+                0->{
+					//0是更新进度，这样做就会只刷新进度条而不是holder的所有view
+                    holder.progress.progress = m["data"] as Int
+                }
+            }
+        }
+    }
