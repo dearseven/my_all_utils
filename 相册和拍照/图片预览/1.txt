@@ -1,0 +1,20 @@
+**用ViewPagerForImageSee代替系统的viewpager
+
+compile 'com.github.chrisbanes.photoview:library:+'
+    //glide
+compile 'com.github.bumptech.glide:glide:3.7.0'
+
+项目的build中
+allprojects {
+    repositories {
+        jcenter()
+        //PhotoView
+        maven { url "https://jitpack.io" }
+    }
+}
+ 
+
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+	以及动态权限哦！
