@@ -1,0 +1,5 @@
+    var mHandler: WeakHandler = object : WeakHandler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+        }
+    }

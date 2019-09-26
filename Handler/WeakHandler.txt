@@ -1,0 +1,29 @@
+import android.app.Service
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
+import java.lang.ref.WeakReference
+
+open class WeakHandler : Handler {
+    lateinit var ref: WeakReference<Context>
+    lateinit var refLooper: WeakReference<Looper>
+
+    constructor(activity: FragmentActivity) {
+        this.ref = WeakReference(activity);
+    }
+
+    constructor(activity: AppCompatActivity) {
+        this.ref = WeakReference(activity);
+    }
+
+    constructor(service: Service) {
+        this.ref = WeakReference(service);
+    }
+
+    constructor(loop: Looper) {
+        this.refLooper = WeakReference(loop)
+    }
+
+}

@@ -1,0 +1,12 @@
+
+public class App extends MultiDexApplication  {
+  
+    //Application.class
+    public static WeakHandler mHandler = new WeakHandler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+
+}
