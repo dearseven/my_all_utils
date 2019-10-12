@@ -10,11 +10,16 @@
             reg_login_reg_pwd.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 			//修改光标移到末尾
             reg_login_reg_pwd.setSelection(reg_login_reg_pwd.text.toString().length)
+			//解决EditText的inputType为Password时， 字体不一致的问题
+			reg_login_reg_pwd.typeface = Typeface.DEFAULT
         } else {
             tag = 0
             reg_login_reg_pwd_eye.setImageResource(R.drawable.pwd_invisiable)
             reg_login_reg_pwd.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+			//解决EditText的inputType为Password时， 字体不一致的问题
+			reg_login_reg_pwd.typeface = Typeface.DEFAULT
             reg_login_reg_pwd.setSelection(reg_login_reg_pwd.text.toString().length)
+			
         }
 		//状态存储回去
         reg_login_reg_pwd_eye.setTag(R.id.view_content_id, tag)
