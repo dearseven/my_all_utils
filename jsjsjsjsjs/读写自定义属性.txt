@@ -1,0 +1,11 @@
+1-原生JS
+
+设置属性 .setAttribute("属性","值")
+获取属性 .getAttribute("属性")
+eg:
+
+js获得元素属性值：obj.getAttribute("data-value")
+
+js设置属性：obj.setAttribute("data-value", "123")
+
+ 
