@@ -121,7 +121,7 @@ class StorageFilePreviewActivity : AppCompatActivity(), IFileStorageResultListen
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 uri = Uri.fromFile(localFile)
             } else {
-                uri = FileProvider.getUriForFile(this, "com.teetaa.intellivusdemo.FileProvider", localFile)
+                uri = FileProvider.getUriForFile(this, "com.xxx.xxx.FileProvider", localFile)
                 intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
             }
             intent.setDataAndType(uri, mime)
