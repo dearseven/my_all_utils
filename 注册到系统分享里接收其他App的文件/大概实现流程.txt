@@ -1,0 +1,70 @@
+<!-- 接受系统分享的Activity-->
+        <activity
+            android:name="com.teetaa.intellivusdemo3.activities.SysShareActivity"
+            android:excludeFromRecents="true"
+            android:label="Upload to Raptor">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.SEND" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <data android:mimeType="text/plain" />-->
+            <!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+		
+		在Activity中
+		//存放文件路径
+		var filePaths: ArrayList<String> = ArrayList<String>()
+
+		override fun onCreate(savedInstanceState: Bundle?) {
+			super.onCreate(savedInstanceState)
+			setContentView(R.layout.activity_sys_share)
+
+			//----------------------------------------------------------------
+			intent.action?.also { action ->
+				intent.type?.also { type ->
+					when (action) {
+						Intent.ACTION_SEND -> {
+							doReceiverFiles()
+						}
+						Intent.ACTION_SEND_MULTIPLE -> {
+							doReceiverFiles()
+						}
+					}
+				}
+			}
+    }
+
+    fun doReceiverFiles() {
+        val bd = intent.extras.get(Intent.EXTRA_STREAM)
+//      Dlog.log4(javaClass, "bd is Uri ?: ${bd is Uri} ")
+        bd?.also { bd ->
+            if (bd is Uri) {
+                bd.authority
+//              Dlog.log4(javaClass, "bd is Uri:${bd},bd.authority=${bd.authority}")
+                val path: String? = ContentUriUtil.getPath(this, bd)
+                path?.also {
+                    Dlog.log4(javaClass, "one file->path${it}")
+                    filePaths.add(it)
+                }
+            } else {
+                bd as ArrayList<Uri>
+                bd.forEach {
+                    Dlog.log4(javaClass, "bd is ArrayList:${it},bd.authority=${it.authority}")
+                    val path: String? = ContentUriUtil.getPath(this, it)
+                    path?.also {
+                        Dlog.log4(javaClass, "some files->path${it}")
+                        filePaths.add(it)
+                    }
+                }
+            }
+        }
+    }
