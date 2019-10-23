@@ -1,0 +1,21 @@
+	.item_row {
+		height: 3.25rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	.item_row:hover {
+		background-color: #ededed;
+	}
+
+	/*active 要在后面 否则会被hover覆盖*/
+	.item_row:focus {
+		background-color: #ededed;
+	}
+
+	.item_row:active {
+		background-color: #ededed;
+	}
