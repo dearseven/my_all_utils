@@ -1,0 +1,28 @@
+1 安装失败
+INSTALL_PARSE_FAILED_MANIFEST_MALFORMED
+在EventLog看细节是
+INSTALL_PARSE_FAILED_MANIFEST_MALFORMED: 
+Failed parse during installPackageLI: /data/app/vmdl1276447099.tmp/base.apk
+ (at Binary XML file line #50): Empty class name in package com.a.x
+ 
+解决方案
+我项目的ApplicationId和PackageId不一样
+ApplicationId是com.a.x
+PackageId 是com.xxx.xxx
+ <application
+        android:name="com.xxx.xxx.Application"
+        android:allowBackup="true"
+        android:appComponentFactory="com.a.x"
+        android:fullBackupContent="@xml/backup_config"
+        android:icon="@drawable/icon_1"
+        android:label="@string/nc_app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="UnusedAttribute"
+        tools:replace="label, icon, theme, name, allowBackup,android:appComponentFactory">
+
+上面已经包含了解决方法
+1 android:appComponentFactory="com.a.x"，这个取值用ApplicationId
+2 tools:replace="android:appComponentFactory",加入android:appComponentFactory
