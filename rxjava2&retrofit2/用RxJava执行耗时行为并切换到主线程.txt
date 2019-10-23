@@ -1,0 +1,110 @@
+   Observable.create<List<List<MainViewBean>>> { observableEmitter ->
+			//这里就是逻辑耗时行为
+            activity?.also {
+                val activity = it as BottomNavMainActivity
+ 
+                val result = GetActivitiesRemoteOperation().execute(activity.mFileStorageClient.mClient)
+                if (result.isSuccess) {
+                    val data = result.data
+                    val activities = data[0] as ArrayList<*>
+                    val lastGiven = data[1] as String
+                    Dlog.log5(javaClass, "lastGiven=" + lastGiven)
+                    Dlog.log5(javaClass, "activities.size=" + activities.size)
+
+                    val list1 = ActivitiesUtil.getInstance()
+                            .makeStorageMainViewBean(activities as List<Activity>)
+                    val list2 = ActivitiesUtil.getInstance()
+                            .makeChatMainViewBean(activities as List<Activity>)
+                    Dlog.log5(javaClass, "组合主页列表完毕")
+                    //---------发射数据,类型就是List<List<MainViewBean>>
+                    observableEmitter.onNext(ArrayList<List<MainViewBean>>(2).also { x ->
+                        x.add(list1)
+                        x.add(list2)
+                    })
+                }
+            }
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {
+            //处理数据，it的类型就是前面发射的List<List<MainViewBean>>
+            val mainViewBeans = MainViewPiledata.instance.combination(it)
+            data.clear()
+            mainViewBeans.mapTo(data) { it }
+            //刷新到UI
+            mRecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+            //mRecyclerView.addItemDecoration(UnderLineDividerDecoration(activity, UnderLineDividerDecoration.VERTICAL_LIST))
+            mRecyclerView.itemAnimator = DefaultItemAnimator()
+            adapter = MainViewRecyclerAdapter(data, WeakReference(activity as Context), this)
+            mRecyclerView.adapter = adapter
+        }
+		
+		//---------------------下面是更好的------------------
+		public class BackgroundActivity extends AppCompatActivity {
+
+    private TextView mTvDownload;
+    private TextView mTvDownloadResult;
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_background);
+        mTvDownload = (TextView) findViewById(R.id.tv_download);
+        mTvDownloadResult = (TextView) findViewById(R.id.tv_download_result);
+        mTvDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDownload();
+            }
+        });
+    }
+
+    private void startDownload() {
+        final Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                for (int i = 0; i < 100; i++) {
+                    if (i % 20 == 0) {
+                        try {
+                            Thread.sleep(500); //模拟下载的操作。
+                        } catch (InterruptedException exception) {
+                            if (!e.isDisposed()) {
+                                e.onError(exception);
+                            }
+                        }
+                        e.onNext(i);
+                    }
+                }
+                e.onComplete();
+            }
+
+        });
+        DisposableObserver<Integer> disposableObserver = new DisposableObserver<Integer>() {
+
+            @Override
+            public void onNext(Integer value) {
+                Log.d("BackgroundActivity", "onNext=" + value);
+                mTvDownloadResult.setText("Current Progress=" + value);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d("BackgroundActivity", "onError=" + e);
+                mTvDownloadResult.setText("Download Error");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d("BackgroundActivity", "onComplete");
+                mTvDownloadResult.setText("Download onComplete");
+            }
+        };
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(disposableObserver);
+        mCompositeDisposable.add(disposableObserver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCompositeDisposable.clear();
+    }
+}
