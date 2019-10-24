@@ -1,0 +1,30 @@
+public class PollingWorker extends Worker {
+    public static final String TAG = "PollingWorker";
+
+    @NonNull
+    @Override
+    public Result doWork() {
+        Log.d(TAG, "doWork");
+        try {
+            polling();
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    //更新UI操作
+                }
+            });
+            return Result.SUCCESS;
+        } catch (Exception e) {
+            Log.d(TAG, "failure");
+            return Result.FAILURE;
+        }
+    }
+
+    private void polling() {
+        Log.d(TAG, "Polling");
+    }
+
+    private void runOnUIThread(Runnable runnable) {
+        new Handler(Looper.getMainLooper()).post(runnable);
+    }
+}
