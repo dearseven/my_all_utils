@@ -1,6 +1,6 @@
 <!-- 接受系统分享的Activity-->
         <activity
-            android:name="com.teetaa.intellivusdemo3.activities.SysShareActivity"
+            android:name="com.xxx.xxx.activities.SysShareActivity"
             android:excludeFromRecents="true"
             android:label="Upload to Raptor">
             <intent-filter>
@@ -18,53 +18,125 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="*/*" />
             </intent-filter>
+			<!-- 把自己注册到用其他应用打开-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="file"/>
+                <data android:scheme="content"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:mimeType="*/*"/>
+<!--                <data android:pathPattern=".*\\.gpx"/>-->
+<!--                <data android:pathPattern=".*\\.loc"/>-->
+<!--                <data android:pathPattern=".*\\.kmz"/>-->
+<!--                <data android:pathPattern=".*\\.kml"/>-->
+<!--                <data android:pathPattern=".*\\.KML"/>-->
+                <data android:host="*"/>
+            </intent-filter>
         </activity>
 		
-		在Activity中
-		//存放文件路径
-		var filePaths: ArrayList<String> = ArrayList<String>()
+		在Activity中（首先请获取存储权限！！！！！！！这里采用了自己封装的动态权限方案）
+/**
+ * 处理接收来自系统的分享
+ */
+class SysShareActivity : SuperActivity() {
 
-		override fun onCreate(savedInstanceState: Bundle?) {
-			super.onCreate(savedInstanceState)
-			setContentView(R.layout.activity_sys_share)
+    var filePaths: ArrayList<String> = ArrayList<String>()
 
-			//----------------------------------------------------------------
-			intent.action?.also { action ->
-				intent.type?.also { type ->
-					when (action) {
-						Intent.ACTION_SEND -> {
-							doReceiverFiles()
-						}
-						Intent.ACTION_SEND_MULTIPLE -> {
-							doReceiverFiles()
-						}
-					}
-				}
-			}
+    companion object {
+        val CONTENT_SCHEME = "content"
+        val AUTHORITY_WX_SEND_MAIL = "com.tencent.mm.external.fileprovider"
     }
 
-    fun doReceiverFiles() {
-        val bd = intent.extras.get(Intent.EXTRA_STREAM)
-//      Dlog.log4(javaClass, "bd is Uri ?: ${bd is Uri} ")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_sys_share)
+        //----------------------------------------------------------------------
+
+        val permissions = arrayOf<String>(
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        askPermission(permissions, object : IPermissionCallBack {
+            override fun askPermissionResult(result: Boolean) {
+                if (result) {
+                    intent.action?.also { action ->
+                        intent.type?.also { type ->
+                            when (action) {
+                                Intent.ACTION_SEND -> {
+                                    doReceiverFiles(intent.extras.get(Intent.EXTRA_STREAM)
+                                    )
+                                    Dlog.log6(javaClass, "1")
+                                }
+                                Intent.ACTION_SEND_MULTIPLE -> {
+                                    doReceiverFiles(intent.extras.get(Intent.EXTRA_STREAM))
+                                    Dlog.log6(javaClass, "2")
+                                }
+                                //用其他应用打开菜单（当然这里的其他应用是我）
+                                Intent.ACTION_VIEW -> {
+                                    doReceiverFiles(Uri.parse(intent.dataString))
+                                    //doReceiverFiles()
+                                    Dlog.log6(javaClass, "2")
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    finish()
+                }
+            }
+        }, getString(R.string.we_need_wr_extelnal_storage_to_next))
+        //----------------------------------------------------------------
+
+    }
+
+    fun doReceiverFiles(bd: Any?) {
+//        Dlog.log4(javaClass, "bd is Uri ?: ${bd is Uri} ")
         bd?.also { bd ->
             if (bd is Uri) {
-                bd.authority
-//              Dlog.log4(javaClass, "bd is Uri:${bd},bd.authority=${bd.authority}")
-                val path: String? = ContentUriUtil.getPath(this, bd)
-                path?.also {
-                    Dlog.log4(javaClass, "one file->path${it}")
-                    filePaths.add(it)
+//                Dlog.log4(javaClass, "bd is Uri:${bd},bd.authority=${bd.authority}")
+                if (bd.scheme == CONTENT_SCHEME && bd.authority == AUTHORITY_WX_SEND_MAIL) {
+                    var path = bd.path
+                    if (path.contains("external")) {
+                        path = path.substring(path.indexOf("/external/") + 9)
+                        path = Environment.getExternalStorageDirectory().getAbsolutePath() + path
+                    }
+                    filePaths.add(path)
+                } else {
+                    val path: String? = ContentUriUtil.getPath(this, bd)
+                    path?.also {
+                        Dlog.log4(javaClass, "one file->path${it}")
+                        filePaths.add(it)
+                    }
                 }
             } else {
                 bd as ArrayList<Uri>
                 bd.forEach {
                     Dlog.log4(javaClass, "bd is ArrayList:${it},bd.authority=${it.authority}")
-                    val path: String? = ContentUriUtil.getPath(this, it)
-                    path?.also {
-                        Dlog.log4(javaClass, "some files->path${it}")
-                        filePaths.add(it)
+                    if (it.scheme == CONTENT_SCHEME && it.authority == AUTHORITY_WX_SEND_MAIL) {
+                        var path = it.path
+                        if (path.contains("external")) {
+                            path = path.substring(path.indexOf("/external/") + 9)
+                            path = Environment.getExternalStorageDirectory().getAbsolutePath() + path
+                        }
+                        filePaths.add(path)
+                    } else {
+                        val path: String? = ContentUriUtil.getPath(this, it)
+                        path?.also {
+                            Dlog.log4(javaClass, "some files->path${it}")
+                            filePaths.add(it)
+                        }
                     }
                 }
             }
         }
     }
+
+
+}
+
+	
