@@ -1,0 +1,3 @@
+               this@MainActivity.runOnUiThread(Runnable {
+                   //切换到主线程
+                })
