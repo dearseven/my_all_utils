@@ -1,0 +1,45 @@
+    //弹出菜单
+    private void showPopupMenu() {
+        //创建对象
+        //参数：1 上下文 ，2 菜单显示在指定控件的下方
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        //记载布局
+        popupMenu.inflate(R.menu.poupmenu);
+        //事件监听
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId){
+                    case R.id.blue:
+						//do something
+                    break;
+                    case R.id.green:
+                        //do something
+                    break;
+                }
+                return false;
+            }
+        });
+        //显示
+        popupMenu.show();
+    }
+	
+	对应的menu文件为，当然这个随便写啦
+	<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+		<item
+			android:id="@+id/blue"
+			android:icon="@android:drawable/ic_menu_set_as"
+			android:orderInCategory="100"
+			android:title="blue"
+			app:showAsAction="ifRoom" />
+
+		<item
+			android:id="@+id/green"
+			android:orderInCategory="200"
+			android:title="green"
+			app:showAsAction="ifRoom" />
+
+	</menu>
