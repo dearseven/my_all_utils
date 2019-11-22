@@ -1,4 +1,16 @@
-   Observable.create<List<List<MainViewBean>>> { observableEmitter ->
+        Observable.create<Any> { observableEmitter ->
+            //这里就是逻辑耗时行为
+            //TODO
+            //发射出去
+            observableEmitter.onNext(1)
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {
+            //处理数据，it的类型就是前面发射的Any
+
+        }
+
+		
+
+  Observable.create<List<List<MainViewBean>>> { observableEmitter ->
 			//这里就是逻辑耗时行为
             activity?.also {
                 val activity = it as BottomNavMainActivity
