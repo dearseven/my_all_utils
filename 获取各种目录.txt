@@ -1,0 +1,11 @@
+总结一下android 中的几种目录：
+1、通过Context.getExternalFilesDir()方法可以获取到 SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
+2、通过Context.getExternalCacheDir()方法可以获取到 SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
+3、Context.getFilesDir()可以获取到"/data/data/<package name>/files" 这个方法获取的目录不是在sdcard上，而是在应用安装的目录
+4、Context.getCacheDir可以获取到"/data/data/<package name>/cache" 这个方法获取的目录不是在sdcard上，而是在应用安装的目录，
+这个文件里面的数据在设备内存不足的时候，会被系统删除数据。注意：你不能依赖系统帮你删除这些文件，当这个文件夹里面的数据超过1MB的时候，系统会删除这个文件夹里面的数据。
+5、通过Context.getExternalFilesDir()方法可以获取到 SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
+6、通过Context.getExternalCacheDir()方法可以获取到 SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
+
+如果使用上面的方法，当你的应用在被用户卸载后，SDCard/Android/data/你的应用的包名/ 这个目录下的所有文件都会被删除，不会留下垃圾信息。
+而且上面二个目录分别对应 设置->应用->应用详情里面的”清除数据“与”清除缓存“选项
