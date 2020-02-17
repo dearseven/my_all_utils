@@ -1,0 +1,7 @@
+第一步：webview的xml属性设置：android:layerType = "software"（关闭webview硬件加速，颜色设置才可以起效果）
+
+第二步：webview所在的布局如linearlayout设置背景色为你想要设置的颜色：R.color.answer_color
+
+第三步：同时代码中设置，
+
+webView.setBackgroundColor(0);
