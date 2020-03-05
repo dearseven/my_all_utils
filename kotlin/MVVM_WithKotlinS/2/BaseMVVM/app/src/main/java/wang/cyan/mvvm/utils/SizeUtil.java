@@ -10,6 +10,17 @@ import java.math.BigDecimal;
  * @author WangXu 2014-7-7 下午5:37:54
  */
 public class SizeUtil {
+	  public static int dpToPx(float dp, Context context) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    }
+	
+    public static int spToPx(float sp, Context context) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    }
+
+    public static int dpToSp(float dp, Context context) {
+        return (int) (dpToPx(dp, context) / context.getResources().getDisplayMetrics().scaledDensity);
+    }
 	// public final static int COMPLEX_UNIT_PX = 0;
 	// public final static int COMPLEX_UNIT_DIP = 1;
 	// public final static int COMPLEX_UNIT_SP = 2;
