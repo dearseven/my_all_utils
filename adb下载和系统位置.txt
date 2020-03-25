@@ -1,6 +1,8 @@
 https://dl-ssl.google.com/android/repository/platform-tools_r27.0.1-windows.zip
 https://dl-ssl.google.com/android/repository/platform-tools_r26.0.1-windows.zip
 https://dl-ssl.google.com/android/repository/platform-tools_r25-windows.zip
+
+https://dl.google.com/android/repository/platform-tools-latest-windows.zip
 .
 .
 .
