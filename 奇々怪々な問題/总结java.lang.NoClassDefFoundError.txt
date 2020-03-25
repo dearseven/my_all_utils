@@ -1,0 +1,14 @@
+解决java.lang.NoClassDefFoundError: Failed resolution of: Lorg/apache/http/impl/client/DefaultHttpClient;
+添加两行代码
+android:usesCleartextTraffic="true"
+<uses-library android:name="org.apache.http.legacy" android:required="false" />
+位置如下
+<application
+...
+ android:usesCleartextTraffic="true"
+ >
+<uses-library android:name="org.apache.http.legacy" android:required="false" />
+...
+<activity .../>
+...
+</application>

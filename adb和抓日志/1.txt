@@ -1,0 +1,23 @@
+首先用独立的adb工具包
+然后usb连接设备，找到设备的ip地址
+cmd进入adb.exe所在目录
+
+1 可以用
+adb devices 看一下所有设备
+
+2 链接设备
+adb connect IP/设备名
+
+3 打印日志
+adb logcat -s IP/设备名 -d > logcat.txt
+日志会出现在adb.exe所在目录
+adb logcat -s IP/设备名 -e time > c:\a\x.txt
+
+-e的意思是error
+-f fatal 
+一般我就要这两种
+-v 是verse
+-i info
+
+4 清除过多日志
+adb logcat -c
