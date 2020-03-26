@@ -1,61 +1,62 @@
 
-public class RunMap<T , R> {
-	private T _t;
-	private R _r;
+public class RunMap {
+    private Object _t;
+    private Object _r;
 
-	public RunMap(T t) {
-		this._t = t;
-	}
+    public RunMap(Object t) {
+        this._t = t;
+    }
 
-	private RunMap(T t, R r) {
-		this._t = t;
-		this._r = r;
-	}
 
-	public T runSelf(F1<T> func) {
-		_t = func.apply(_t);
-		return _t;
-	}
+    private RunMap(Object t, Object r) {
+        this._t = t;
+        this._r = r;
+    }
 
-	public R runIt(F2<T, R> func) {
-		_r = func.apply(_t);
-		return _r;
-	}
+    public <T>T  runSelf(F1 func) {
+        _t = func.apply(_t);
+        return (T)_t;
+    }
 
-	public RunMap<T, R> runSelfMap(F1<T> func) {
-		func.apply(_t);
-		return new RunMap<T, R>(_t);
-	}
+    public <T>T runIt(F2 func) {
+        _r = func.apply(_t);
+        return (T)_r;
+    }
 
-	public RunMap<T, R> runItMap(F2<T, R> func) {
-		_r = func.apply(_t);
-		return new RunMap<T, R>(_t, _r);
-	}
+    public RunMap runSelfMap(F1 func) {
+        func.apply(_t);
+        return new RunMap(_t);
+    }
 
-	public RunMap<T, R> runT2R(F2<T, R> func) {
-		_r = func.apply(_t);
-		return new RunMap(_r);
-	}
+    public RunMap runItMap(F2 func) {
+        _r = func.apply(_t);
+        return new RunMap(_t, _r);
+    }
 
-	public T getSelf() {
-		return _t;
-	}
+    public RunMap runT2R(F2 func) {
+        _r = func.apply(_t);
+        return new RunMap(_r);
+    }
 
-	public R getTo() {
-		return _r;
-	}
+    public <T> T getSelf(Class<?> c) {
+        return (T) c.cast(_t);
+    }
 
-	public interface F1<T> {
-		T apply(T t);
-	}
+    public <T> T getTo(Class<?> c) {
+        return (T) c.cast(_r);
+    }
 
-	public interface F2<T, R> {
-		R apply(T t);
-	}
+    public interface F1<T extends  Object> {
+        T apply(T t);
+    }
 
-	@Override
-	public String toString() {
-		return "RunMap [_t=" + _t + ", _r=" + _r + "]";
-	}
+    public interface F2<T extends  Object, R extends  Object> {
+        R apply(T t);
+    }
+
+    @Override
+    public String toString() {
+        return "RunMap [_t=" + _t + ", _r=" + _r + "]";
+    }
 
 }
