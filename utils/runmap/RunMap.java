@@ -46,11 +46,11 @@ public class RunMap {
         return (T) c.cast(_r);
     }
 
-    public interface F1<T extends  Object> {
+    public interface F1<T> {
         T apply(T t);
     }
 
-    public interface F2<T extends  Object, R extends  Object> {
+    public interface F2<T,R> {
         R apply(T t);
     }
 
