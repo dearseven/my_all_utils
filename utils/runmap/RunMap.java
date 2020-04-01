@@ -38,11 +38,11 @@ public class RunMap {
         return new RunMap(_r);
     }
 
-    public <T> T getSelf(Class<?> c) {
+    public <T> T getSelf(Class<T> c) {
         return (T) c.cast(_t);
     }
 
-    public <T> T getTo(Class<?> c) {
+    public <T> T getTo(Class<T> c) {
         return (T) c.cast(_r);
     }
 
