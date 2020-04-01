@@ -1,0 +1,2 @@
+在项目中的gradle.properties全局配置中设置如下，后面就运行成功了。
+android.injected.testOnly=false

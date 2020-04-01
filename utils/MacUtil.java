@@ -20,10 +20,13 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
+ * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"> </uses-permission>
+ * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"> </uses-permission>
+ * <uses-permission android:name="android.permission.WAKE_LOCK"> </uses-permission>
  * Created by wx on 2016/12/19.
  */
 public class MacUtil {
-//    /**
+    //    /**
 //     * 获取手机的MAC地址
 //     *
 //     * @return
@@ -58,36 +61,26 @@ public class MacUtil {
 //        return macSerial;
 //    }
 
+/**
+ * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"> </uses-permission>
+ * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"> </uses-permission>
+ * <uses-permission android:name="android.permission.WAKE_LOCK"> </uses-permission>
+ */
     public static String getMac(Context context) {
-        String strMac = null;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            Log.e("=====", "6.0以下");
-            //Toast.makeText(context, "6.0以下", Toast.LENGTH_SHORT).show();
-            strMac = getLocalMacAddressFromWifiInfo(context);
-            //return strMac;
-        }
-        if (strMac == null || (Build.VERSION.SDK_INT < Build.VERSION_CODES.N
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
-            Log.e("=====", "6.0以上7.0以下，或者strMac==null,strMac="+strMac);
-            //Toast.makeText(context, "6.0以上7.0以下", Toast.LENGTH_SHORT).show();
+        String strMac = getLocalMacAddressFromWifiInfo(context);
+
+        if (strMac == null || strMac.equals("02:00:00:00:00:00")) {
             strMac = getMacAddress(context);
             // return strMac;
         }
-        if ((strMac == null || strMac.equals("02:00:00:00:00:00")) || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)) {
-            Log.e("=====", "7.0以上，或者strMac==null,strMac="+strMac);
+        if ((strMac == null || strMac.equals("02:00:00:00:00:00"))) {
             if (!TextUtils.isEmpty(getMacAddress())) {
-                Log.e("=====", "7.0以上1");
-                // Toast.makeText(context, "7.0以上1", Toast.LENGTH_SHORT).show();
                 strMac = getMacAddress();
                 return strMac;
             } else if (!TextUtils.isEmpty(getMachineHardwareAddress())) {
-                Log.e("=====", "7.0以上2");
-                // Toast.makeText(context, "7.0以上2", Toast.LENGTH_SHORT).show();
                 strMac = getMachineHardwareAddress();
                 return strMac;
             } else {
-                Log.e("=====", "7.0以上3");
-                // Toast.makeText(context, "7.0以上3", Toast.LENGTH_SHORT).show();
                 strMac = getLocalMacAddressFromBusybox();
                 return strMac;
             }
@@ -99,19 +92,75 @@ public class MacUtil {
             return strMac;
         }
     }
+//    public static String getMac(Context context) {
+//        String strMac = null;
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//            Log.e("=====", "6.0以下");
+//            //Toast.makeText(context, "6.0以下", Toast.LENGTH_SHORT).show();
+//            strMac = getLocalMacAddressFromWifiInfo(context);
+//            //return strMac;
+//        }
+//        if (strMac == null || (Build.VERSION.SDK_INT < Build.VERSION_CODES.N
+//                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
+//            Log.e("=====", "6.0以上7.0以下，或者strMac==null,strMac="+strMac);
+//            //Toast.makeText(context, "6.0以上7.0以下", Toast.LENGTH_SHORT).show();
+//            strMac = getMacAddress(context);
+//            // return strMac;
+//        }
+//        if ((strMac == null || strMac.equals("02:00:00:00:00:00")) || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)) {
+//            Log.e("=====", "7.0以上，或者strMac==null,strMac="+strMac);
+//            if (!TextUtils.isEmpty(getMacAddress())) {
+//                Log.e("=====", "7.0以上1");
+//                // Toast.makeText(context, "7.0以上1", Toast.LENGTH_SHORT).show();
+//                strMac = getMacAddress();
+//                return strMac;
+//            } else if (!TextUtils.isEmpty(getMachineHardwareAddress())) {
+//                Log.e("=====", "7.0以上2");
+//                // Toast.makeText(context, "7.0以上2", Toast.LENGTH_SHORT).show();
+//                strMac = getMachineHardwareAddress();
+//                return strMac;
+//            } else {
+//                Log.e("=====", "7.0以上3");
+//                // Toast.makeText(context, "7.0以上3", Toast.LENGTH_SHORT).show();
+//                strMac = getLocalMacAddressFromBusybox();
+//                return strMac;
+//            }
+//        }
+//        //
+//        if (strMac == null || strMac.trim().equals("02:00:00:00:00:00")) {
+//            return "02:00:00:00:00:00";
+//        } else {
+//            return strMac;
+//        }
+//    }
 
-    /**
-     * 根据wifi信息获取本地mac
-     *
-     * @param context
-     * @return
-     */
-    public static String getLocalMacAddressFromWifiInfo(Context context) {
-        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiInfo winfo = wifi.getConnectionInfo();
-        String mac = winfo.getMacAddress();
-        return mac;
+    private static String getLocalMacAddressFromWifiInfo(Context context) {
+        String macAddress = null;
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = (null == wifiManager ? null : wifiManager.getConnectionInfo());
+        if (!wifiManager.isWifiEnabled()) {
+            //必须先打开，才能获取到MAC地址
+            wifiManager.setWifiEnabled(true);
+            wifiManager.setWifiEnabled(false);
+        }
+        if (null != info) {
+            macAddress = info.getMacAddress();
+        }
+        return macAddress;
     }
+
+//    /**
+//     * 根据wifi信息获取本地mac
+//     *
+//     * @param context
+//     * @return
+//     */
+//    public static String getLocalMacAddressFromWifiInfo(Context context) {
+//        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+//        WifiInfo winfo = wifi.getConnectionInfo();
+//        String mac = winfo.getMacAddress();
+//        return mac;
+//    }
 
     /**
      * android 6.0及以上、7.0以下 获取mac地址
@@ -119,7 +168,7 @@ public class MacUtil {
      * @param context
      * @return
      */
-    public static String getMacAddress(Context context) {
+    private static String getMacAddress(Context context) {
 
         // 如果是6.0以下，直接通过wifimanager获取
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -218,7 +267,7 @@ public class MacUtil {
      *
      * @return
      */
-    public static String getMacAddress() {
+    private static String getMacAddress() {
         String strMacAddr = null;
         try {
             // 获得IpD地址
@@ -309,7 +358,7 @@ public class MacUtil {
      *
      * @return
      */
-    public static String getMachineHardwareAddress() {
+    private static String getMachineHardwareAddress() {
         Enumeration<NetworkInterface> interfaces = null;
         try {
             interfaces = NetworkInterface.getNetworkInterfaces();
@@ -363,7 +412,7 @@ public class MacUtil {
      *
      * @return
      */
-    public static String getLocalMacAddressFromBusybox() {
+    private static String getLocalMacAddressFromBusybox() {
         String result = "";
         String Mac = "";
         result = callCmd("busybox ifconfig", "HWaddr");
