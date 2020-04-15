@@ -1,0 +1,2 @@
+        int maxLength=200;
+		mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
