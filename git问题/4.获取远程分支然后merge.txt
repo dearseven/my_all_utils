@@ -1,0 +1,9 @@
+1 我的步骤是首先git pull(也有人是git fetch)
+
+2 假设这个分支是不存在的，他在远程叫做BranchR，那么我要获取它的方法是
+git checkout -b BranchR origin/BranchR
+这样本地就会建立一个分支拉取远程的BranchR，并且也叫做BranchR
+----------------------------------------------------------------------------------
+关于merge，假设我要将BranchR 合并（merge）到BranchL
+那么，我要首先git checkout BranchL 切回到BranchL分支，
+然后git merge BranchR，最后修改冲突
