@@ -1,3 +1,48 @@
+通过getViewTreeObserver获取软键盘的状态
+  
+boolean isKeyBoardShown = false;
+boolean isFirstTestKeyBoard = true;
+
+
+@Override
+public void onWindowFocusChanged(boolean hasFocus) {
+super.onWindowFocusChanged(hasFocus);
+if (isFirstTestKeyBoard) {
+isFirstTestKeyBoard = false;
+
+View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+@Override
+public void onGlobalLayout() {
+int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
+if (heightDiff > DensityUtil.dp2px(BaseChatActivity.this, 200)) { //如果view的高度大于200dp,那么很有可能就是键盘
+isKeyBoardShown = true;
+} else {
+isKeyBoardShown = false;
+}
+}
+});
+}
+}
+
+@Override
+public boolean onKeyUp(int keyCode, KeyEvent event) {
+if (keyCode == KeyEvent.KEYCODE_BACK) {
+InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+boolean isOpen = imm.isActive() && isKeyBoardShown;
+if (isOpen) {
+if (getCurrentFocus() != null) {
+imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+}
+} else {
+finish();
+}
+return true;
+}
+return super.onKeyUp(keyCode, event);
+}
+//其他东西获取软键盘的状态，但是我测试反正小米手机不是那么稳
+  //------------------------------------------------------------------------------------------------------
   @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
