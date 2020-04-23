@@ -1,0 +1,13 @@
+1 现在anim文件夹中定义2个动画
+login_popup_in
+login_popup_out
+2 在style中定义
+    <style name="loginPopupAnimStyle">
+        <item name="android:windowEnterAnimation">@anim/login_popup_in</item>
+        <item name="android:windowExitAnimation">@anim/login_popup_out</item>
+    </style>
+	引用这两个动画
+3 初始化的时候设置动画资源
+    popupWindow.setAnimationStyle(R.style.loginPopupAnimStyle);
+4 反正我用的用showAsDropDown和dismiss，就会自动执行动画
+	popupWindow.showAsDropDown(anchor, 50, 30);
