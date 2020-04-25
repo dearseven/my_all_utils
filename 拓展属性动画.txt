@@ -1,0 +1,47 @@
+
+import android.animation.ValueAnimator;
+import android.view.View;
+
+import java.lang.ref.WeakReference;
+
+public class ObjectValueAnimator extends ValueAnimator {
+    private WeakReference<View> targetView;
+
+    private ObjectValueAnimator() {
+    }
+
+    public void setTargetView(View targetView) {
+        this.targetView = new WeakReference(targetView);
+    }
+
+    public View getTargetView() {
+        return targetView.get();
+    }
+
+    public static ObjectValueAnimator ofFloat(float... fls) {
+        ObjectValueAnimator o = new ObjectValueAnimator();
+        o.setFloatValues(fls);
+        return o;
+    }
+}
+
+//---------------使用---------------------
+			View area = mHeadView.findViewById(R.id.headViewImageArea);
+            final int extensibleHeight = new ViewPositionAndSizeGetter().calculate(area, this, this).getH();
+            ObjectValueAnimator ova = ObjectValueAnimator.ofFloat(0f, 1f);
+            ova.setTargetView(area);
+            ova.addUpdateListener(animation -> {
+                ObjectValueAnimator ani = (ObjectValueAnimator) animation;
+                float fraction = 1f - animation.getAnimatedFraction();
+                View view = ani.getTargetView();
+                ViewGroup.MarginLayoutParams viewLp = (LinearLayout.LayoutParams) area.getLayoutParams();
+                if (fraction == 1f) {
+                    viewLp.height = extensibleHeight;
+                } else {
+                    int height = (int) (viewLp.height * fraction);
+                    viewLp.height = height;
+                }
+                view.setLayoutParams(viewLp);
+            });
+            ova.setDuration(500);
+            ova.start();
