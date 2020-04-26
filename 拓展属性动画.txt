@@ -1,3 +1,4 @@
+
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.view.View;
@@ -18,10 +19,9 @@ public class ObjectValueAnimator extends ValueAnimator {
         return targetView.get();
     }
 
-    public static ObjectValueAnimator ofFloat(ValueAnimator.AnimatorUpdateListener updateListener, float... fls) {
+    public static ObjectValueAnimator ofFloat( float... fls) {
         ObjectValueAnimator o = new ObjectValueAnimator();
         o.setFloatValues(fls);
-        updateListener.onAnimationUpdate(o);
         return o;
     }
 
@@ -50,13 +50,14 @@ public class ObjectValueAnimator extends ValueAnimator {
     }
 }
 
-//---------------使用---------------------
+//--使用
 			View area = mHeadView.findViewById(R.id.headViewImageArea);
-            final int extensibleHeight = new ViewPositionAndSizeGetter().calculate(area, this, this).getH();
-			//这里直接在构造方法里实现ValueAnimator.AnimatorUpdateListener
-            ObjectValueAnimator ova = ObjectValueAnimator.ofFloat(animation -> {
+           
+            ObjectValueAnimator ova = ObjectValueAnimator.ofFloat(0f, 1f);
+            ova.setTargetView(area);
+            ova.addUpdateListener(animation -> {
                 ObjectValueAnimator ani = (ObjectValueAnimator) animation;
-                float fraction = 1f - animation.getAnimatedFraction();
+                float fraction = 1f - animation.getAnimatedFraction();//1...0
                 View view = ani.getTargetView();
                 ViewGroup.MarginLayoutParams viewLp = (LinearLayout.LayoutParams) area.getLayoutParams();
                 if (fraction == 1f) {
@@ -65,15 +66,16 @@ public class ObjectValueAnimator extends ValueAnimator {
                     int height = (int) (viewLp.height * fraction);
                     viewLp.height = height;
                 }
+                multiImageView.setAlpha(fraction);
                 view.setLayoutParams(viewLp);
-            },0f, 1f);
-            ova.setTargetView(area);
-            ova.setDuration(500);
-			//OVAnimatorListener，用这个就只用实现自己想要的方法啊，不然一大堆太长了
-			ova.addListener(new ObjectValueAnimator.OVAnimatorListener() {
+
+                mHeadExpandToggle.setRotation(180 * (1 - fraction));//0...1
+            });
+            ova.setDuration(400);
+            ova.addListener(new ObjectValueAnimator.OVAnimatorListener() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    isAnimationRuning = false;
+                    isAnimationRuning=false;
                 }
             });
             ova.start();
