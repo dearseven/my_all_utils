@@ -1,0 +1,23 @@
+//点击弹出对话框
+  final CustomDialog customDialog = new CustomDialog(getActivity());
+  customDialog.setTitle("消息提示");
+  customDialog.setMessage("是否暂停广告投放？");
+  customDialog.setYesOnclickListener("确定", new CustomDialog.onYesOnclickListener() {
+    @Override
+    public void onYesClick() {
+    //这里是确定的逻辑代码，别忘了点击确定后关闭对话框
+    customDialog.dismiss();
+    }
+  });
+ customDialog.setNoOnclickListener("取消", new CustomDialog.onNoOnclickListener() {
+@Override
+  public void onNoClick() {
+   customDialog.dismiss();
+    }
+   });
+ customDialog.show();
+ 
+ 
+ https://www.jb51.net/article/151623.htm
+ 
+ 要注意的时候我在CustomDialog写死了文本 哈哈哈
