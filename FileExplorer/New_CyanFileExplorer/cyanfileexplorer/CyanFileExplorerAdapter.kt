@@ -1,65 +1,59 @@
 
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.provider.MediaStore.Images.Thumbnails.MINI_KIND
+import android.support.v7.widget.RecyclerView
+import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
-import com.cyan.Dlog
-import com.nextcloud.talk.R
+import cc.m2u.intelliv.myutils.IDoSomeThing
+import com.vrv.base.R
+import com.vrv.base.utils.MyThreadPool
+
+import java.io.BufferedInputStream
 import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.HashSet
 
 class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder> {
-    lateinit var files: ArrayList<Map<String, Any>>
-    lateinit var weakCtx: WeakReference<Context>
-    lateinit var inflater: LayoutInflater
+    var files: ArrayList<Map<String, Any>>
+    var weakCtx: WeakReference<Context>
+    var inflater: LayoutInflater
 
-    lateinit var selectedSet: HashSet<Map<String, Any>>
+    var selectedSet: HashSet<Map<String, Any>>
 
-    lateinit var folderClick: IFolderClick
+    var folderClick: IFolderClick
 
-    lateinit var pathStack: Stack<String>
-    lateinit var rootPath: String
+    var pathStack: Stack<String>
+    var rootPath: String
 
     var isOnlyDirectory = false
     var pickMaxCount = 0
 
-//    constructor(files: List<Map<String, Any>>, ctx: Context) {
-//    pathStack = Stack()
-//        this.files = files
-//        weakCtx = WeakReference(ctx)
-//        inflater = LayoutInflater.from(weakCtx.get())
-//        selectedSet = HashSet<String>()
-//        this.folderClick = object : IFolderClick {
-//            override fun openFolder(path: String) {
-//                Dlog.log(javaClass, "openFolder=${path}")
-//                val list = GetFilesUtils.getInstance().getSonNode(path)
-//                Dlog.log(javaClass, "list=${list}")
-//                list?.apply {
-//                    //如果这个目录可以进去，则把路径入栈
-//                    pathStack.push(path)
-//
-//                    this as java.util.ArrayList<Map<String, Object>>
-//
-//                    val previousSize = files.size
-//                    (files as java.util.ArrayList<Map<String, Object>>).clear()
-//                    notifyItemRangeRemoved(0, previousSize);
-//
-//                    this.forEach { (files as java.util.ArrayList<Map<String, Object>>).add(it) }
-//                    notifyItemRangeChanged(0, files.size)
-//                }
-//            }
-//        }
-//
-//    }
+    val myThreadPool: MyThreadPool by lazy {
+        MyThreadPool.getNewThreadPoll()
+    }
+
+    val myCache: SimpleCacheMine<String, Bitmap> by lazy {
+        SimpleCacheMine<String, Bitmap>(30);
+    }
+
+    companion object {
+        val handler = object : Handler() {}
+    }
 
     constructor(ctx: Context, _isOnlyDirectory: Boolean, _pickMaxCount: Int) {
         this.isOnlyDirectory = _isOnlyDirectory
@@ -67,18 +61,47 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
 
         pathStack = Stack<String>()
         rootPath = Environment.getExternalStorageDirectory().absolutePath
+
         pathStack.push(rootPath)
         this.files = GetFilesUtils.getInstance().getSonNode(rootPath)
                 ?: ArrayList<Map<String, Any>>()
+
         if (isOnlyDirectory) {
             this.files = this.files.filter { it[GetFilesUtils.FILE_INFO_ISFOLDER] as Boolean } as ArrayList<Map<String, Any>>
         }
+//        this.files.sortedBy {
+//            var path = it[GetFilesUtils.FILE_INFO_PATH]
+//            when (path) {
+//                is String -> {
+//                    path as String
+//                }
+//                is File -> {
+//                    var _path = path.absolutePath
+//                    path=_path
+//                }
+//            }
+//            (path as String).toCharArray()[0]
+//        }
+        this.files.sortBy {
+            var name = it[GetFilesUtils.FILE_INFO_NAME] as String
+            name.toCharArray()[0]
+        }
         //ArrayList<Map<String, Any>>()
         weakCtx = WeakReference(ctx)
+        weakCtx.get()?.also {
+            it as CyanFileExplorerActivity
+            it.titleTv.setText(rootPath)
+        }
         inflater = LayoutInflater.from(weakCtx.get())
         selectedSet = HashSet<Map<String, Any>>()
         this.folderClick = object : IFolderClick {
             override fun openFolder(path: String) {
+                //设置路径
+                weakCtx.get()?.also {
+                    it as CyanFileExplorerActivity
+                    it.titleTv.setText(path)
+                }
+
                 var list = GetFilesUtils.getInstance().getSonNode(path)
                 if (isOnlyDirectory) {
                     list = list.filter { it[GetFilesUtils.FILE_INFO_ISFOLDER] as Boolean } as ArrayList<Map<String, Any>>
@@ -87,13 +110,17 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
                     //如果这个目录可以进去，则把路径入栈
                     pathStack.push(path)
 
-                    this as java.util.ArrayList<Map<String, Object>>
+                    this as ArrayList<Map<String, Object>>
 
                     val previousSize = files.size
-                    (files as java.util.ArrayList<Map<String, Object>>).clear()
+                    (files as ArrayList<Map<String, Object>>).clear()
                     notifyItemRangeRemoved(0, previousSize);
 
-                    this.forEach { (files as java.util.ArrayList<Map<String, Object>>).add(it) }
+                    this.forEach { (files as ArrayList<Map<String, Object>>).add(it) }
+                    files.sortBy {
+                        var name = it[GetFilesUtils.FILE_INFO_NAME] as String
+                        name.toCharArray()[0]
+                    }
                     notifyItemRangeChanged(0, files.size)
                 }
             }
@@ -101,7 +128,7 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CyanFileExplorerViewHolder {
-        var v = inflater!!.inflate(R.layout.cyan_file_explorer_item_demo, parent, false)
+        var v = inflater.inflate(R.layout.cyan_file_explorer_item_demo, parent, false)
         var vh = CyanFileExplorerViewHolder(v)
         return vh
     }
@@ -122,7 +149,7 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
 
     override fun onBindViewHolder(holder: CyanFileExplorerViewHolder, position: Int) {
         val item = files[position]
-        var path = item[GetFilesUtils.FILE_INFO_PATH];
+        var path = item[GetFilesUtils.FILE_INFO_PATH]
         when (path) {
             is String -> {
                 path as String
@@ -138,13 +165,46 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
             holder.tv2.setTag(R.id.content_id_1, path)
             holder.tv2.setOnClickListener {
                 selectedSet.clear()
+                val activity = (weakCtx.get() as CyanFileExplorerActivity)
+                activity.okBtn.text = "${activity.getString(R.string.select_ok)}"
                 folderClick.openFolder(it.getTag(R.id.content_id_1) as String)
             }
+            holder.tv3.visibility = View.GONE
         } else {
             //holder.tv1.text = ""
             path as File
             holder.tv1.setImageResource(MimetypeUtils.instance.fromMimeTypeGetIcon(MimetypeUtils.instance.getMimeType(path)))
+            MimetypeUtils.instance.getMimeType(path).apply {
+                if (this.contains("image")) {
+                    myThreadPool.execute {
+                        revitionImageSize(path.absolutePath, dpToPx(36f, weakCtx.get()!!), dpToPx(36f, weakCtx.get()!!), object : IDoSomeThing<Bitmap>() {
+                            override fun doSomeThing(t: Bitmap?) {
+                                t?.also {
+                                    handler.post {
+                                        holder.tv1.setImageBitmap(t)
+                                    }
+
+                                }
+                            }
+                        })
+                    }
+                } else if (this.contains("video")) {
+                    myThreadPool.execute {
+                        getVideoThumbnailUtils(path.absolutePath, dpToPx(36f, weakCtx.get()!!), dpToPx(36f, weakCtx.get()!!), object : IDoSomeThing<Bitmap>() {
+                            override fun doSomeThing(t: Bitmap?) {
+                                t?.also {
+                                    handler.post {
+                                        holder.tv1.setImageBitmap(t)
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+
             holder.tv2.setOnClickListener { }
+            holder.tv3.visibility = View.VISIBLE
         }
 
         holder.tv2.text = item[GetFilesUtils.FILE_INFO_NAME] as String
@@ -234,7 +294,7 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
         activity.okBtn.setOnClickListener {
             activity.setResult(Activity.RESULT_OK, Intent().apply {
                 this.putExtras(Bundle().also {
-                    val list = ArrayList<Map<String, Any>>(selectedSet.size + 1);
+                    val list = ArrayList<Map<String, Any>>(selectedSet.size + 1)
                     selectedSet.forEach { i ->
                         list.add(i)
                     }
@@ -249,5 +309,78 @@ class CyanFileExplorerAdapter : RecyclerView.Adapter<CyanFileExplorerViewHolder>
     override fun getItemViewType(position: Int): Int {
         return super.getItemViewType(position)
     }
+
+
+    /**
+     * 根据指定的图像路径和大小来获取图片缩略图
+     *
+     * @param path      图像的路径
+     * @param maxWidth  指定输出图像的宽度
+     * @param maxHeight 指定输出图像的高度
+     * @return 生成的缩略图
+     */
+    @Throws(IOException::class)
+    fun revitionImageSize(path: String?, maxWidth: Int, maxHeight: Int, dst: IDoSomeThing<Bitmap>) {
+        if (myCache.get(path!!) != null) {
+            dst.doSomeThing(myCache.get(path!!))
+        } else {
+            var bitmap: Bitmap? = null
+            try {
+                var `in` = BufferedInputStream(FileInputStream(
+                        File(path)))
+                val options: BitmapFactory.Options = BitmapFactory.Options()
+                options.inJustDecodeBounds = true
+                BitmapFactory.decodeStream(`in`, null, options)
+                `in`.close()
+                var i = 0
+                while (true) {
+                    if (options.outWidth shr i <= maxWidth
+                            && options.outHeight shr i <= maxHeight) {
+                        `in` = BufferedInputStream(
+                                FileInputStream(File(path)))
+                        options.inSampleSize = Math.pow(2.0, i.toDouble()).toInt()
+                        options.inJustDecodeBounds = false
+                        bitmap = BitmapFactory.decodeStream(`in`, null, options)
+                        break
+                    }
+                    i += 1
+                }
+            } catch (e: Exception) {
+                dst.doSomeThing(null)
+            }
+            myCache.put(path!!, bitmap!!)
+            dst.doSomeThing(bitmap)
+        }
+    }
+
+
+    /**
+     * 根据指定的图像路径和大小来获取图片缩略图
+     *
+     * @param path      图像的路径
+     * @param maxWidth  指定输出图像的宽度
+     * @param maxHeight 指定输出图像的高度
+     * @return 生成的缩略图
+     */
+    @Throws(IOException::class)
+    fun getVideoThumbnailUtils(path: String?, maxWidth: Int, maxHeight: Int, dst: IDoSomeThing<Bitmap>) {
+        if (myCache.get(path!!) != null) {
+            dst.doSomeThing(myCache.get(path!!))
+        } else {
+            var bitmap: Bitmap? = null
+            try {
+                bitmap = ThumbnailUtils.createVideoThumbnail(path, MINI_KIND)
+            } catch (e: Exception) {
+                dst.doSomeThing(null)
+            }
+            myCache.put(path!!, bitmap!!)
+            dst.doSomeThing(bitmap)
+        }
+    }
+
+    fun dpToPx(dp: Float, context: Context): Int {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics).toInt()
+    }
+
 
 }

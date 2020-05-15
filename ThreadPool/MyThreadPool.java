@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 当LinkedBlockingDeque塞满时，新增的任务会直接创建新线程来执行，当创建的线程数量超过最大线程数量时会抛异常。
 SynchronousQueue没有数量限制。因为他根本不保持这些任务，而是直接交给线程池去执行。当任务数量超过最大线程数时会直接抛异常。
 --------------------- 
- /
+ */
 
 public class MyThreadPool extends ThreadPoolExecutor {
 
