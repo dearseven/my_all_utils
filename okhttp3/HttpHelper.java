@@ -21,6 +21,9 @@ public class HttpHelper {
     private static Handler handler=new Handler(Looper.getMainLooper());
 
     public static void getRequest(String url, final IDoSomeThing<HttpResponse> doOnResponse, final IDoSomeThing<HttpFailure> doOnFailure) {
+        if(!url.startsWith("http://")&&!url.startsWith("https://")){
+            url="http://"+url;
+        }
         Log.i("HttpHelper","url="+url);
         OkHttpClient okHttpClient = new OkHttpClient();
         //
@@ -46,7 +49,7 @@ public class HttpHelper {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //Log.i("HttpHelper",response.body().string());
+                Log.i("HttpHelper","response called,read data from body.string()");
                 final HttpResponse response1=HttpResponse.create(call, response);
 
                 handler.post(new Runnable() {
@@ -60,6 +63,9 @@ public class HttpHelper {
     }
 
     public static void postRequest(String url, Map<String, String> formParam, final IDoSomeThing<HttpResponse> doOnResponse, final IDoSomeThing<HttpFailure> doOnFailure) {
+        if(!url.startsWith("http://")&&!url.startsWith("https://")){
+            url="http://"+url;
+        }
         Log.i("HttpHelper","url="+url);
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody.Builder builder = new FormBody.Builder();
@@ -92,7 +98,7 @@ public class HttpHelper {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //Log.i("HttpHelper",response.body().string());
+                Log.i("HttpHelper","response called,read data from body.string()");
                 final HttpResponse response1=HttpResponse.create(call, response);
 
                 handler.post(new Runnable() {
@@ -107,6 +113,9 @@ public class HttpHelper {
     }
 
     public static void postJson(String url, String json, final IDoSomeThing<HttpResponse> doOnResponse, final IDoSomeThing<HttpFailure> doOnFailure) {
+        if(!url.startsWith("http://")&&!url.startsWith("https://")){
+            url="http://"+url;
+        }
         Log.i("HttpHelper","url="+url);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         //
@@ -133,7 +142,7 @@ public class HttpHelper {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //Log.i("HttpHelper",response.body().string());
+                Log.i("HttpHelper","response called,read data from body.string()");
                 final HttpResponse response1=HttpResponse.create(call, response);
 
                 handler.post(new Runnable() {
