@@ -1,0 +1,11 @@
+HttpHelper.getRequest("http://192.168.3.236:8004/deviceInfo?mac=" + MacUtil.getMac(this), new IDoSomeThing<HttpResponse>() {
+            @Override
+            public void doSomeThing(HttpResponse httpResult) {
+                    final CSON cson = new CSON(httpResult.getResponse().body().string());
+            }
+        }, new IDoSomeThing<HttpFailure>() {
+            @Override
+            public void doSomeThing(HttpFailure httpFailure) {
+                Debug.c20202(isDebug,getClass(),"==========httpFailure============");
+            }
+        });
