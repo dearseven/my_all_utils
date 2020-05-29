@@ -1,0 +1,13 @@
+ 使用的方法基本都是 SeekTo 之前的时间点，但是经常遇到恢复播放时位置不准的问题，而且甚至有重头开始播放的现象。这个是因为SeekTo是回到上一时间点附近的关键帧导致的。
+针对这个问题，在最新的android 8.0平台上，已经有了新的解决方案：
+
+SeekTo() 方法在android O 平台新增了一个多参数的方法：
+
+void seekTo（long msec, @SeekMode int mode）
+
+ 
+ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+	mMediaPlayer.seekTo(pos,MediaPlayer.SEEK_CLOSEST);
+ }else{
+	mMediaPlayer.seekTo(pos);
+ }
