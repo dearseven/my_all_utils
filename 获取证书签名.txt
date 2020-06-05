@@ -1,0 +1,2 @@
+可以在as的terminal中输入keytool -list -v -keystore [C:\works\xx.keystore]
+然后输入密钥库口令
