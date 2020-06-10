@@ -1,0 +1,4 @@
+npm install -g cnpm -registry=https://registry.npm.taobao.org
+
+该代码用来安装淘宝团队的npm。
+安装完成后遇到需要npm install的时候直接cnpm install 即可
