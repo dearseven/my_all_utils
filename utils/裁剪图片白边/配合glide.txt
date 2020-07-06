@@ -1,0 +1,15 @@
+        Glide.with(this)
+                .load(jsonObj.getString("payQrCodeUrl"))
+                .transform(object : BitmapTransformation(this@GuoGuangSubscribeActivity) {
+                    override fun getId(): String {
+                        return "GuoGuangSubscribeActivity1"
+                    }
+
+                    override fun transform(pool: BitmapPool?, toTransform: Bitmap?, outWidth: Int, outHeight: Int): Bitmap {
+                        return BitmapDeleteNoUseSpaceUtil.deleteNoUseWhiteSpace(toTransform)
+                    }
+                })
+                //.placeholder(R.mipmap.ttfh_dev_placehold_1).crossFade()
+                .into(mQrImage)
+				
+				通过transform来进行图片变换
