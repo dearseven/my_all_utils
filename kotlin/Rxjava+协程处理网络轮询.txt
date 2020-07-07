@@ -1,0 +1,57 @@
+Observable.interval(3, 3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io()) //发射在耗时IO线程(interval)
+                .observeOn(AndroidSchedulers.mainThread()) //订阅在主线程(DisposableObserver)
+                .subscribeWith(object : DisposableObserver<Any>() {
+                    override fun onNext(o: Any) {
+						//启动一个协程块
+                        launch {
+						   //1--通过async来返回一个结果
+                            val def = async {
+								//1.1---切换到io上，并且withContext是有返回结果的
+                                withContext(Dispatchers.IO) {
+									//1.1.1---通过suspendCancellableCoroutine将callback的形式改为返回结果的形式
+                                    val result: SimpleHttp.Result = suspendCancellableCoroutine { scc ->
+                                        HttpHelper.getRequest("${payStatus}?userId=${BaseConfig.OtherConfig.USER_NAME}", object : IDoSomeThing<HttpResponse>() {
+                                            override fun doSomeThing(t: HttpResponse?) {
+												//通过resume来返回结果
+                                                scc.resume(t?.let { t ->
+                                                    val r = SimpleHttp.Result()
+                                                    r.retString = t.responseString
+                                                    r.errorMsg = ""
+                                                    r.returnCode = SimpleHttp.Result.CODE_SUCCESS
+                                                    r
+                                                } ?: SimpleHttp.Result().also {
+                                                    it.makeExResult()
+                                                })
+                                            }
+                                        }, object : IDoSomeThing<HttpFailure>() {
+                                            override fun doSomeThing(t: HttpFailure?) {
+                                                scc.resume(SimpleHttp.Result().also {
+                                                    it.makeExResult()
+                                                })
+                                            }
+                                        }, null)
+                                    }
+									//这就是suspendCancellableCoroutine返回的结果啊
+                                    result//withContext返回结果到async
+                                }
+                            }
+							//2--等待async返回
+                            val result = def.await();
+							//3--返回结果后，切换到Main上，处理UI
+                            withContext(Dispatchers.Main) {
+                                if (result.returnCode == 0) {
+                                    val status = CSON(result.retString).getInt("status")
+                                    showResultDialog(status)
+                                    mCompositeDisposable.clear()
+                                }
+                            }
+                        }//协程块结束
+                    }
+
+                    override fun onComplete() {
+                    }
+
+                    override fun onError(e: Throwable) {
+                    }
+                })
