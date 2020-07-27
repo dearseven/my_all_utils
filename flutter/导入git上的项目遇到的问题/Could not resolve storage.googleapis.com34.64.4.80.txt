@@ -1,0 +1,37 @@
+找到当前project正在使用对的flutter sdk（电脑上有几个，可以通过as的设置里查看）。
+
+找到sdk里的flutter.gradle文件（上层目录\flutter\packages\flutter_tools\gradle\flutter.gradle）
+
+buildscript {
+    repositories {
+    		//注释以前的
+    	 //google()
+	   // jcenter()
+	     ///增加这段代码
+        maven { url'https://maven.aliyun.com/repository/google'}
+		maven { url'https://maven.aliyun.com/repository/jcenter'}
+		maven { url'http://maven.aliyun.com/nexus/content/groups/public'}
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+    }
+}
+class FlutterPlugin implements Plugin<Project> {
+	//原下载路径
+ 	//private static final String MAVEN_REPO      = "https://storage.googleapis.com/download.flutter.io";
+ 	//修改后的下载路径
+    private static final String MAVEN_REPO      = "https://storage.flutter-io.cn/download.flutter.io"
+
+project.rootProject.allprojects {
+            repositories {
+                maven {
+                    url repository
+                }
+                ///增加这段代码
+				maven { url'https://maven.aliyun.com/repository/google'}
+				maven { url'https://maven.aliyun.com/repository/jcenter'}
+				maven { url'http://maven.aliyun.com/nexus/content/groups/public'
+            }
+}
+
+然后可以再试试
