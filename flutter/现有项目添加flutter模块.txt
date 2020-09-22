@@ -1,0 +1,14 @@
+坑:
+1 flutter module要和app module 所属的Project在同一个层级的目录结构下，考虑到我们做项目的时候都是很多Project在一个目录里，这样会导致一个目录里有很多个Project和其对应的flutter module，注意好命名
+2 在app module引入flutter module的时候，引入的不是他的名字而且是他在自己的include_flutter.groovy文件里设定的名字，就叫做flutter（所以感觉现在还不好做多模块吧，但是应该改一下这个名字就可以）
+
+步骤：
+1 依次点击左上角的File --> New --> New Flutter Project 然后选择Flutter Module。主意好他放在对应的Project的同层；
+2 在Setting.gradle中会生成（用as会自动生成）
+setBinding(new Binding([gradle: this])) evaluate(new File( settingsDir.parentFile, '你的moudle名字/.android/include_flutter.groovy' ))
+3 app下的build.gradle文件中添加该module的依赖
+
+implementation project(':flutter')
+4 我就用vscode愉快的写flutter了
+
+至于怎么用 调用参考domsub项目里的MyRouterFlutterActivity
