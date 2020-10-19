@@ -1,0 +1,37 @@
+android.view.InflateException Binary XML file line #8 Error inflating class android.webkit.WebView
+
+不知道为什么系统的WebView在5.1.1（至少我是5.1.1的android机顶盒会报错）
+解决方法如下
+1 使用自己修改过的
+public class CustomWebView extends WebView {
+    public CustomWebView(Context context) {
+        super(getFixedContext(context));
+    }
+
+    public CustomWebView(Context context, AttributeSet attrs) {
+        super(getFixedContext(context), attrs);
+    }
+
+    public CustomWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(getFixedContext(context), attrs, defStyleAttr);
+    }
+
+    public static Context getFixedContext(Context context) {
+		/*
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+               return context.createConfigurationContext(new Configuration());
+            }
+        }
+		*/
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                return context.createConfigurationContext(new Configuration());
+            } else {
+                return context;
+            }
+        } else {
+            return context;
+        }
+    }
+}
+2 加载WebView的页面用最原始的Activity
