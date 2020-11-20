@@ -1,3 +1,37 @@
+
+import android.Manifest
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.provider.Settings
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+
+/**
+ *
+动态权限
+val permissions = arrayOf<String>(
+android.Manifest.permission.READ_EXTERNAL_STORAGE,
+android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+)
+(activity as SuperActivity).askPermission(permissions, object : IPermissionCallBack {
+override fun askPermissionResult(result: Boolean) {
+Dlog.Toast(activity,"授权结果：$result")
+}
+}, "我们需要文件读取权限才能进行下一步")
+
+actvityResult
+val it = Intent(activity, CyanFileExplorerActivity::class.java)
+(activity as SuperActivity).startActivityForResult(6001,it,object:IActivityResultCallBack{
+override fun activityResultCallBack(requestCode: Int, resultCode: Int, data: Intent?) {
+Dlog.Toast(activity,"selectDirectory activityResultCallBack")
+}
+})
+ */
 open class SuperActivity : AppCompatActivity() {
     companion object {
         val REQUEST_PEMISSION_CODE: Int = 2041
@@ -6,10 +40,10 @@ open class SuperActivity : AppCompatActivity() {
     var permissionCallBack: IPermissionCallBack? = null
     var shouldShowRequestTip: String? = null
 
-    open lateinit var loading: LoadingDiaglog
+//    open lateinit var loading: LoadingDiaglog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loading = LoadingDiaglog()
+//        loading = LoadingDiaglog()
     }
 
     /**
@@ -60,8 +94,26 @@ open class SuperActivity : AppCompatActivity() {
                 .create()
                 .show()
     }
+
+
+    //==============================startActivityForResult======================================
+    var activityResultCallBack: IActivityResultCallBack? = null
+
+    fun startActivityForResult(requestCode: Int, intent: Intent, callBack: IActivityResultCallBack) {
+        activityResultCallBack = callBack
+        startActivityForResult(intent, requestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        activityResultCallBack?.activityResultCallBack(requestCode, resultCode, data)
+    }
 }
 
 interface IPermissionCallBack {
     open fun askPermissionResult(result: Boolean)
+}
+
+interface IActivityResultCallBack {
+    open fun activityResultCallBack(requestCode: Int, resultCode: Int, data: Intent?)
 }
