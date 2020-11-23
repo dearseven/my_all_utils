@@ -1,3 +1,4 @@
+package  com.teetaa.outsourcing.carinspection.activity;
 
 import android.Manifest
 import android.app.AlertDialog
@@ -17,6 +18,7 @@ import android.widget.PopupWindow
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.teetaa.outsourcing.carinspection.R
 
 /**
  *
