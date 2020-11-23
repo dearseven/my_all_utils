@@ -84,13 +84,18 @@ class ClickEventHandler {
     }
 }
 
+
 /**
 MainTxt1.setClickEventHandler { v ->
 startFrontServiceAndLocate()
 }
-//这可以用 it访问View对象
 MainTxt3.setClickEventHandler {
 openOtherMap()
+}
+//设定需要判定动态权限
+MainTxt4.setTag(ClickEventHandler.instance.TAG_CAMERA_ALBUM, 1)
+MainTxt4.setClickEventHandler {
+Log.i("MainTxt4", "打开相册相机")
 }
  */
 fun View.setClickEventHandler(clicked: (View) -> Unit) {
