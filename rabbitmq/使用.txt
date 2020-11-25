@@ -1,0 +1,2 @@
+推荐配合前台服务
+implementation 'com.rabbitmq:amqp-client:5.7.0'

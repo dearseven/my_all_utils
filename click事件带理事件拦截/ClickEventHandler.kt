@@ -10,8 +10,10 @@ import android.widget.Toast
  */
 class ClickEventHandler {
     //通过TAG_XXXX的传递的值 1 就是需要判断拦截
-    //打开相册
+    //打开相册，设定需要判定动态权限
     val TAG_CAMERA_ALBUM = R.id.TAG_CAMERA_ALBUM
+    val TAG_LOCATE: Int = R.id.TAG_LOCATE
+
 
     companion object {
         val instance = Holder.ClickEventHandler
@@ -33,36 +35,55 @@ class ClickEventHandler {
         var flag = 1//1 不拦截 0拦截 2 进入回调流程
         //可以拦截
         if (view.id == R.id.MainTxt1) {
-            Toast.makeText(view.context, "setClickEventHandler--MainTxt1", Toast.LENGTH_SHORT)
-                .show()
+            //Toast.makeText(view.context, "setClickEventHandler--MainTxt1", Toast.LENGTH_SHORT)
+                //.show()
             //next = true
         } else if (view.id == R.id.MainTxt3) {
-            Toast.makeText(view.context, "setClickEventHandler--MainTxt3", Toast.LENGTH_SHORT)
-                .show()
+            //Toast.makeText(view.context, "setClickEventHandler--MainTxt3", Toast.LENGTH_SHORT)
+                //.show()
             //next = false
-        } else {
-            //------- 通过TAG_XXXX的传递的值 1 就是需要判断拦截
-            //--看看是不是打开相机相册的按钮
-            view.getTag(TAG_CAMERA_ALBUM)?.let {
-                if (it == 1) {
-                    next = false
-                    flag = 2
-                    val superActivity = view.context as SuperActivity
-                    superActivity.askPermission(
-                        arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                        ), object : IPermissionCallBack {
-                            override fun askPermissionResult(result: Boolean) {
-                                if (result)
-                                    clicked(view)
-                            }
-                        }, "需要权限才能访问您的相机和相册"
-                    )
-                }
+        }
+
+        //------- 通过TAG_XXXX的传递的值 1 就是需要判断拦截
+        //--看看是不是打开相机相册的按钮
+        view.getTag(TAG_CAMERA_ALBUM)?.let {
+            if (it == 1) {
+                next = false
+                flag = 2
+                val superActivity = view.context as SuperActivity
+                superActivity.askPermission(
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ), object : IPermissionCallBack {
+                        override fun askPermissionResult(result: Boolean) {
+                            if (result)
+                                clicked(view)
+                        }
+                    }, "需要权限才能访问您的相机和相册"
+                )
             }
-            //--
+        }
+        //--定位权限
+        view.getTag(TAG_LOCATE)?.let {
+            if (it == 1) {
+                next = false
+                flag = 2
+                val superActivity = view.context as SuperActivity
+                superActivity.askPermission(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                    ), object : IPermissionCallBack {
+                        override fun askPermissionResult(result: Boolean) {
+                            if (result)
+                                clicked(view)
+                        }
+                    }, "需要您的位置信息"
+                )
+            }
+            //-----
         }
         //
         when (flag) {
@@ -83,7 +104,6 @@ class ClickEventHandler {
         Log.i("ClickEventHandler", "${view} endClick--$desc")
     }
 }
-
 
 /**
 MainTxt1.setClickEventHandler { v ->
