@@ -20,6 +20,7 @@ import android.widget.PopupWindow
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 
 
 /**
@@ -69,9 +70,26 @@ open class SuperActivity : AppCompatActivity() {
         callBack: IPermissionCallBack,
         shouldShowRequestTip: String? //为null就不会弹窗
     ) {
+
         permissionCallBack = callBack
         this.shouldShowRequestTip = shouldShowRequestTip
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+            val permissions = ArrayList<String>()
+            for (i in permissionArr.indices) {
+                if (PermissionChecker.checkSelfPermission(
+                        this,
+                        permissionArr[i]
+                    ) != PermissionChecker.PERMISSION_GRANTED
+                ) {
+                    permissions.add(permissionArr[i])
+                }
+            }
+            if (permissions.size > 0) {
+                requestPermissions(permissions.toTypedArray(), REQUEST_PEMISSION_CODE)
+            } else {
+                permissionCallBack?.askPermissionResult(true)
+            }
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             val permissions = ArrayList<String>()
             for (i in permissionArr.indices) {
                 if (ContextCompat.checkSelfPermission(
