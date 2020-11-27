@@ -1,14 +1,16 @@
-package  com.teetaa.outsourcing.carinspection.activity;
 
 import android.Manifest
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.view.Gravity
 import android.view.View
@@ -18,7 +20,7 @@ import android.widget.PopupWindow
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.teetaa.outsourcing.carinspection.R
+
 
 /**
  *
@@ -65,7 +67,7 @@ open class SuperActivity : AppCompatActivity() {
     fun askPermission(
         permissionArr: Array<String>,
         callBack: IPermissionCallBack,
-        shouldShowRequestTip: String
+        shouldShowRequestTip: String? //为null就不会弹窗
     ) {
         permissionCallBack = callBack
         this.shouldShowRequestTip = shouldShowRequestTip
@@ -102,7 +104,14 @@ open class SuperActivity : AppCompatActivity() {
                 permissionCallBack?.askPermissionResult(true)
             } else {//如果用户点了不再提醒并且拒绝了授权
                 permissionCallBack?.askPermissionResult(false)
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
+                var showDialog = false
+                for (i in permissions.indices) {
+                    if (!shouldShowRequestPermissionRationale(permissions[i])) {
+                        showDialog = true
+                        break
+                    }
+                }
+                if (showDialog && shouldShowRequestTip != null) {
                     //我们就弹出对话框告诉用户需要授权才能用,然后打开应用的权限页面,因为这个时候requestPermissions已经直接返回不成功了
                     showMessageOKCancel(shouldShowRequestTip!!,
                         DialogInterface.OnClickListener { dialog, which ->
@@ -142,8 +151,15 @@ open class SuperActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //super.onActivityResult(requestCode, resultCode, data)
+        //activityResultCallBack?.activityResultCallBack(requestCode, resultCode, data)
+
         super.onActivityResult(requestCode, resultCode, data)
-        activityResultCallBack?.activityResultCallBack(requestCode, resultCode, data)
+        if (openMatisseRequestCode == requestCode) {
+            matisseCallBack?.onMatisseCallBack(requestCode, resultCode, data)
+        } else {
+            activityResultCallBack?.activityResultCallBack(requestCode, resultCode, data)
+        }
     }
     //------------------------
 
@@ -176,6 +192,55 @@ open class SuperActivity : AppCompatActivity() {
     }
 
 
+    //==============================startMatisseResult======================================
+    var matisseCallBack: IMatisseCallBack? = null
+    val openMatisseRequestCode = 12287
+    var auth = "com.teetaa.outsourcing.carinspection.FileProvider"
+
+    fun startMatisseForResult(
+        mimeTypeSet: Set<MimeType>,
+        styleId: Int, countable: Boolean,
+        maxSelectable: Int, showCamera: Boolean,
+        callBack: IMatisseCallBack
+    ) {
+        //-- MimeType.ofAll()->mimeTypeSet
+        //--R.style.Matisse_Fengling
+        matisseCallBack = callBack
+        Matisse.from(this)
+            .choose(mimeTypeSet)//图片类型
+            .theme(R.style.Matisse_Fengling)//(styleId)
+            .countable(countable)//true:选中后显示数字;false:选中后显示对号
+            .maxSelectable(maxSelectable)//可选的最大数
+            .capture(showCamera)//选择照片时，是否显示拍照
+            .captureStrategy(CaptureStrategy(false, auth))
+            //参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+            .imageEngine(Glide4Engine())//图片加载引擎,***!!!!!这里很重要 因为我用的glide4 要用自己改过的引擎
+            //
+            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+            //
+            .forResult(openMatisseRequestCode)//
+    }
+
+    /**
+     * 将返回的content的路径编程真实路径
+     */
+    fun getRealPathFromUri(contentUri: Uri): String {
+        var cursor: Cursor? = null
+        try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = getContentResolver().query(contentUri, proj, null, null, null)
+            val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor!!.moveToFirst()
+            return cursor!!.getString(column_index)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return "";
+        } finally {
+            if (cursor != null) {
+                cursor!!.close()
+            }
+        }
+    }
 }
 
 interface IPermissionCallBack {
@@ -188,4 +253,8 @@ interface IActivityResultCallBack {
 
 interface IPopMenuShownCallBack {
     open fun onPopMenuShownCallBack(view: View, callBackParam: Any?, popupWindow: PopupWindow)
+}
+
+interface IMatisseCallBack {
+    open fun onMatisseCallBack(requestCode: Int, resultCode: Int, data: Intent?)
 }

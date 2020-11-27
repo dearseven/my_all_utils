@@ -1,0 +1,35 @@
+注意这用KeepWatchVarHolder主要是因为我是一个变量可能被好几个地方观察，实际上不一定非要这么干
+
+1 在KeepWatchVarHolder中申明可以被观察的变量 比如 ，我这里是更新消息队列每次推消息以后的时间戳
+    var rabbitMqTsVar = KeepWatchVar<Long>(0L)
+
+表示变量的实际内容值是一个Long
+
+2 在需要观察这个值变化的地方使用， 比如Activity
+
+	2.1 先实现接口
+	private var rabbitMqTsWatcher = object : VarWatcher<Long> {
+        override fun KeepWatchVarChanged(_var: Long?) {
+            runBlocking {
+                withContext(Dispatchers.Main) {
+                    MainTxt1.setText("${_var}")
+                }
+            }
+        }
+    }	
+			
+	2.2 注册和移除监听器	
+			override fun whenDestroy() {
+                super.whenDestroy()
+				//
+                KeepWatchVarHolder.instance.rabbitMqTsVar.removeWatcher(this@MainActivity::class.java.simpleName)
+            }
+
+            override fun whenCreate() {
+                KeepWatchVarHolder.instance.rabbitMqTsVar.addWatcher(
+                    this@MainActivity::class.java.simpleName,
+                    rabbitMqTsWatcher
+                )
+			}
+3 在引起数据变化的地方使用
+     KeepWatchVarHolder.instance.rabbitMqTsVar.setVarAndNotify(System.currentTimeMillis())

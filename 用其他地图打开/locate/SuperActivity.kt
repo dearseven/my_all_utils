@@ -21,9 +21,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
-import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.MimeType
-import com.zhihu.matisse.internal.entity.CaptureStrategy
 
 /**
  *
@@ -70,7 +67,7 @@ open class SuperActivity : AppCompatActivity() {
     fun askPermission(
         permissionArr: Array<String>,
         callBack: IPermissionCallBack,
-        shouldShowRequestTip: String
+        shouldShowRequestTip: String? //为null就不会弹窗
     ) {
         permissionCallBack = callBack
         this.shouldShowRequestTip = shouldShowRequestTip
@@ -107,7 +104,14 @@ open class SuperActivity : AppCompatActivity() {
                 permissionCallBack?.askPermissionResult(true)
             } else {//如果用户点了不再提醒并且拒绝了授权
                 permissionCallBack?.askPermissionResult(false)
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
+                var showDialog = false
+                for (i in permissions.indices) {
+                    if (!shouldShowRequestPermissionRationale(permissions[i])) {
+                        showDialog = true
+                        break
+                    }
+                }
+                if (showDialog && shouldShowRequestTip != null) {
                     //我们就弹出对话框告诉用户需要授权才能用,然后打开应用的权限页面,因为这个时候requestPermissions已经直接返回不成功了
                     showMessageOKCancel(shouldShowRequestTip!!,
                         DialogInterface.OnClickListener { dialog, which ->
