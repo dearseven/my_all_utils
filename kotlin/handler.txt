@@ -1,0 +1,14 @@
+	private var mHandler: Handler = WithoutLeakHandler(this)
+
+    companion object {
+        private class WithoutLeakHandler(ui: Activity) : Handler() {
+            private var ui: WeakReference<Activity> = WeakReference(ui)
+
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+                when (msg.what) {
+
+                }
+            }
+        }
+    }
