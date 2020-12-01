@@ -1,0 +1,91 @@
+1 fragment的布局
+ <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_ef"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tb"
+        layout="@layout/bases_toolbar"></include>
+
+
+</LinearLayout>
+
+2 bases_toolbar<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/base_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--关于 toorbalr的一部分特效，请看activity_todo_list.xml的CoordinatorLayout里的部分 -->
+        <androidx.appcompat.widget.Toolbar android:background="@color/status_bar_color"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            app:theme="@style/ToolbarPopupTheme">
+
+            <!--自定义toolbar的title 和subtitle -->
+
+            <TextView
+                android:id="@+id/toolbar_subtitle"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:maxLines="1"
+                android:paddingRight="10dp"
+                android:text="subtitle"
+                android:textColor="@color/black" />
+
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:text="title"
+                android:textColor="@color/black" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+</merge>
+
+
+3 ToolbarPopupTheme
+    <style name="ToolbarPopupTheme" parent="Theme.AppCompat.Light.NoActionBar"><!--@style/ThemeOverlay.AppCompat.Dark-->
+        <!--<item name="android:colorBackground">@color/pop_menu_color</item>&lt;!&ndash; 弹出菜单的背景颜色&ndash;&gt;-->
+        <item name="android:colorBackground">@color/white</item><!-- 弹出菜单的背景颜色-->
+        <item name="android:textColor">@android:color/black</item><!-- 弹出菜单的文本颜色-->
+        <item name="actionMenuTextColor">@android:color/black</item><!--右侧alwaysshow的按钮的颜色-->
+        <!--<item name="colorButtonNormal">@android:color/holo_red_dark</item>-->
+        <item name="colorControlNormal">@android:color/black</item><!--右侧的显示颜色-->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle
+        </item> <!--新增一个item，用于控制menu-->
+    </style>
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+    </style>
+	
+4 这个要给对应的activity加上
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="popupTheme">@style/ToolbarPopupTheme</item>
+    </style>
+5 fragment的onCreateView
+ (activity as AppCompatActivity?)!!.setSupportActionBar(view!!.findViewById(R.id.toolbar))
+  setHasOptionsMenu(true) //可以设置optionMenu
