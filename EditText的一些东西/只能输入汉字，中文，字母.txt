@@ -1,0 +1,30 @@
+ //EditText只允许输入字母数字和中文
+        mngOrderInCarET.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                var edit = mngOrderInCarET.text.toString();
+                var str = stringFilter(edit.toString());
+                if (!edit.equals(str)) {
+                    mngOrderInCarET.setText(str);
+                    //设置新的光标所在位置
+                    mngOrderInCarET.setSelection(str.length);
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+            }
+
+            fun stringFilter(str: String): String {
+                // 只允许字母、数字和汉字其余的还可以随时添加比如下划线什么的，但是注意引文符号和中文符号区别
+                var regEx = "[^a-zA-Z0-9\u4E00-\u9FA5]";//正则表达式
+                val p = Pattern.compile(regEx);
+                val m = p.matcher(str);
+                return m.replaceAll("").trim();
+            }
+        });
+        
+      

@@ -21,7 +21,7 @@ android:inputType="number"
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void onTextChanged(CharSequence s, int start, int before, int 	) {
             Pattern p = Pattern.compile("^(100|[1-9]\\d|\\d)$");
 
             Matcher m = p.matcher(s.toString());

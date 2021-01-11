@@ -1,0 +1,9 @@
+
+    <style name="TranslucentFullScreenThemePT" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>-->
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@color/no_color</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
