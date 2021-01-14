@@ -23,13 +23,15 @@ webview清除历史记录
 需要在doUpdateVisitedHistory方法中调用clearHistory方法才能起作用
 
 
-@Override
-public void doUpdateVisitedHistory(WebView webView, String s, boolean b) {
+setWebViewClient(new WebViewClient() {
+	//....
+	@Override
+	public void doUpdateVisitedHistory(WebView webView, String s, boolean b) {
 
-    if (needClearHistory) {
-        webView.clearHistory();
-        needClearHistory = false;
-    }
-
+		if (needClearHistory) {
+			webView.clearHistory();
+			needClearHistory = false;
+		}
+	}
 }
 --------------------- 
