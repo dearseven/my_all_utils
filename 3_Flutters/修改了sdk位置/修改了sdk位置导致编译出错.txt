@@ -1,0 +1,14 @@
+是这样的我有一个老项目是往项目里添加了flutter模块
+
+然后有一天我不小心把fluter和dart的sdk删了，然后下了新的，但是存放的位置不一样
+
+当我再次编译的时候就说连flutter最基本的"StatelessWidget"都找不到了
+
+参考它报错的的信息，我发现它是引用了我本来删除的那个目录里的东西，所以我想肯定有配置需要替换
+于是在我的翻找下发现了flutter module的根目录下的
+
+.dart_tool目录
+之中的package_config.json是还是引入了老了被删掉的，这里修改一下
+
+.idea\libraries目录
+之中的Dart_SDK.xml是还是引入了老了被删掉的，这里修改一下
