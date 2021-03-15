@@ -1,0 +1,164 @@
+0
+ //腾讯x5 腾讯浏览器服务https://x5.tencent.com/tbs/index.html
+    api 'com.tencent.tbs.tbssdk:sdk:43939'
+	
+1 权限
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+2
+      <service
+                android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+                android:label="dexopt"
+                android:process=":dexopt" >
+        </service>
+3 初始化
+在Application类的onCreate中
+       // 在调用TBS初始化、创建WebView之前进行如下配置
+        if (!QbSdk.isTbsCoreInited()){
+
+
+            // 这个函数内是异步执行所以不会阻塞 App 主线程，这个函数内是轻量级执行所以对 App 启动性能没有影响
+            QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+                @Override
+                public void onViewInitFinished(boolean arg0) {
+                    //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                    Log.d("QbSdk", " onViewInitFinished is " + arg0);
+
+                    HashMap map = new HashMap();
+                    map.put(TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER, true);
+                    map.put(TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE, true);
+                    QbSdk.initTbsSettings(map);
+                }
+
+                @Override
+                public void onCoreInitFinished() {
+                }
+            };
+            //x5内核初始化接口
+            QbSdk.initX5Environment(getApplicationContext(), cb);
+
+
+        }
+4
+class MainFragmentH5 : BaseLazyFragment(), CTBSWebView.CWebViewEventHandler {
+    var h5NoNet: TextView? = null
+    var h5Web: CTBSWebView? = null
+    var h5Swipe: SwipeRefreshLayout? = null
+
+    val url = "${PAGE_URL}huaXiang.html?type=list"
+    var currentUrl = url
+    //val url = "http://192.168.3.87:8848/fenghuang/YongHuQunTiHuaXiang/pages/index.html?taskId=1"
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val v = super.onCreateView(inflater, container, savedInstanceState)
+        hasInited = false;
+        //apl_swipe
+        intoFragment()
+        return v
+    }
+
+    @SuppressLint("JavascriptInterface")
+    override fun initViews(vararg args: Any?) {
+
+        h5Swipe = selfView.findViewById(R.id._h5WebSwipe)
+        h5NoNet = selfView.findViewById(R.id._h5NoNet)
+        h5Web = selfView.findViewById(R.id._h5Web)
+
+        h5Swipe?.setOnRefreshListener {
+            if (currentUrl.equals(url))
+                h5Web?.loadUrl(url)
+            else
+                h5Web?.loadUrl(currentUrl)
+
+        }
+
+        if (NetWorkTester.getNetState(activity) == NetWorkTester.NO_INTERNET) {
+            h5NoNet?.visibility = View.VISIBLE
+            h5Web?.visibility = View.GONE
+            return
+        }
+
+
+
+        h5Web?.setCWebViewEventHandler(this)
+
+        h5Web?.loadUrl(url)
+        h5Web?.addJavascriptInterface(object : Object() {
+
+        }, "androidjs")
+    }
+
+    override fun intoFragment(vararg args: Any?) {
+        if (hasInited == false) {
+            hasInited = true;
+            initViews(args)
+        }
+    }
+
+
+    override fun onBackFilter(obj: Any?): Boolean {
+        return super.onBackFilter(obj)
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.h5page
+    }
+
+    var isPageLoadSuc = false
+
+    //--------------------cwebview的事件----------------
+    override fun onPageFinshed(cWebView: CTBSWebView?, loadError: Boolean) {
+        isPageLoadSuc = loadError == false
+//        val info = AdminInfo.toInstance(activity)
+//        val para = H5PageParam();
+//        para.adminId = info.adminId
+
+        _h5WebSwipe?.isRefreshing = false
+
+        if (loadError) {
+            h5NoNet?.visibility = View.VISIBLE
+            h5Web?.visibility = View.GONE
+
+            h5NoNet?.setOnClickListener {
+                //Toast.makeText(context,"111", Toast.LENGTH_SHORT).show()
+                h5Web?.loadUrl(url)
+            }
+        } else {
+            currentUrl = cWebView?.currentUrl ?: url
+            h5NoNet?.visibility = View.GONE
+            h5Web?.visibility = View.VISIBLE
+
+        }
+    }
+
+    override fun onStartLoad(cWebView: CTBSWebView?, url: String?) {
+    }
+
+    override fun loadProgress(view: CTBSWebView?, newProgress: Int) {
+    }
+
+//    val h = object : WeakHandler(activity) {
+//        override fun handleMessage(msg: Message?) {
+//            super.handleMessage(msg)
+//        }
+//    }		
+5
+
+反正我设置android:layerType="software"以后某些图表出不来，所以去掉了
+        <CTBSWebView
+                android:id="@+id/_h5Web"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/status_bar_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"><CTBSWebView>
