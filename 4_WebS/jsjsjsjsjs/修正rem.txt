@@ -1,3 +1,4 @@
+A-------------------
 <script>
         /** 得到屏幕的宽度*/
         let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
@@ -6,3 +7,87 @@
         /** 设置根元素字体大小 */
         htmlDom.style.fontSize = htmlWidth / 20 + 'px';
     </script>
+
+
+
+
+B-------------------
+
+方案需求：
+
+rem 单位在做移动端的h5开发的时候是最经常使用的单位。为解决自适应的问题，我们需要动态的给文档的根节点添加font-size 值。
+
+使用mediaquery 可以解决这个问题，但是每一个文件都引用一大串的font-size 值很繁琐，而且值也不能达到连续的效果。
+
+就使用js动态计算给文档的fopnt-size 动态赋值解决问题。
+
+设计稿以750为准。其中测试的设计稿中标注此div的width:750px;height:200px;
+
+方案一：
+
+<script type="text/javascript">
+  window.addEventListener(('orientationchange' in window ? 'orientationchange' : 'resize'), (function() {
+    function c() {
+      var d = document.documentElement;
+      var cw = d.clientWidth || 750;
+      d.style.fontSize = (20 * (cw / 375)) > 40 ? 40 + 'px' : (20 * (cw / 375)) + 'px';
+    }
+    c();
+    return c;
+  })(), false);
+</script>
+<style type="text/css">
+  html{font-size:10px}
+  *{margin:0;}
+</style>
+<div style="width:18.75rem;height:5rem;background:#f00;color:#fff;text-align:center;">
+    此时在iPhone6上测试，width:375px，也即width:100%。
+　　此时 1rem = 40px;将设计稿标注的宽高除以40即可得到rem的值。 </div>
+方案二：
+
+<script type="text/javascript">
+  !(function(doc, win) {
+    var docEle = doc.documentElement, //获取html元素
+      event = "onorientationchange" in window ? "orientationchange" : "resize", //判断是屏幕旋转还是resize;
+      fn = function() {
+        var width = docEle.clientWidth;
+        width && (docEle.style.fontSize = 10 * (width / 375) + "px"); //设置html的fontSize，随着event的改变而改变。
+      };
+
+    win.addEventListener(event, fn, false);
+    doc.addEventListener("DOMContentLoaded", fn, false);
+
+  }(document, window));
+</script>
+<style type="text/css"> html { font-size: 10px; } *{ margin: 0; } </style>
+<div style="width:37.5rem;height:10rem;background:#f00;color:#fff;text-align:center;">
+    此时 1rem = 20px;将设计稿标注的宽高除以20即可得到rem的值。
+</div>
+write by tuantuan
+
+
+
+C-------------------
+
+使用方法：width:4rem;max-width:100%;
+说明：此方法设置了最大宽度为600px 
+/*rem*/
+(function(doc, win) {
+    var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function() {
+            var clientWidth = docEl.clientWidth;
+            if(!clientWidth) return;
+            //          docEl.style.fontSize = 100 * (clientWidth / 360) + 'px';
+            if(clientWidth >= 600) {
+                docEl.style.fontSize = '150px';
+            } else {
+                docEl.style.fontSize = 100 * (clientWidth / 360) + 'px';
+            }
+        };
+    if(!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+})(document, window);
+
+ 
