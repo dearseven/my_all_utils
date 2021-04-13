@@ -115,4 +115,14 @@ public class ResourceGetter {
         }
         return id;
     }
+	
+	public static String getNameFromId(Context ctx, int resourceId){
+        TypedValue value = new TypedValue();
+        ctx.getResources().getValue(resourceId, value, true);
+        String resname = value.string.toString();
+        String [] nameArr=value.string.toString().split("/");
+        resname = nameArr[nameArr.length-1].toString();
+        //Debug.logGuoGuang(getClass(), "ModuleImageView", "2 --- resname=" + resname);
+        return resname;
+    }
 }
