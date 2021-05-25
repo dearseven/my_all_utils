@@ -1,0 +1,7 @@
+ DialogActivity da = DialogActivity.createOneWithFull(this, R.layout.ask_dialog);
+        View view = da.startWithFullScreen(getWindow());
+        //DialogActivity.createOne(this, R.layout.ask_dialog).start();
+        view.findViewById(R.id.ttfh_ask_dialog_ok);
+        view.findViewById(R.id.ttfh_ask_dialog_back).requestFocus();
+        TextView tv = view.findViewById(R.id.ttfh_ask_dialog_content);
+        tv.setText("111112222333333");
