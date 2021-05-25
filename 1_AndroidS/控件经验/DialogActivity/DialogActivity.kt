@@ -1,9 +1,9 @@
 
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.DialogInterface
 import android.view.*
+import wc.c.libbase.R
 import java.lang.ref.WeakReference
 
 
@@ -18,6 +18,10 @@ class DialogActivity : Dialog {
 //        fun whenShown()
 //        fun whenHidden()
 //    }
+
+    interface IBack {
+        fun whenBack()
+    }
 
     companion object {
         @JvmStatic
@@ -37,7 +41,7 @@ class DialogActivity : Dialog {
         //setContentView(R.layout.dialog_activity)
     }
 
-    fun start(): View {
+    fun start(iBack: IBack?): View {
         val mView = weakContext?.get()?.let { context ->
             val inflater = LayoutInflater.from(context)
             val _view: View = inflater.inflate(layoutId, null)
@@ -46,10 +50,22 @@ class DialogActivity : Dialog {
             show()
             _view
         }!!
+        setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP &&
+                    !event.isCanceled) {
+                iBack?.whenBack()
+                //ToastUtil.Companion.showToast(ctx, "onKey BackPressed!!!!");
+                //                    dialog.cancel();
+                //                    showDialog(DIALOG_MENU);
+                true
+            } else
+                false
+        })
+
         return mView
     }
 
-    fun startWithFullScreen(window: Window): View {
+    fun startWithFullScreen(window: Window, iBack: IBack?): View {
         val mView = weakContext?.get()?.let { context ->
             setCancelable(false)
 //            setContentView(layoutId)
@@ -70,6 +86,17 @@ class DialogActivity : Dialog {
         window.decorView.setPadding(0, 0, 0, 0)
         window.attributes = layoutParams
 
+        setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP &&
+                    !event.isCanceled) {
+                iBack?.whenBack()
+                //ToastUtil.Companion.showToast(ctx, "onKey BackPressed!!!!");
+                //                    dialog.cancel();
+                //                    showDialog(DIALOG_MENU);
+                true
+            } else
+                false
+        })
         return mView
     }
 
